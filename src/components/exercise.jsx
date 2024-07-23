@@ -1,5 +1,4 @@
 import { Button, Col, Collapse, Divider, Input, Row } from 'antd';
-import Title from 'antd/es/skeleton/Title';
 import React, { useState } from 'react'
 import { ExerciseSetInput } from './exercise-set-input';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
@@ -33,19 +32,20 @@ export const Exercise = ({ exercise, onUpdate, onRemove }) => {
             key: '1',
             label: (
                 <>
-                    <Row align="middle">
-                        <Col>
+                    <Row style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                        <Col flex="auto" style={{ marginRight: '8px' }}>
                             <Input
                                 placeholder="Название упражнения"
                                 value={exercise.name}
                                 onChange={(e) => updateName(e.target.value)}
-                                required={true}
+                                required
+                                style={{ width: '100%' }}
                             />
                         </Col>
-                        <Col offset={8}>
+                        <Col>
                             <Button
                                 icon={<DeleteOutlined />}
-                                onClick={() => onRemove()}
+                                onClick={onRemove}
                             />
                         </Col>
                     </Row>
