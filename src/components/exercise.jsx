@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { ExerciseSetInput } from './exercise-set-input';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
-export const Exercise = ({ exercise, onUpdate }) => {
+export const Exercise = ({ exercise, onUpdate, onRemove }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const updateExercise = (updatedFields) => {
@@ -45,7 +45,7 @@ export const Exercise = ({ exercise, onUpdate }) => {
                         <Col offset={8}>
                             <Button
                                 icon={<DeleteOutlined />}
-                                onClick={() => console.log('remove')}
+                                onClick={() => onRemove()}
                             />
                         </Col>
                     </Row>

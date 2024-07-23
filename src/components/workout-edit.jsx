@@ -17,6 +17,12 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
         onUpdate({ ...workout, exercises: newExercises })
     }
 
+    const removeExercise = (index) => {
+        const newExercises = [...workout.exercises]
+        newExercises.splice(index, 1)
+        onUpdate({ ...workout, exercises: newExercises })
+
+    }
     const addExercise = () => onUpdate({ ...workout, exercises: [...workout.exercises, { name: '', sets: [] }] })
 
     const startTraining = () => {
@@ -54,6 +60,7 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
                         <Exercise
                             exercise={exercise}
                             onUpdate={(exercise) => updateExercise(exercise, idx)}
+                            onRemove={() => removeExercise(idx)}
                         />
                     </div>
                 ))
