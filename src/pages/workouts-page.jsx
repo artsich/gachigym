@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Typography, Layout, Card } from 'antd';
+import { List, Typography, Layout, Card, Modal } from 'antd';
 import { getWorkouts, removeWorkout } from '../services/workout-service';
 import { DeleteOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 export const WorkoutsPage = () => {
     const [workouts, setWorkouts] = useState(getWorkouts());
+    const [modal, contextHolder] = Modal.useModal();
 
     const handleRemoveWorkout = (id) => {
-        removeWorkout(id)
-        setWorkouts(getWorkouts())
-    }
+        modal.confirm({
+            title: 'Are you sure you want to delete it?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Yes',
+            cancelText: 'No',
+            onOk: () => {
+                removeWorkout(id)
+                setWorkouts(getWorkouts())
+            }
+        });
+    };
 
     return (
         <Layout>
@@ -22,14 +32,17 @@ export const WorkoutsPage = () => {
                 <List
                     itemLayout="vertical"
                     dataSource={workouts}
-                    renderItem={(workout, index) => (
+                    renderItem={(workout, _) => (
                         <List.Item>
                             <Card
                                 style={{ width: '100%', marginBottom: 16 }}
                                 actions={[
-                                    <DeleteOutlined
-                                        key="delete"
-                                        onClick={() => handleRemoveWorkout(workout.id)} />,
+                                    <>
+                                        <DeleteOutlined
+                                            key="delete"
+                                            onClick={() => handleRemoveWorkout(workout.id)} />
+                                        {contextHolder}
+                                    </>
                                 ]}
                             >
                                 <Card.Meta
