@@ -2,6 +2,7 @@ import { Button, Card, Flex } from "antd";
 import Title from "antd/es/typography/Title";
 import { useNavigate } from "react-router-dom";
 import { isTrainingInProgress } from "../services/workout-service";
+import { EyeOutlined, PlusCircleTwoTone, InfoCircleOutlined } from "@ant-design/icons";
 
 const styles = {
     container: {
@@ -18,6 +19,12 @@ const styles = {
         border: '1px solid #00ff00',
         flex: '0 0 auto',
         cursor: 'pointer',
+    },
+    newWorkoutButton: {
+        background: "#BDECB6"
+    },
+    historyButton: {
+        background: "#4285b4"  
     }
 }
 
@@ -27,19 +34,28 @@ export const MainPage = () => {
 
     return (
         <div style={styles.container}>
-            <Flex gap="middle" vertical>
+            <Flex gap="large" horizontal="true">
                 <Button
-                    style={styles.mainButton}
+                    icon={<EyeOutlined />}
+                    type="primary"
+                    size="large"
+                    className="mainButton"
+                    style={styles.historyButton}
                     onClick={() => navigate('/workouts')}>
-                    Старые тренировки
+                    История
                 </Button>
                 <Button
-                    style={styles.mainButton}
+                    icon={<PlusCircleTwoTone />}
+                    size="large"
+                    className="mainButton"
+                    style={styles.newWorkoutButton}
                     onClick={() => navigate('/workout')}>
                     Новая тренировка
                 </Button>
                 {isTrainingInProgress() ? <Button
-                    style={styles.mainButton}
+                    icon={<InfoCircleOutlined />}
+                    size="large"
+                    className="mainButton"
                     onClick={() => navigate('/current-workout')}>
                     Текущая тренировка
                 </Button> : <></>}
