@@ -53,15 +53,6 @@ export const Exercise = ({ exercise, onUpdate, onRemove }) => {
             ),
             children: (
                 <>
-                    {exercise.sets.length > 0 ? (
-                        <Row gutter={[16, 16]} align="middle">
-                            <Col span={8}>
-                                <Title level={5} style={{ margin: 0 }}>Weight</Title>
-                            </Col>
-                            <Col>
-                                <Title level={5} style={{ margin: 0 }}>Count</Title>
-                            </Col>
-                        </Row>) : <> </>}
                     {exercise.sets.map((set, index) => (
                         <div key={index}>
                             <ExerciseSetInput
