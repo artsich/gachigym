@@ -1,3 +1,7 @@
+import { generateId } from './id-generator'
+
+const WORKOUTS_STORAGE_KEY = 'trainings'
+
 export function isTrainingInProgress() {
     return localStorage.getItem('current_workout') !== null
 }
@@ -20,17 +24,19 @@ export function saveCurrentWorkout(workout) {
 }
 
 export function saveWorkout(workout) {
-    console.log('Trying to save', workout)
-
-    let trainings = JSON.parse(localStorage.getItem('trainings'))
-    if (trainings == null) {
-        trainings = []
-    }
-
-    trainings.push(workout)
-    localStorage.setItem('trainings', JSON.stringify(trainings))
+    const newWorkout = { ...workout, id: generateId() }
+    let workouts = getWorkouts()
+    workouts.push(newWorkout)
+    localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts))
 }
 
 export function getWorkouts() {
-    return []
+    const trainings = JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? []
+    const sorted = trainings.sort((a, b) => b.startTime - a.startTime)
+    return sorted
+}
+
+export function removeWorkout(id) {
+    const workouts = getWorkouts().filter(workout => workout.id != id)
+    localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts))
 }
