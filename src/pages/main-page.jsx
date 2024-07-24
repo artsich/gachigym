@@ -76,18 +76,17 @@ export const MainPage = () => {
         )}
       </Flex>
 
-      <Title level={4}>Шаблоны (not implemented)</Title>
-      <div style={styles.templatesSection}>
-        {templates.map((template) => (
-          <Card
-            key={template}
-            style={styles.templateCard}
-            onClick={() => navigate(`/create-workout/${template}`)}
-          >
-            {template}
-          </Card>
-        ))}
-      </div>
-    </div>
-  );
+            <Title level={4}>Programs (not implemented)</Title>
+            <div style={styles.templatesSection}>
+                {templates.map(template => (
+                    <Card
+                        key={template}
+                        style={styles.templateCard}
+                        onClick={() => navigate(`/create-workout/${template}`)}>
+                        {template}
+                    </Card>
+                ))}
+            </div>
+        </div>
+    );
 };

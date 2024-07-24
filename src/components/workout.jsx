@@ -4,30 +4,37 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
-export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
+export const Workout = ({ workout, onUpdate, onFinish }) => {
     const [started, setStarted] = useState(workout.startTime != null)
+    const readonly = Boolean(workout.startTime && workout.finishTime)
+
+    const update = (workout) => {
+        if (!readonly) {
+            onUpdate(workout)
+        }
+    }
 
     const updateWorkoutName = (name) => {
-        onUpdate({ ...workout, name })
+        update({ ...workout, name })
     }
 
     const updateExercise = (exercise, index) => {
         const newExercises = [...workout.exercises]
         newExercises[index] = exercise
-        onUpdate({ ...workout, exercises: newExercises })
+        update({ ...workout, exercises: newExercises })
     }
 
     const removeExercise = (index) => {
         const newExercises = [...workout.exercises]
         newExercises.splice(index, 1)
-        onUpdate({ ...workout, exercises: newExercises })
+        update({ ...workout, exercises: newExercises })
 
     }
-    const addExercise = () => onUpdate({ ...workout, exercises: [...workout.exercises, { name: '', sets: [] }] })
+    const addExercise = () => update({ ...workout, exercises: [...workout.exercises, { name: '', sets: [] }] })
 
     const startTraining = () => {
         setStarted(true)
-        onUpdate({ ...workout, startTime: Date.now() })
+        update({ ...workout, startTime: Date.now() })
     }
 
     const finishTraining = () => {
@@ -44,13 +51,17 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
                         onChange={(e) => updateWorkoutName(e.target.value)}
                     />
                 </Col>
-                {started ? <Col>
-                    <FinishTrainingButton onFinish={finishTraining} />
-                </Col> : <Col>
-                    <Button type="default" onClick={startTraining}>
-                        Start training
-                    </Button>
-                </Col>}
+                {!readonly ?
+                    started ?
+                        <Col>
+                            <FinishTrainingButton onFinish={finishTraining} />
+                        </Col>
+                        : <Col>
+                            <Button type="default" onClick={startTraining}>
+                                Start training
+                            </Button>
+                        </Col>
+                    : <></>}
             </Row>
             <Divider />
             {workout.startTime ? 'Display ellapsed time....' : <></>}
@@ -65,8 +76,8 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
                     </div>
                 ))
             }
-            <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />
-            <Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as template</Button>
+            {!readonly && <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />}
+            {<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as Program</Button>}
         </div >
     )
 }
