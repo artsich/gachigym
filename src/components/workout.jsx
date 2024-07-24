@@ -4,8 +4,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
-export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
+export const Workout = ({ workout, onUpdate, onFinish }) => {
     const [started, setStarted] = useState(workout.startTime != null)
+    const readonly = workout.startTime && workout.finishTime
 
     const updateWorkoutName = (name) => {
         onUpdate({ ...workout, name })
@@ -44,13 +45,17 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
                         onChange={(e) => updateWorkoutName(e.target.value)}
                     />
                 </Col>
-                {started ? <Col>
-                    <FinishTrainingButton onFinish={finishTraining} />
-                </Col> : <Col>
-                    <Button type="default" onClick={startTraining}>
-                        Start training
-                    </Button>
-                </Col>}
+                {!readonly ?
+                    started ?
+                        <Col>
+                            <FinishTrainingButton onFinish={finishTraining} />
+                        </Col>
+                        : <Col>
+                            <Button type="default" onClick={startTraining}>
+                                Start training
+                            </Button>
+                        </Col>
+                    : <></>}
             </Row>
             <Divider />
             {workout.startTime ? 'Display ellapsed time....' : <></>}
@@ -65,8 +70,8 @@ export const WorkoutEdit = ({ workout, onUpdate, onFinish }) => {
                     </div>
                 ))
             }
-            <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />
-            <Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as template</Button>
+            {!readonly && <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />}
+            {<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as Program</Button>}
         </div >
     )
 }
