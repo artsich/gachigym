@@ -40,12 +40,12 @@ export const MainPage = () => {
                 </Button>
                 {isTrainingInProgress() ? <Button
                     style={styles.mainButton}
-                    onClick={() => navigate('/current-workout')}>
+                    onClick={() => navigate('/workout/current')}>
                     Текущая тренировка
                 </Button> : <></>}
             </Flex>
 
-            <Title level={4}>Шаблоны (not implemented)</Title>
+            <Title level={4}>Programs (not implemented)</Title>
             <div style={styles.templatesSection}>
                 {templates.map(template => (
                     <Card
