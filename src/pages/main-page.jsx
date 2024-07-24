@@ -61,7 +61,7 @@ export const MainPage = () => {
                 </Button> : <></>}
             </Flex>
 
-            <Title level={4}>Шаблоны (not implemented)</Title>
+            <Title level={4}>Programs (not implemented)</Title>
             <div style={styles.templatesSection}>
                 {templates.map(template => (
                     <Card
