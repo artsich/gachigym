@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import { Divider, Row, Col, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
@@ -36,7 +35,6 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 	const startTraining = () => {
 		setStarted(true)
 		update({ ...workout, startTime: Date.now() })
-		navigate("/workout/current")
 	}
 
 	const finishTraining = () => {
