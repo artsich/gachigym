@@ -1,7 +1,7 @@
 import { Button, Card, Flex } from "antd";
 import Title from "antd/es/typography/Title";
 import { useNavigate } from "react-router-dom";
-import { isTrainingInProgress } from "../services/workout-service";
+import { isTrainingInProgress, getCurrentWorkout, getPrograms } from "../services/workout-service";
 import {
     EyeOutlined,
     PlusCircleTwoTone,
@@ -11,11 +11,6 @@ import {
 const styles = {
     container: {
         padding: "16px",
-    },
-    templatesSection: {
-        display: "flex",
-        gap: "8px",
-        overflowX: "auto",
     },
     templateCard: {
         backgroundColor: "#1a1a1a",
@@ -37,7 +32,7 @@ const styles = {
 
 export const MainPage = () => {
     const navigate = useNavigate();
-    const templates = ["Сила", "Мобильность"]; // TODO: load components
+    const programs = getPrograms();
 
     return (
         <div style={styles.container}>
@@ -76,18 +71,17 @@ export const MainPage = () => {
                 )}
             </Flex>
 
-            <Title level={4}>Шаблоны (not implemented)</Title>
-            <div style={styles.templatesSection}>
-                {templates.map((template) => (
+            <Title level={4}>Programs (not implemented)</Title>
+            <div>
+                {programs.map(program => (
                     <Card
-                        key={template}
+                        key={program.id}
                         style={styles.templateCard}
-                        onClick={() => navigate(`/create-workout/${template}`)}
-                    >
-                        {template}
+                        onClick={() => navigate(`/workout/${program.id}`)}>
+                        {program.name}
                     </Card>
                 ))}
             </div>
-        </div>
+        </div >
     );
 };

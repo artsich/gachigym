@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { Divider, Row, Col, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
@@ -35,10 +36,15 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 	const startTraining = () => {
 		setStarted(true)
 		update({ ...workout, startTime: Date.now() })
+		navigate("/workout/current")
 	}
 
 	const finishTraining = () => {
 		onFinish()
+	}
+
+	const saveAsProgram = () => {
+		update({ ...workout, isProgram: !workout.isProgram })
 	}
 
 	return (
@@ -77,7 +83,7 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 				))
 			}
 			{!readonly && <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />}
-			{<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as Program</Button>}
+			{<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram} >Save as Program</Button>}
 		</div >
 	)
 }
