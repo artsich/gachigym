@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Divider, Row, Col, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
 export const Workout = ({ workout, onUpdate, onFinish }) => {
-	const [started, setStarted] = useState(workout.startTime != null)
+	const started = workout.startTime != null
 	const readonly = Boolean(workout.startTime && workout.finishTime)
 
 	const update = (workout) => {
@@ -33,7 +33,6 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 	const addExercise = () => update({ ...workout, exercises: [...workout.exercises, { name: '', sets: [] }] })
 
 	const startTraining = () => {
-		setStarted(true)
 		update({ ...workout, startTime: Date.now() })
 	}
 
