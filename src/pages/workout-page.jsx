@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Workout } from '../components/workout';
 import {
@@ -14,7 +14,7 @@ export const WorkoutPage = () => {
     const { id } = useParams()
     const [workout, setWorkout] = useState({ name: '', exercises: [], isProgram: false, startTime: null })
 
-    useState(() => {
+    useEffect(() => {
         if (id === 'current') {
             setWorkout(getCurrentWorkout())
         }
