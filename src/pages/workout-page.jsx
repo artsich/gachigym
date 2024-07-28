@@ -13,7 +13,7 @@ import {
 export const WorkoutPage = () => {
     const navigate = useNavigate();
     const { id } = useParams()
-    const [workout, setWorkout] = useState({ name: '', exercises: [], isProgram: false, startTime: null })
+    const [workout, setWorkout] = useState({ name: '', exercises: [], startTime: null })
 
     useEffect(() => {
         if (id === 'current') {
