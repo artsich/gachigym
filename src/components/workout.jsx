@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
-export const Workout = ({ workout, onUpdate, onFinish }) => {
+export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
 	const started = workout.startTime != null
 	const readonly = Boolean(workout.startTime && workout.finishTime)
 
@@ -40,10 +40,8 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 		onFinish()
 	}
 
-	const saveAsProgram = () => {
-		update({ ...workout, isProgram: !workout.isProgram })
-	}
-
+	const saveAsProgram = () => onSaveAsProgram({name: workout.name, exercises: [...workout.exercises]})	
+	
 	return (
 		<div style={{ padding: '16px' }}>
 			<Row gutter={[16, 16]} align="middle" justify="space-between">

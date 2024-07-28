@@ -1,6 +1,7 @@
 import { generateId } from './id-generator'
 
 const WORKOUTS_STORAGE_KEY = 'trainings'
+const PROGRAMS_STORAGE_KEY = 'programs'
 const CURRENT_WORKOUT_STORAGE_KEY = 'current_workout'
 
 export function isTrainingInProgress() {
@@ -47,10 +48,14 @@ export function getWorkouts() {
     return sorted
 }
 
+export function saveProgram(program) {
+    let programs = getPrograms()
+    programs.push(program)
+    localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs))
+}
+
 export function getPrograms() {
-    const trainings = JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? []
-    const programs = trainings.filter(w => w.isProgram === true)
-    return programs
+    return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? []
 }
 
 export function getById(id) {
