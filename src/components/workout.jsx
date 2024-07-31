@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
-export const Workout = ({ workout, onUpdate, onFinish }) => {
+export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
 	const started = workout.startTime != null
 	const readonly = Boolean(workout.startTime && workout.finishTime)
 
@@ -39,6 +39,8 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 	const finishTraining = () => {
 		onFinish()
 	}
+
+	const saveAsProgram = () => onSaveAsProgram({name: workout.name, exercises: [...workout.exercises]})	
 
 	return (
 		<div style={{ padding: '16px' }}>
@@ -76,7 +78,7 @@ export const Workout = ({ workout, onUpdate, onFinish }) => {
 				))
 			}
 			{!readonly && <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />}
-			{<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }}>Save as Program</Button>}
+			{<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>}
 		</div >
 	)
 }

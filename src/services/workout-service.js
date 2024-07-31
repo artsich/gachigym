@@ -1,17 +1,19 @@
 import { generateId } from './id-generator'
 
 const WORKOUTS_STORAGE_KEY = 'trainings'
+const PROGRAMS_STORAGE_KEY = 'programs'
+const CURRENT_WORKOUT_STORAGE_KEY = 'current_workout'
 
 export function isTrainingInProgress() {
-    return localStorage.getItem('current_workout') !== null
+    return localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY) !== null
 }
 
 export function removeCurrentWorkout() {
-    localStorage.removeItem('current_workout')
+    localStorage.removeItem(CURRENT_WORKOUT_STORAGE_KEY)
 }
 
 export function getCurrentWorkout() {
-    const currentWorkout = localStorage.getItem('current_workout')
+    const currentWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY)
     if (currentWorkout) {
         return JSON.parse(currentWorkout)
     }
@@ -20,7 +22,7 @@ export function getCurrentWorkout() {
 }
 
 export function saveCurrentWorkout(workout) {
-    localStorage.setItem('current_workout', JSON.stringify(workout))
+    localStorage.setItem(CURRENT_WORKOUT_STORAGE_KEY, JSON.stringify(workout))
 }
 
 export function saveWorkout(workout) {
@@ -43,4 +45,14 @@ export function getById(id) {
 export function removeWorkout(id) {
     const workouts = getWorkouts().filter(workout => workout.id != id)
     localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts))
+}
+
+export function saveProgram(program) {
+    let programs = getPrograms()
+    programs.push(program)
+    localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs))
+}
+
+export function getPrograms() {
+    return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? []
 }
