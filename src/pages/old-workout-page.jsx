@@ -1,0 +1,44 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { OldWorkout } from '../components/old-workout';
+import {
+    getCurrentWorkout,
+    removeCurrentWorkout,
+    saveCurrentWorkout,
+    saveWorkout,
+    getById,
+    saveProgram
+} from '../services/workout-service';
+
+export const OldWorkoutPage = () => {
+    const navigate = useNavigate();
+    const { id } = useParams()
+    const [workout, setWorkout] = useState({ name: '', exercises: [], startTime: null })
+
+    useEffect(() => {
+        if (id === 'current') {
+            setWorkout(getCurrentWorkout())
+        }
+        else if (id) {
+            setWorkout(getById(id))
+        }
+    }, [])
+
+    return (
+        <OldWorkout
+            workout={workout}
+            onUpdate={(workout) => {
+                setWorkout(workout)
+                saveCurrentWorkout(workout)
+            }}
+            onFinish={() => {
+                removeCurrentWorkout()
+                saveWorkout({ ...workout, finishTime: Date.now() })
+                navigate("/")
+            }}
+            onSaveAsProgram={(program) => {
+                saveProgram(program)    
+            }}
+        />
+    );
+};
