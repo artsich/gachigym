@@ -6,10 +6,11 @@ import {
     removeCurrentWorkout,
     saveCurrentWorkout,
     saveWorkout,
-    getById
+    getById,
+    saveProgram
 } from '../services/workout-service';
 
-export const WorkoutPage = ({ }) => {
+export const WorkoutPage = () => {
     const navigate = useNavigate();
     const { id } = useParams()
     const [workout, setWorkout] = useState({ name: '', exercises: [], startTime: null })
@@ -34,6 +35,9 @@ export const WorkoutPage = ({ }) => {
                 removeCurrentWorkout()
                 saveWorkout({ ...workout, finishTime: Date.now() })
                 navigate("/")
+            }}
+            onSaveAsProgram={(program) => {
+                saveProgram(program)    
             }}
         />
     );
