@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
 	getPrograms,
+	getProgramByName,
+	saveCurrentWorkout
 } from "../services/workout-service";
 import {
 	EyeOutlined,
@@ -36,6 +38,13 @@ const styles = {
 export const MainPage = () => {
 	const navigate = useNavigate();
 	const programs = getPrograms();
+
+	const openProgram = (name) => {
+		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
+		const program = getProgramByName(name)
+		saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] })
+		navigate("/workout/current")
+	}
 
 	return (
 		<div style={styles.container}>
@@ -76,11 +85,11 @@ export const MainPage = () => {
 
 			<Title level={4}>Programs</Title>
 			<div>
-				{programs.map((program) => (
+				{programs.map((program, idx) => (
 					<Card
-						key={program.id}
+						key={idx}
 						style={styles.templateCard}
-						onClick={() => navigate(`/create-workout/${program.name}`)}
+						onClick={() => openProgram(program.name)}
 					>
 						{program.name}
 					</Card>
