@@ -1,84 +1,51 @@
-import React from 'react';
-import { Divider, Row, Col, Button, Input } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { Exercise } from './exercise';
+import React, { useEffect } from 'react';
+import { Form, Input, Col, Row, Button } from 'antd';
+import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
 
 export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
-	const started = workout.startTime != null
-	const readonly = Boolean(workout.startTime && workout.finishTime)
+    const [form] = Form.useForm()
 
-	const update = (workout) => {
-		if (!readonly) {
-			onUpdate(workout)
-		}
-	}
+    useEffect(() => {
+        form.setFieldsValue(workout)
+    }, [workout])
 
-	const updateWorkoutName = (name) => {
-		update({ ...workout, name })
-	}
+    const saveAsProgram = () =>
+        onSaveAsProgram({ name: workout.name, exercises: [...workout.exercises] })
 
-	const updateExercise = (exercise, index) => {
-		const newExercises = [...workout.exercises]
-		newExercises[index] = exercise
-		update({ ...workout, exercises: newExercises })
-	}
+    return (
+        <Form
+            form={form}
+            name="workout_form"
+            onFinish={onFinish}
+            onValuesChange={(_, v) => onUpdate(v)}
+            autoComplete="off"
+            style={{ padding: '16px' }}
+        >
+            <Row gutter={[16, 16]} align="middle" justify="space-between">
+                <Col flex="auto">
+                    <Form.Item
+                        name="name"
+                        noStyle
+                        rules={[{ required: true, message: 'Please input the workout name!' }]}
+                    >
+                        <Input placeholder="Workout Name" />
+                    </Form.Item>
+                </Col>
+                <Col>
+                    <FinishTrainingButton onBeforeFinish={async () => {
+                        try {
+                            const _ = await form.validateFields();
+                            return true;
+                        } catch (__1) {
+                            return false;
+                        }
+                    }} onFinish={() => form.submit()} />
+                </Col>
+            </Row>
 
-	const removeExercise = (index) => {
-		const newExercises = [...workout.exercises]
-		newExercises.splice(index, 1)
-		update({ ...workout, exercises: newExercises })
-
-	}
-	const addExercise = () => update({ ...workout, exercises: [...workout.exercises, { name: '', sets: [] }] })
-
-	const startTraining = () => {
-		update({ ...workout, startTime: Date.now() })
-	}
-
-	const finishTraining = () => {
-		onFinish()
-	}
-
-	const saveAsProgram = () => onSaveAsProgram({name: workout.name, exercises: [...workout.exercises]})	
-
-	return (
-		<div style={{ padding: '16px' }}>
-			<Row gutter={[16, 16]} align="middle" justify="space-between">
-				<Col flex="auto">
-					<Input
-						placeholder="Training name"
-						value={workout.name}
-						onChange={(e) => updateWorkoutName(e.target.value)}
-					/>
-				</Col>
-				{!readonly ?
-					started ?
-						<Col>
-							<FinishTrainingButton onFinish={finishTraining} />
-						</Col>
-						: <Col>
-							<Button type="default" onClick={startTraining}>
-								Start training
-							</Button>
-						</Col>
-					: <></>}
-			</Row>
-			<Divider />
-			{workout.startTime ? 'Display ellapsed time....' : <></>}
-			{
-				workout.exercises.map((exercise, idx) => (
-					<div key={idx} style={{ marginBottom: '12px' }}>
-						<Exercise
-							exercise={exercise}
-							onUpdate={(exercise) => updateExercise(exercise, idx)}
-							onRemove={() => removeExercise(idx)}
-						/>
-					</div>
-				))
-			}
-			{!readonly && <Button size="large" style={{ display: 'block', margin: '16px auto' }} icon={<PlusOutlined />} onClick={addExercise} />}
-			{<Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>}
-		</div >
-	)
-}
+            <Exercises />
+            <Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>
+        </Form >
+    );
+};

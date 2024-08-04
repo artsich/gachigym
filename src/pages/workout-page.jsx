@@ -13,7 +13,7 @@ import {
 export const WorkoutPage = () => {
     const navigate = useNavigate();
     const { id } = useParams()
-    const [workout, setWorkout] = useState({ name: '', exercises: [], startTime: null })
+    const [workout, setWorkout] = useState({ name: '', exercises: [], startTime: Date.now() })
 
     useEffect(() => {
         if (id === 'current') {
@@ -25,11 +25,11 @@ export const WorkoutPage = () => {
     }, [])
 
     return (
-        <Workout
-            workout={workout}
-            onUpdate={(workout) => {
-                setWorkout(workout)
-                saveCurrentWorkout(workout)
+        <Workout workout={workout}
+            onUpdate={(workoutUpdated) => {
+                const newWorkout = { ...workoutUpdated, startTime: workout.startTime }
+                setWorkout(newWorkout)
+                saveCurrentWorkout(newWorkout)
             }}
             onFinish={() => {
                 removeCurrentWorkout()

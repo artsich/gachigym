@@ -1,78 +1,74 @@
-import { Button, Col, Collapse, Divider, Input, Row } from 'antd';
-import React, { useState } from 'react'
-import { ExerciseSetInput } from './exercise-set-input';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Form, Input, Button, Space, Collapse, Row, Col, Divider, InputNumber } from 'antd';
+import { PlusCircleOutlined, DeleteOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
-export const Exercise = ({ exercise, onUpdate, onRemove }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const updateExercise = (updatedFields) => {
-        onUpdate({ ...exercise, ...updatedFields });
-    };
-
-    const updateSet = (set, index) => {
-        const sets = exercise.sets.map((s, i) => (i === index ? set : s));
-        updateExercise({ sets });
-    };
-
-    const updateName = (name) => updateExercise({ name });
-
-    const addSet = () => {
-        const sets = [...exercise.sets, { weight: 0, reps: 0 }];
-        updateExercise({ sets });
-    };
-
-    const removeSet = (index) => {
-        const sets = exercise.sets.filter((_, i) => i !== index);
-        updateExercise({ sets });
-    };
-
-    const items = [
-        {
-            key: '1',
-            label: (
-                <Row style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                    <Col flex="auto" style={{ marginRight: '8px' }}>
-                        <Input
-                            placeholder="Название упражнения"
-                            value={exercise.name}
-                            onChange={(e) => updateName(e.target.value)}
-                            required
-                            style={{ width: '100%' }}
-                        />
-                    </Col>
-                    <Col>
-                        <Button
-                            icon={<DeleteOutlined />}
-                            onClick={onRemove}
-                        />
-                    </Col>
-                </Row>
-            ),
-            children: (
-                <>
-                    {exercise.sets.map((set, index) => (
-                        <div key={index}>
-                            <ExerciseSetInput
-                                set={{ weight: set.weight, reps: set.reps }}
-                                onUpdate={(set) => updateSet(set, index)}
-                                onRemove={() => removeSet(index)}
+export const Excersise = ({ fields, onRemove }) => {
+    const items = fields.map((field, _) => ({
+        key: field.key,
+        label: (
+            <Row style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                <Col flex="auto" style={{ marginRight: '8px' }}>
+                    <Form.Item
+                        name={[field.name, 'name']}
+                        rules={[{ required: true, message: 'Please enter the exercise name' }]}
+                        noStyle
+                    >
+                        <Input placeholder="Exercise name" style={{ width: '100%' }} />
+                    </Form.Item>
+                </Col>
+                <Col>
+                    <Button
+                        icon={<DeleteOutlined />}
+                        onClick={() => { onRemove(field.name) }}
+                    />
+                </Col>
+            </Row>
+        ),
+        children: (
+            <Form.List name={[field.name, 'sets']}>
+                {(setFields, { add: addSet, remove: removeSet }) => (
+                    <>
+                        {setFields.map((setField) => (
+                            <div key={setField.key}>
+                                <Space align="baseline">
+                                    <Form.Item
+                                        name={[setField.name, 'weight']}
+                                        rules={[{ required: true, message: 'Missing weight' }]}
+                                        noStyle
+                                    >
+                                        <InputNumber
+                                            placeholder="Weight"
+                                            addonAfter="kg" />
+                                    </Form.Item>
+                                    <Form.Item
+                                        name={[setField.name, 'reps']}
+                                        rules={[{ required: true, message: 'Missing reps' }]}
+                                        noStyle>
+                                        <InputNumber
+                                            placeholder="Reps"
+                                            style={{ width: '120px' }} />
+                                    </Form.Item>
+                                    <Button icon={<MinusCircleOutlined />} onClick={() => removeSet(setField.name)} />
+                                </Space>
+                                <Divider />
+                            </div>
+                        ))}
+                        <div style={{ textAlign: 'center', marginTop: '16px' }}>
+                            <Button
+                                type="text"
+                                onClick={() => addSet()}
+                                icon={<PlusCircleOutlined style={{ fontSize: '32px' }} />}
                             />
-                            <Divider />
-                        </div >
-                    ))}
-                    <div style={{ textAlign: 'center', marginTop: '16px' }}>
-                        <Button
-                            type="text"
-                            onClick={addSet}
-                            icon={<PlusCircleOutlined style={{ fontSize: '32px' }} />} />
-                    </div>
-                </>
-            ),
-        },
-    ];
+                        </div>
+                    </>
+                )}
+            </Form.List>
+        )
+    }));
 
     return (
-        <Collapse onChange={() => setIsOpen(!isOpen)} items={items} />
-    );
-};
+        <Collapse
+            style={{ marginTop: '16px' }}
+            items={items} />
+    )
+}
