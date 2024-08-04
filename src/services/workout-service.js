@@ -60,3 +60,8 @@ export function getProgramByName(name) {
 export function getPrograms() {
 	return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? []
 }
+
+export function deleteProgram(name) {
+	const programs = getPrograms().filter(program => program.name !== name)
+	localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs))
+}
