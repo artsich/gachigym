@@ -43,7 +43,7 @@ export function getById(id) {
 }
 
 export function removeWorkout(id) {
-	const workouts = getWorkouts().filter(workout => workout.id != id)
+	const workouts = getWorkouts().filter(workout => workout.id !== id)
 	localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts))
 }
 

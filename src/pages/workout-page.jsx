@@ -22,7 +22,7 @@ export const WorkoutPage = () => {
         else if (id) {
             setWorkout(getById(id))
         }
-    }, [])
+    }, [id])
 
     return (
         <Workout workout={workout}
@@ -37,7 +37,7 @@ export const WorkoutPage = () => {
                 navigate("/")
             }}
             onSaveAsProgram={(program) => {
-                saveProgram(program)    
+                saveProgram(program)
             }}
         />
     );

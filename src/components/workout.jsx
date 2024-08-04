@@ -8,7 +8,7 @@ export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
 
     useEffect(() => {
         form.setFieldsValue(workout)
-    }, [workout])
+    }, [form, workout])
 
     const saveAsProgram = () =>
         onSaveAsProgram({ name: workout.name, exercises: [...workout.exercises] })
@@ -35,7 +35,7 @@ export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
                 <Col>
                     <FinishTrainingButton onBeforeFinish={async () => {
                         try {
-                            const _ = await form.validateFields();
+                            await form.validateFields();
                             return true;
                         } catch (__1) {
                             return false;
