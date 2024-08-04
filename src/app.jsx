@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page';
 import { WorkoutPage } from './pages/workout-page';
 import { WorkoutsPage } from './pages/workouts-page';
-import { styles } from './styles/style.css';
 
 const WorkoutRouter = () => {
 	return (

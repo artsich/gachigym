@@ -1,5 +1,5 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Button, Modal, Space } from "antd";
+import { Button, Modal } from "antd";
 
 export const FinishTrainingButton = ({ onBeforeFinish, onFinish }) => {
     const [modal, contextHolder] = Modal.useModal();
