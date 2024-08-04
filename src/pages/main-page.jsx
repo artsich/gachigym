@@ -1,10 +1,10 @@
-import { Button, Card, Flex } from "antd";
-import Title from "antd/es/typography/Title";
+import { Button, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
 	getPrograms,
 	getProgramByName,
+	deleteProgram,
 	saveCurrentWorkout
 } from "../services/workout-service";
 import {
@@ -12,15 +12,14 @@ import {
 	PlusCircleTwoTone,
 	InfoCircleOutlined,
 } from "@ant-design/icons";
+import { useState } from "react";
+import { Programs } from "../components/programs";
 
 const styles = {
 	container: {
 		padding: "16px",
 	},
 	templateCard: {
-		backgroundColor: "#1a1a1a",
-		color: "#00ff00",
-		border: "1px solid #00ff00",
 		flex: "0 0 auto",
 		cursor: "pointer",
 	},
@@ -37,13 +36,18 @@ const styles = {
 
 export const MainPage = () => {
 	const navigate = useNavigate();
-	const programs = getPrograms();
+	const [programs, setPrograms] = useState(getPrograms());
 
 	const openProgram = (name) => {
 		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
 		const program = getProgramByName(name)
 		saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] })
 		navigate("/workout/current")
+	}
+
+	const handleDeleteProgram = (program) => {
+		deleteProgram(program.name)
+		setPrograms(getPrograms())
 	}
 
 	return (
@@ -82,19 +86,10 @@ export const MainPage = () => {
 					</Button>
 				)}
 			</Flex>
-
-			<Title level={4}>Programs</Title>
-			<div>
-				{programs.map((program, idx) => (
-					<Card
-						key={idx}
-						style={styles.templateCard}
-						onClick={() => openProgram(program.name)}
-					>
-						{program.name}
-					</Card>
-				))}
-			</div>
-		</div>
+			<Programs
+				programs={programs}
+				onOpen={(program) => openProgram(program.name)}
+				onDelete={(program) => handleDeleteProgram(program)} />
+		</div >
 	);
 };
