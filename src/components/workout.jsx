@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { Form, Input, Col, Row, Button } from 'antd';
 import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
+import { AbortWorkoutButton } from './abort-workout-button';
 
-export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
+export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram, onAbort }) => {
     const [form] = Form.useForm()
 
     useEffect(() => {
@@ -45,7 +46,11 @@ export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram }) => {
             </Row>
 
             <Exercises />
-            <Button size="large" type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>
+            <Button size="large" block type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>
+            {
+                // todo: Aboty shoule be available when workout started!
+            }
+            <AbortWorkoutButton onFinish={onAbort} />
         </Form >
     );
 };

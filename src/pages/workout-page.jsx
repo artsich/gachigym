@@ -39,6 +39,10 @@ export const WorkoutPage = () => {
             onSaveAsProgram={(program) => {
                 saveProgram(program)
             }}
+            onAbort={() => {
+                removeCurrentWorkout()
+                navigate("/")
+            }}
         />
     );
 };
