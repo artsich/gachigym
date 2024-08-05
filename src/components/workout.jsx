@@ -4,14 +4,16 @@ import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
 import { AbortWorkoutButton } from './abort-workout-button';
 
-export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram, onAbort }) => {
+export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram, onAbort }) => {
     const [form] = Form.useForm()
+    const started = workout.startTime !== undefined
 
     useEffect(() => {
         form.setFieldsValue(workout)
     }, [form, workout])
 
     const saveAsProgram = () =>
+        // TODO: maybe better this logic to service. (Logic to copy only name and exercises)
         onSaveAsProgram({ name: workout.name, exercises: [...workout.exercises] })
 
     return (
@@ -34,14 +36,19 @@ export const Workout = ({ workout, onUpdate, onFinish, onSaveAsProgram, onAbort 
                     </Form.Item>
                 </Col>
                 <Col>
-                    <FinishTrainingButton onBeforeFinish={async () => {
-                        try {
-                            await form.validateFields();
-                            return true;
-                        } catch (__1) {
-                            return false;
-                        }
-                    }} onFinish={() => form.submit()} />
+                    {
+                        started ?
+                            <FinishTrainingButton onBeforeFinish={async () => {
+                                try {
+                                    await form.validateFields();
+                                    return true;
+                                } catch (__1) {
+                                    return false;
+                                }
+                            }} onFinish={() => form.submit()} />
+                            :
+                            <Button size="middle" onClick={onStart}>Start</Button>
+                    }
                 </Col>
             </Row>
 
