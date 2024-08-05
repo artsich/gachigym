@@ -52,7 +52,7 @@ export const MainPage = () => {
 
 	return (
 		<div style={styles.container}>
-			<Flex gap="large" horizontal="true">
+			<Flex gap="middle">
 				<Button
 					icon={<EyeOutlined />}
 					type="primary"
@@ -60,6 +60,7 @@ export const MainPage = () => {
 					className="mainButton"
 					style={styles.historyButton}
 					onClick={() => navigate("/workouts")}
+					block
 				>
 					История
 				</Button>
@@ -71,6 +72,7 @@ export const MainPage = () => {
 						className="mainButton"
 						style={styles.currentWorkoutButton}
 						onClick={() => navigate("/workout/current")}
+						block
 					>
 						Текущая тренировка
 					</Button>
@@ -81,6 +83,7 @@ export const MainPage = () => {
 						className="mainButton"
 						style={styles.newWorkoutButton}
 						onClick={() => navigate("/workout")}
+						block
 					>
 						Новая тренировка
 					</Button>
