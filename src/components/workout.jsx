@@ -3,6 +3,7 @@ import { Form, Input, Col, Row, Button } from 'antd';
 import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
 import { AbortWorkoutButton } from './abort-workout-button';
+import { Timer } from './timer';
 
 export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram, onAbort }) => {
     const [form] = Form.useForm()
@@ -51,7 +52,18 @@ export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram,
                     }
                 </Col>
             </Row>
-
+            {
+                workout.startTime &&
+                (
+                    <div style={{
+                        marginTop: '16px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}>
+                        <Timer startTime={workout.startTime} />
+                    </div>
+                )
+            }
             <Exercises />
             <Button size="large" block type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>
             {
