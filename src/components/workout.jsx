@@ -5,7 +5,6 @@ import { Exercise } from './exercise';
 import { FinishTrainingButton } from './finish-training-button';
 
 export const Workout = ({ workout, onUpdate, onFinish }) => {
-export const Workout = ({ workout, onUpdate, onFinish }) => {
     const [started, setStarted] = useState(workout.startTime != null)
     const readonly = Boolean(workout.startTime && workout.finishTime)
 

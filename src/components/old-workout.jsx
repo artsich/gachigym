@@ -1,30 +1,65 @@
 import React from "react";
-import { Avatar, Divider, Row, Col } from "antd";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import { CapsuleTabs, IndexBar, List, Grid, Badge, Space } from "antd-mobile";
+import { CapsuleTabs, Grid, Space, Divider } from "antd-mobile";
+import { Row } from 'antd';
 
 export const OldWorkout = ({ workout }) => {
 	const styles = {
-		box: {
-			backgroundColor: "lightgrey",
-			width: "60px",
-			border: "2px solid green",
-			height: "50px"
+		badge: {
+			position: "relative",
+			width: "40px",
+			height: "40px",
+			borderRadius: "20%",
+			backgroundColor: "rgb(21,96,189)",
+			fontFamily: "Roboto, Arial, sans-serif",
+			fontSize: "24px",
+			fontWeight: "bold"
 		},
+
+		badgeWeight: {
+			position: "absolute",
+			top: "20%",
+			left: "16%",
+			color: "rgb(245,245,245)"
+		},
+
+		badgeReps: {
+			position: "absolute",
+			top: "-20%",
+			right: "-20%",
+			fontSize: ".4em",
+			color: "rgb(245,245,245)",
+			width: "2.8em",
+			height: "2em",
+			lineHeight: "2em",
+  			textAlign: "center",
+			border: "1px solid white",
+			borderRadius: "50%",
+			background: "red"
+		},
+
+		badgeLabelKG: {
+			position: "absolute",
+			top: "50%",
+			right: "-30%",
+			writingMode: "vertical-rl",
+			transform: "scale(-1)",
+			fontSize: ".5em"
+		}
 	};
 
+	const example = {}
 	return (
 		<>
-			<Row>
+			<Row direction="vertical">
 				<Grid columns={4} gap={18}>
-					<Grid.Item span={3} >
+					<Grid.Item span={3}>
 						<div>
 							ОЧЕНЬ ДЛИННОЕ название тренировки в пятницу или
 							среду
 						</div>
 					</Grid.Item>
 					<Grid.Item span={1}>
-						<Space direction="vertical" justify="center">
+						<Row direction="vertical" justify="center">
 							<span
 								style={{
 									fontSize: "bold 16px",
@@ -41,42 +76,47 @@ export const OldWorkout = ({ workout }) => {
 							>
 								2 H 11 m
 							</span>
-						</Space>
+						</Row>
 					</Grid.Item>
 				</Grid>
 
 				<CapsuleTabs defaultActiveKey="1">
 					<CapsuleTabs.Tab title="Espresso" key="1">
-						<Grid columns={4} gap={40}>
-							<Grid.Item >
-								<Badge content="5" bordered >
-									<div style={styles.box}>50 kg</div>
-								</Badge>
+						<Grid columns={5} gap={1}>
+							<Grid.Item>
+								<div style={styles.badge}>
+									<div style={styles.badgeWeight}>50</div>
+									<div style={styles.badgeReps}>x 20</div>
+									<div style={styles.badgeLabelKG}>KG</div>
+								</div>
 							</Grid.Item>
 							<Grid.Item>
-								<Badge content="5" bordered>
-									<div style={styles.box}>AAA</div>
-								</Badge>
+								<div style={styles.badge}>
+									<div style={styles.badgeWeight}>50</div>
+									<div style={styles.badgeReps}>x 150</div>
+									<div style={styles.badgeLabelKG}>KG</div>
+								</div>
 							</Grid.Item>
 							<Grid.Item>
-								<Badge content="5" bordered>
-									<div style={styles.box}>AAA</div>
-								</Badge>
+								<div style={styles.badge}>
+									<div style={styles.badgeWeight}>50</div>
+									<div style={styles.badgeReps}>x 30</div>
+									<div style={styles.badgeLabelKG}>KG</div>
+								</div>
 							</Grid.Item>
 							<Grid.Item>
-								<Badge content="5" bordered>
-									<div style={styles.box}>AAA</div>
-								</Badge>
+								<div style={styles.badge}>
+									<div style={styles.badgeWeight}>50</div>
+									<div style={styles.badgeReps}>x 99</div>
+									<div style={styles.badgeLabelKG}>KG</div>
+								</div>
 							</Grid.Item>
 							<Grid.Item>
-								<Badge content="5" bordered>
-									<div style={styles.box}>AAA</div>
-								</Badge>
-							</Grid.Item>
-							<Grid.Item>
-								<Badge content="5" bordered>
-									<div style={styles.box}>AAA</div>
-								</Badge>
+								<div style={styles.badge}>
+									<div style={styles.badgeWeight}>50</div>
+									<div style={styles.badgeReps}>x 10</div>
+									<div style={styles.badgeLabelKG}>KG</div>
+								</div>
 							</Grid.Item>
 						</Grid>
 					</CapsuleTabs.Tab>
@@ -95,7 +135,7 @@ export const OldWorkout = ({ workout }) => {
 				</CapsuleTabs>
 			</Row>
 			<Divider />
-			<Row align="middle" justify="space-between">
+			<Row align="middle" justify="Row-between">
 				<div>Воскресение тренировка 24.07.2024</div>
 				<CapsuleTabs defaultActiveKey="1">
 					<CapsuleTabs.Tab title="Espresso" key="1">
