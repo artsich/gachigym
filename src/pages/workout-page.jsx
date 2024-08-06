@@ -27,7 +27,8 @@ export const WorkoutPage = () => {
     }, [id])
 
     return (
-        <Workout workout={workout}
+        <Workout
+            workout={workout}
             onUpdate={(workoutUpdated) => {
                 const newWorkout = { ...workoutUpdated, startTime: workout.startTime }
                 saveCurrentWorkout(newWorkout)
