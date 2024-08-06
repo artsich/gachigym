@@ -7,8 +7,10 @@ import {
     saveCurrentWorkout,
     saveWorkout,
     getById,
-    saveProgram
+    saveProgram,
+    getProgramByName
 } from '../services/workout-service';
+import { message } from 'antd';
 
 export const WorkoutPage = () => {
     const navigate = useNavigate();
@@ -42,7 +44,14 @@ export const WorkoutPage = () => {
                 navigate("/")
             }}
             onSaveAsProgram={(program) => {
-                saveProgram(program)
+                if (!getProgramByName(program.name)) {
+                    saveProgram(program)
+                    message.success(`${program.name} is saved`)
+                }
+                else {
+                    // TODO: Find something user friendly.
+                    message.error(`Program '${program.name}' already exists`)
+                }
             }}
             onAbort={() => {
                 removeCurrentWorkout()
