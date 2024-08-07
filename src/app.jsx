@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page';
 import { WorkoutPage } from './pages/workout-page';
-import { WorkoutsPage } from './pages/workouts-page';
+import { HistoryPage } from './pages/history-page';
 import { styles } from './styles/style.css';
-import { OldWorkoutPage } from './pages/old-workout-page';
 
 const WorkoutRouter = () => {
 	return (
@@ -20,8 +19,7 @@ export const App = () => {
 			<Routes>
 				<Route path="/" element={<MainPage />} />
 				<Route path="/workout/*" element={<WorkoutRouter />} />
-				<Route path="/workouts" element={<WorkoutsPage />} />
-				<Route path="/old-workouts" element={<OldWorkoutPage />} />
+				<Route path="/history" element={<HistoryPage />} />
 			</Routes>
 		</Router>
 	);

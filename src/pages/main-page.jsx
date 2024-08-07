@@ -41,8 +41,8 @@ export const MainPage = () => {
                     size="large"
                     className="mainButton"
                     style={styles.historyButton}
-                    onClick={() => navigate('/workouts')}>
-                    История
+                    onClick={() => navigate('/history')}>
+                    History
                 </Button>
                 <Button
                     icon={<PlusCircleTwoTone />}

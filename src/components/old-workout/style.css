@@ -1,0 +1,42 @@
+.badge {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 20%;
+    background-color: rgb(21, 96, 189);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.badge-weight {
+    height: 100%;
+    text-align: center;
+    line-height: 1.8em;
+    color: rgb(245, 245, 245);
+    font-family: "Roboto; Arial; sans-serif";
+}
+
+.badge-reps {
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    font-size: .4em;
+    color: rgb(245, 245, 245);
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: red;
+    font-family: "Roboto; Arial; sans-serif";
+}
+
+.badge-label-KG {
+    position: absolute;
+    top: 50%;
+    right: -40%;
+    writing-mode: vertical-rl;
+    transform: scale(-1);
+    font-size: .5em;
+} 
