@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Form, Input, Col, Row, Button } from 'antd';
 import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
-import { AbortWorkoutButton } from './abort-workout-button';
+import { CancelWorkoutButton } from './cancel-workout-button';
 import { Timer } from './timer';
 
-export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram, onAbort }) => {
+export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram, onCancel }) => {
 	const [form] = Form.useForm()
 	const started = workout.startTime !== undefined
 
@@ -74,7 +74,7 @@ export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram,
 			{
 				// todo: Aboty shoule be available when workout started!
 			}
-			<AbortWorkoutButton onFinish={onAbort} />
+			<CancelWorkoutButton onClick={onCancel} />
 		</Form >
 	);
 };
