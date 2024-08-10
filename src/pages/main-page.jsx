@@ -1,4 +1,4 @@
-import { Button, Flex } from "antd";
+import { Button, Space } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
@@ -16,9 +16,6 @@ import { useState } from "react";
 import { Programs } from "../components/programs";
 
 const styles = {
-	container: {
-		padding: "16px",
-	},
 	templateCard: {
 		flex: "0 0 auto",
 		cursor: "pointer",
@@ -51,48 +48,45 @@ export const MainPage = () => {
 	}
 
 	return (
-		<div style={styles.container}>
-			<Flex gap="middle">
+		<Space direction="vertical" block style={{ padding: "16px" }}>
+			{isTrainingInProgress() ? (
 				<Button
-					icon={<EyeOutlined />}
-					type="primary"
+					icon={<InfoCircleOutlined />}
 					size="large"
 					className="mainButton"
-					style={styles.historyButton}
-					onClick={() => navigate("/workouts")}
+					style={styles.currentWorkoutButton}
+					onClick={() => navigate("/workout/current")}
 					block
 				>
-					История
+					Текущая тренировка
 				</Button>
-
-				{isTrainingInProgress() ? (
-					<Button
-						icon={<InfoCircleOutlined />}
-						size="large"
-						className="mainButton"
-						style={styles.currentWorkoutButton}
-						onClick={() => navigate("/workout/current")}
-						block
-					>
-						Текущая тренировка
-					</Button>
-				) : (
-					<Button
-						icon={<PlusCircleTwoTone />}
-						size="large"
-						className="mainButton"
-						style={styles.newWorkoutButton}
-						onClick={() => navigate("/workout")}
-						block
-					>
-						Новая тренировка
-					</Button>
-				)}
-			</Flex>
+			) : (
+				<Button
+					icon={<PlusCircleTwoTone />}
+					size="large"
+					className="mainButton"
+					style={styles.newWorkoutButton}
+					onClick={() => navigate("/workout")}
+					block
+				>
+					Новая тренировка
+				</Button>
+			)}
+			<Button
+				icon={<EyeOutlined />}
+				type="primary"
+				size="large"
+				className="mainButton"
+				style={styles.historyButton}
+				onClick={() => navigate("/workouts")}
+				block
+			>
+				История
+			</Button>
 			<Programs
 				programs={programs}
 				onOpen={(program) => openProgram(program.name)}
 				onDelete={(program) => handleDeleteProgram(program)} />
-		</div >
+		</Space >
 	);
 };

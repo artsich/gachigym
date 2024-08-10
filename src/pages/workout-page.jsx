@@ -10,12 +10,48 @@ import {
 	saveProgram,
 	getProgramByName
 } from '../services/workout-service';
-import { message } from 'antd';
+// import { message } from 'antd-mobile';
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const [workout, setWorkout] = useState({ name: '', exercises: [] })
+	const [workout, setWorkout] = useState(
+		{
+			name: 'Силовая тренивка',
+			exercises:
+				[
+					{
+						name: "Присед",
+						sets: [
+							{
+								weight: 10,
+								reps: 20,
+								isDone: true
+							},
+							{
+								weight: 10,
+								reps: 20,
+								isDone: true
+							}
+						]
+					},
+					{
+						name: "Подтягивания",
+						sets: [
+							{
+								weight: 10,
+								reps: 20,
+								isDone: true
+							},
+							{
+								weight: 10,
+								reps: 20,
+								isDone: true
+							}
+						]
+					}
+				]
+		})
 
 	useEffect(() => {
 		if (id === 'current') {
@@ -51,11 +87,11 @@ export const WorkoutPage = () => {
 			onSaveAsProgram={(program) => {
 				if (!getProgramByName(program.name)) {
 					saveProgram(program)
-					message.success(`${program.name} is saved`)
+					// message.success(`${program.name} is saved`)
 				}
 				else {
 					// TODO: Find something user friendly.
-					message.error(`Program '${program.name}' already exists`)
+					// message.error(`Program '${program.name}' already exists`)
 				}
 			}}
 			onCancel={() => {
