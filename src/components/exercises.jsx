@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Excersise } from './exercise';
+import { Exercise } from './exercise';
 
 export const Exercises = () => {
     return (
@@ -21,7 +21,7 @@ export const Exercises = () => {
         >
             {(fields, { add, remove }) => (
                 <>
-                    <Excersise
+                    <Exercise
                         fields={fields}
                         onRemove={(key) => remove(key)} />
                     <Form.Item>

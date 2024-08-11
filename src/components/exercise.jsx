@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Space, Collapse, Row, Col, Divider, InputNumber } from 'antd';
 import { PlusCircleOutlined, DeleteOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
-export const Excersise = ({ fields, onRemove }) => {
+export const Exercise = ({ fields, onRemove }) => {
     const items = fields.map((field, _) => ({
         key: field.key,
         label: (
