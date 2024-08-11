@@ -1,7 +1,25 @@
-import React from 'react';
-import { Form, Button } from 'antd-mobile';
-import { Excersise } from './exercise';
-import { AddCircleOutline } from 'antd-mobile-icons';
+import React, { useRef } from 'react';
+import { Form, Button, Input, Space, VirtualInput, NumberKeyboard, Switch, Grid, SwipeAction, Dialog } from 'antd-mobile';
+import { Exercise } from './exercise';
+import { AddCircleOutline, DeleteOutline } from 'antd-mobile-icons';
+
+const DeleteExerciseButton = ({ onClick }) => (
+	<Button
+		size='large'
+		fill='none'
+		color='primary'
+		onClick={() => Dialog.confirm({
+			title: 'Remove excercise',
+			confirmText: 'Remove',
+			cancelText: 'No',
+			onConfirm: onClick
+		})}
+	>
+		<DeleteOutline />
+	</Button >
+
+)
+
 
 export const Exercises = () => {
 	return (
@@ -15,24 +33,38 @@ export const Exercises = () => {
 			)}
 			renderHeader={({ index }, { remove }) => (
 				<>
-					{/* <span>联系人{index + 1}</span> */}
-					{/* <a onClick={() => remove(index)} style={{ float: 'right' }}>
-						Remove
-					</a> */}
 				</>
 			)}
 		>
 			{fields =>
-				fields.map(({ field, index }) => (
+				fields.map(({ index }) => (
 					<>
-						<Excersise
-							fields={field}
-							onRemove={(key) => { }/*remove(key)*/} />
+						<Form.Item
+							name={[index, 'name']}
+							label='name'
+							rules={[{ required: true, message: 'name is required' }]}
+						>
+							<Input placeholder='Exercise name' />
+						</Form.Item>
+						<Form.Array
+							name={[index, 'sets']}
+							onAdd={operation => operation.add({ weight: '', reps: '' })}
+							renderAdd={() => (
+								<span>
+									<AddCircleOutline /> Add set
+								</span>
+							)}
+						>
+							{(fields, { removeSet }) => fields.map((field) => (
+								<Exercise
+									field={field}
+									onRemoveSet={removeSet} />
+							))}
+						</Form.Array >
 					</>
 				))
 			}
-
-		</Form.Array>
+		</Form.Array >
 
 		// <Form.List
 		// 	name="exercises"

@@ -8,10 +8,10 @@ import {
 	saveCurrentWorkout
 } from "../services/workout-service";
 import {
-	EyeOutlined,
-	PlusCircleTwoTone,
-	InfoCircleOutlined,
-} from "@ant-design/icons";
+	EyeOutline,
+	AddCircleOutline,
+	InformationCircleOutline,
+} from "antd-mobile-icons";
 import { useState } from "react";
 import { Programs } from "../components/programs";
 
@@ -31,6 +31,7 @@ const styles = {
 	},
 };
 
+// TODO: Icons looks bad!
 export const MainPage = () => {
 	const navigate = useNavigate();
 	const [programs, setPrograms] = useState(getPrograms());
@@ -51,7 +52,7 @@ export const MainPage = () => {
 		<Space direction="vertical" block style={{ padding: "16px" }}>
 			{isTrainingInProgress() ? (
 				<Button
-					icon={<InfoCircleOutlined />}
+					icon={<InformationCircleOutline />}
 					size="large"
 					className="mainButton"
 					style={styles.currentWorkoutButton}
@@ -62,18 +63,16 @@ export const MainPage = () => {
 				</Button>
 			) : (
 				<Button
-					icon={<PlusCircleTwoTone />}
 					size="large"
 					className="mainButton"
 					style={styles.newWorkoutButton}
 					onClick={() => navigate("/workout")}
 					block
 				>
-					Новая тренировка
+					<AddCircleOutline /> Новая тренировка
 				</Button>
 			)}
 			<Button
-				icon={<EyeOutlined />}
 				type="primary"
 				size="large"
 				className="mainButton"
@@ -81,7 +80,7 @@ export const MainPage = () => {
 				onClick={() => navigate("/workouts")}
 				block
 			>
-				История
+				<EyeOutline /> История
 			</Button>
 			<Programs
 				programs={programs}
