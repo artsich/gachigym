@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Divider } from "antd-mobile";
+import { Grid } from "antd-mobile";
 import { Row } from "antd";
 import { ExercisesView } from "./exercises-view";
 import { style } from "./style.css";
