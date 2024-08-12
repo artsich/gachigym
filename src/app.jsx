@@ -1,7 +1,6 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page';
 import { WorkoutPage } from './pages/workout-page';
-// import { WorkoutsPage } from './pages/workouts-page';
 
 const WorkoutRouter = () => {
 	return (
@@ -18,7 +17,6 @@ export const App = () => {
 			<Routes>
 				<Route exact path="/" element={<MainPage />} />
 				<Route path="/workout/*" element={<WorkoutRouter />} />
-				{/* <Route path="/workouts" element={<WorkoutsPage />} /> */}
 			</Routes>
 		</Router>
 	);
