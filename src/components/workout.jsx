@@ -1,79 +1,122 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Col, Row, Button } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Skeleton, Grid } from 'antd-mobile';
 import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
 import { CancelWorkoutButton } from './cancel-workout-button';
 import { Timer } from './timer';
 
-export const Workout = ({ workout, onUpdate, onStart, onFinish, onSaveAsProgram, onCancel }) => {
-	const [form] = Form.useForm()
-	const started = workout.startTime !== undefined
-
-	useEffect(() => {
-		form.setFieldsValue(workout)
-	}, [form, workout])
+export const Workout = ({
+	workout,
+	onUpdate,
+	onStart,
+	onFinish,
+	onSaveAsProgram,
+	onCancel
+}) => {
+	const [formRef] = Form.useForm()
+	const started = workout?.startTime !== undefined
 
 	const saveAsProgram = async () => {
 		try {
-			await form.validateFields();
+			await formRef.validateFields();
 			// TODO: maybe better this logic to service. (Logic to copy only name and exercises)
-			onSaveAsProgram({ name: workout.name, exercises: [...workout.exercises] })
+			onSaveAsProgram({
+				name: workout.name,
+				exercises: workout.exercises.map(
+					e => (
+						{
+							name: e.name,
+							sets: e.sets.map(
+								s => ({
+									weight: s.weight,
+									reps: s.reps,
+								})
+							)
+						}
+					)
+				)
+			})
 		} catch (__1) {
 		}
 	}
 
+	if (workout === null) {
+		return <>
+			<Skeleton.Title animated />
+			<Skeleton.Paragraph lineCount={5} animated />
+		</>
+	}
+
 	return (
 		<Form
-			form={form}
-			name="workout_form"
+			form={formRef}
+			initialValues={workout}
 			onFinish={onFinish}
+			name="workout_form"
 			onValuesChange={(_, v) => onUpdate(v)}
-			autoComplete="off"
 			style={{ padding: '16px' }}
 		>
-			<Row gutter={[16, 16]} align="middle" justify="space-between">
-				<Col flex="auto">
+			<Grid columns={4}>
+				<Grid.Item span={3}>
 					<Form.Item
-						name="name"
-						noStyle
-						rules={[{ required: true, message: 'Please input the workout name!' }]}
+						name={'name'}
+						label='Workout name'
+						rules={[{ required: true, message: 'Name is required!' }]}
 					>
-						<Input placeholder="Workout Name" />
+						<Input placeholder='name' />
 					</Form.Item>
-				</Col>
-				<Col>
-					{
-						started ?
-							<FinishTrainingButton onBeforeFinish={async () => {
-								try {
-									await form.validateFields();
-									return true;
-								} catch (__1) {
-									return false;
-								}
-							}} onFinish={() => form.submit()} />
-							:
-							<Button size="middle" onClick={onStart}>Start</Button>
-					}
-				</Col>
-			</Row>
-			{
-				workout.startTime &&
-				(
-					<div style={{
-						marginTop: '16px',
-						display: 'flex',
-						justifyContent: 'center',
-					}}>
-						<Timer startTime={workout.startTime} />
-					</div>
-				)
-			}
+				</Grid.Item>
+				<Grid.Item>
+					<Form.Item>
+						{
+							started ?
+								<FinishTrainingButton
+									onBeforeFinish={async () => {
+										try {
+											await formRef.validateFields()
+											return true;
+										} catch (__1) {
+											return false;
+										}
+									}}
+									onFinish={() => formRef.submit()} />
+								:
+								<Button
+									block
+									color='primary'
+									size="middle"
+									onClick={onStart}
+								>
+									Start
+								</Button>
+						}
+					</Form.Item>
+				</Grid.Item>
+			</Grid>
+			<Form.Item>
+				{
+					workout.startTime &&
+					(
+						<div style={{
+							marginTop: '8px',
+							display: 'flex',
+							justifyContent: 'center',
+						}}>
+							<Timer startTime={workout.startTime} />
+						</div>
+					)
+				}
+			</Form.Item>
 			<Exercises />
-			<Button size="large" block type='dashed' style={{ display: 'block', margin: '16px auto' }} onClick={saveAsProgram}>Save as Program</Button>
-			{
-				// todo: Aboty shoule be available when workout started!
-			}
+			<Button
+				size="middle"
+				block
+				fill='outline'
+				style={{ display: 'block', margin: '16px auto' }}
+				onClick={saveAsProgram}
+			>
+				Save as Program
+			</Button>
 			<CancelWorkoutButton onClick={onCancel} />
 		</Form >
 	);

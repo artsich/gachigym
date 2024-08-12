@@ -10,12 +10,12 @@ import {
 	saveProgram,
 	getProgramByName
 } from '../services/workout-service';
-import { message } from 'antd';
+import { Toast } from 'antd-mobile';
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();
 	const { id } = useParams()
-	const [workout, setWorkout] = useState({ name: '', exercises: [] })
+	const [workout, setWorkout] = useState(null)
 
 	useEffect(() => {
 		if (id === 'current') {
@@ -23,6 +23,9 @@ export const WorkoutPage = () => {
 		}
 		else if (id) {
 			setWorkout(getById(id))
+		}
+		else {
+			setWorkout({ name: '', exercises: [] })
 		}
 	}, [id])
 
@@ -40,8 +43,8 @@ export const WorkoutPage = () => {
 			}}
 			onStart={() => {
 				const newWorkout = { ...workout, startTime: Date.now() }
-				setWorkout(newWorkout)
 				saveCurrentWorkout(newWorkout)
+				setWorkout(newWorkout)
 			}}
 			onFinish={() => {
 				removeCurrentWorkout()
@@ -51,11 +54,16 @@ export const WorkoutPage = () => {
 			onSaveAsProgram={(program) => {
 				if (!getProgramByName(program.name)) {
 					saveProgram(program)
-					message.success(`${program.name} is saved`)
+					Toast.show({
+						icon: 'success',
+						content: `${program.name} is saved`,
+					})
 				}
 				else {
-					// TODO: Find something user friendly.
-					message.error(`Program '${program.name}' already exists`)
+					Toast.show({
+						icon: 'fail',
+						content: `Program '${program.name}' already exists`,
+					})
 				}
 			}}
 			onCancel={() => {

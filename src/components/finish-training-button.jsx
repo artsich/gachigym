@@ -1,25 +1,18 @@
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Button, Modal } from "antd";
+import { Button, Dialog } from "antd-mobile";
 
 export const FinishTrainingButton = ({ onBeforeFinish, onFinish }) => {
-    const [modal, contextHolder] = Modal.useModal();
+	const confirm = async () => {
+		if (await onBeforeFinish()) {
+			await Dialog.confirm({
+				content: `Finish workout?`,
+				confirmText: 'Yes',
+				cancelText: 'No',
+				onConfirm: () => onFinish()
+			})
+		}
+	};
 
-    const confirm = async () => {
-        if (await onBeforeFinish()) {
-            modal.confirm({
-                title: 'Finish training?',
-                icon: <ExclamationCircleOutlined />,
-                okText: 'Yes',
-                cancelText: 'No',
-                onOk: () => onFinish()
-            });
-        }
-    };
-
-    return (
-        <>
-            <Button type="primary" onClick={confirm}>Finish training</Button>
-            {contextHolder}
-        </>
-    )
+	return (
+		<Button block size='middle' color="primary" onClick={confirm}>Finish</Button>
+	)
 }

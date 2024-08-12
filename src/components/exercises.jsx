@@ -1,40 +1,52 @@
 import React from 'react';
-import { Form, Button, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { Excersise } from './exercise';
+import { Form, Input, Grid } from 'antd-mobile';
+import { AddCircleOutline } from 'antd-mobile-icons';
+import { ExerciseSet } from './exercise-set';
+import { DeleteExerciseButton } from './delete-exercise-button';
 
 export const Exercises = () => {
-    return (
-        <Form.List
-            name="exercises"
-            rules={[
-                {
-                    validator: async (_, exercises) => {
-                        if (!exercises || exercises.length < 1) {
-                            message.error("At least one exercises are required!")
-                            return Promise.reject(new Error('At least two exercises are required'));
-                        }
-                        return Promise.resolve();
-                    },
-                },
-            ]}
-        >
-            {(fields, { add, remove }) => (
-                <>
-                    <Excersise
-                        fields={fields}
-                        onRemove={(key) => remove(key)} />
-                    <Form.Item>
-                        <Button
-                            style={{ display: 'block', margin: '16px auto' }}
-                            type="dashed"
-                            onClick={() => add()}
-                            icon={<PlusOutlined />}>
-                            Add Exercise
-                        </Button>
-                    </Form.Item>
-                </>
-            )}
-        </Form.List>
-    );
+	return (
+		<Form.Array
+			name="exercises"
+			renderAdd={() => (
+				<span>
+					<AddCircleOutline /> Add excersise
+				</span>
+			)}
+		>
+			{(fields, { remove }) =>
+				fields.map(({ index }) => (
+					<>
+						<Grid columns={4}>
+							<Grid.Item span={3} >
+								<Form.Item
+									name={[index, 'name']}
+									rules={[{ required: true, message: 'Name is required' }]}
+								>
+									<Input placeholder='Exercise name' />
+								</Form.Item>
+							</Grid.Item>
+							<Grid.Item>
+								<DeleteExerciseButton onClick={() => remove(index)} />
+							</Grid.Item>
+						</Grid>
+						<Form.Array
+							name={[index, 'sets']}
+							renderAdd={() => (
+								<span>
+									<AddCircleOutline /> Add set
+								</span>
+							)}
+						>
+							{(fields, { remove }) => fields.map((field) => (
+								<ExerciseSet
+									field={field}
+									onRemoveSet={() => remove(field.index)} />
+							))}
+						</Form.Array >
+					</>
+				))
+			}
+		</Form.Array >
+	);
 };

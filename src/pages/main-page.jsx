@@ -1,4 +1,4 @@
-import { Button, Flex } from "antd";
+import { Button, Space } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
@@ -8,17 +8,14 @@ import {
 	saveCurrentWorkout
 } from "../services/workout-service";
 import {
-	EyeOutlined,
-	PlusCircleTwoTone,
-	InfoCircleOutlined,
-} from "@ant-design/icons";
+	EyeOutline,
+	AddCircleOutline,
+	InformationCircleOutline,
+} from "antd-mobile-icons";
 import { useState } from "react";
 import { Programs } from "../components/programs";
 
 const styles = {
-	container: {
-		padding: "16px",
-	},
 	templateCard: {
 		flex: "0 0 auto",
 		cursor: "pointer",
@@ -34,6 +31,7 @@ const styles = {
 	},
 };
 
+// TODO: Icons looks bad!
 export const MainPage = () => {
 	const navigate = useNavigate();
 	const [programs, setPrograms] = useState(getPrograms());
@@ -51,48 +49,43 @@ export const MainPage = () => {
 	}
 
 	return (
-		<div style={styles.container}>
-			<Flex gap="middle">
+		<Space direction="vertical" block style={{ padding: "16px" }}>
+			{isTrainingInProgress() ? (
 				<Button
-					icon={<EyeOutlined />}
-					type="primary"
+					icon={<InformationCircleOutline />}
 					size="large"
 					className="mainButton"
-					style={styles.historyButton}
-					onClick={() => navigate("/workouts")}
+					style={styles.currentWorkoutButton}
+					onClick={() => navigate("/workout/current")}
 					block
 				>
-					История
+					Текущая тренировка
 				</Button>
-
-				{isTrainingInProgress() ? (
-					<Button
-						icon={<InfoCircleOutlined />}
-						size="large"
-						className="mainButton"
-						style={styles.currentWorkoutButton}
-						onClick={() => navigate("/workout/current")}
-						block
-					>
-						Текущая тренировка
-					</Button>
-				) : (
-					<Button
-						icon={<PlusCircleTwoTone />}
-						size="large"
-						className="mainButton"
-						style={styles.newWorkoutButton}
-						onClick={() => navigate("/workout")}
-						block
-					>
-						Новая тренировка
-					</Button>
-				)}
-			</Flex>
+			) : (
+				<Button
+					size="large"
+					className="mainButton"
+					style={styles.newWorkoutButton}
+					onClick={() => navigate("/workout")}
+					block
+				>
+					<AddCircleOutline /> Новая тренировка
+				</Button>
+			)}
+			<Button
+				type="primary"
+				size="large"
+				className="mainButton"
+				style={styles.historyButton}
+				onClick={() => navigate("/workouts")}
+				block
+			>
+				<EyeOutline /> История
+			</Button>
 			<Programs
 				programs={programs}
 				onOpen={(program) => openProgram(program.name)}
 				onDelete={(program) => handleDeleteProgram(program)} />
-		</div >
+		</Space >
 	);
 };
