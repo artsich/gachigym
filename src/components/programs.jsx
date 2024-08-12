@@ -2,7 +2,6 @@ import { List, SwipeAction, Dialog } from "antd-mobile";
 import { useRef } from "react";
 
 export const Programs = ({ programs, onOpen, onDelete }) => {
-	const ref = useRef(null)
 
 	if (programs.length === 0) {
 		return <></>
@@ -13,9 +12,8 @@ export const Programs = ({ programs, onOpen, onDelete }) => {
 			{programs.map((program, index) => (
 				<SwipeAction
 					key={index} // todo: index should be unique for each program.
-					ref={ref}
-					closeOnAction={false}
-					closeOnTouchOutside={false}
+					closeOnAction={true}
+					closeOnTouchOutside={true}
 					rightActions={[
 						{
 							key: 'delete',
@@ -28,7 +26,6 @@ export const Programs = ({ programs, onOpen, onDelete }) => {
 									cancelText: 'No',
 									onConfirm: () => onDelete(program)
 								})
-								ref.current?.close()
 							},
 						},
 					]}

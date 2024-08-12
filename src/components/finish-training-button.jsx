@@ -1,7 +1,6 @@
-import { Button, Dialog, Modal } from "antd-mobile";
+import { Button, Dialog } from "antd-mobile";
 
 export const FinishTrainingButton = ({ onBeforeFinish, onFinish }) => {
-
 	const confirm = async () => {
 		if (await onBeforeFinish()) {
 			await Dialog.confirm({
@@ -14,6 +13,6 @@ export const FinishTrainingButton = ({ onBeforeFinish, onFinish }) => {
 	};
 
 	return (
-		<Button block size='middle' color="primary" onClick={confirm}>Finish training</Button>
+		<Button block size='middle' color="primary" onClick={confirm}>Finish</Button>
 	)
 }

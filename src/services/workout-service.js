@@ -58,7 +58,7 @@ export function getProgramByName(name) {
 }
 
 export function getPrograms() {
-	return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? [{ name: "Program1" }, { name: "Program2" }]
+	return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? []
 }
 
 export function deleteProgram(name) {

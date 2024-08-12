@@ -1,13 +1,9 @@
-import { useRef } from 'react';
 import { Input, Switch, Form, SwipeAction, Grid } from 'antd-mobile';
 
-export const Exercise = ({ field, onRemoveSet }) => {
-	const ref = useRef(null)
-
+export const ExerciseSet = ({ field, onRemoveSet }) => {
 	return (
 		<SwipeAction
 			key={field.index}
-			ref={ref}
 			closeOnAction={true}
 			closeOnTouchOutside={true}
 			rightActions={[{
@@ -17,21 +13,25 @@ export const Exercise = ({ field, onRemoveSet }) => {
 				onClick: () => {
 					onRemoveSet()
 				}
-			}
-			]}
+			}]}
 		>
 			<Grid columns={5} gap={8}>
 				<Grid.Item span={1}>
 					<Form.Item
-						name={[field.index, 'isDone']}>
-						<Switch />
+						name={[field.index, 'isDone']}
+						valuePropName='checked'>
+						<Switch
+							style={{
+								'--checked-color': '#00b578',
+								marginTop: '8px'
+							}}
+						/>
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item span={2}>
 					<Form.Item
 						name={[field.index, 'weight']}
 						label="Weight"
-						required
 					>
 						<Input
 							type='number'
@@ -45,7 +45,7 @@ export const Exercise = ({ field, onRemoveSet }) => {
 					<Form.Item
 						name={[field.index, 'reps']}
 						label="Reps"
-						required
+						rules={[{ required: true, message: 'Missing field' }]}
 					>
 						<Input
 							type='number'
