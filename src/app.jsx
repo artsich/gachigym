@@ -1,7 +1,7 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page';
 import { WorkoutPage } from './pages/workout-page';
-import { WorkoutsPage } from './pages/workouts-page';
+// import { WorkoutsPage } from './pages/workouts-page';
 
 const WorkoutRouter = () => {
 	return (

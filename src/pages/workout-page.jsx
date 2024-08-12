@@ -11,7 +11,6 @@ import {
 	getProgramByName
 } from '../services/workout-service';
 import { Toast } from 'antd-mobile';
-import { Exercises } from '../components/exercises';
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();

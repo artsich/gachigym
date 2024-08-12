@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Col, Row, Button, Skeleton, Grid } from 'antd-mobile';
+import React from 'react';
+import { Form, Input, Button, Skeleton, Grid } from 'antd-mobile';
 import { Exercises } from './exercises';
 import { FinishTrainingButton } from './finish-training-button';
 import { CancelWorkoutButton } from './cancel-workout-button';
