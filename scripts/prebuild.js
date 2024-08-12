@@ -7,8 +7,8 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 const homepage = process.env.HOMEPAGE;
 
 if (homepage) {
-    packageJson.homepage = homepage;
-    console.log(`Set homepage to ${homepage}`);
+	packageJson.homepage = homepage;
+	console.log(`Set homepage to ${homepage}`);
 }
 
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
