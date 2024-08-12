@@ -1,23 +1,8 @@
-import React, { useRef } from 'react';
-import { Form, Button, Input, Space, VirtualInput, NumberKeyboard, Switch, Grid, SwipeAction, Dialog } from 'antd-mobile';
+import React from 'react';
+import { Form, Input, Grid } from 'antd-mobile';
+import { AddCircleOutline } from 'antd-mobile-icons';
 import { ExerciseSet } from './exercise-set';
-import { AddCircleOutline, DeleteOutline } from 'antd-mobile-icons';
-
-const DeleteExerciseButton = ({ onClick }) => (
-	<Button
-		size='large'
-		fill='none'
-		color='primary'
-		onClick={async () => await Dialog.confirm({
-			title: 'Remove excercise',
-			confirmText: 'Remove',
-			cancelText: 'No',
-			onConfirm: onClick
-		})}
-	>
-		<DeleteOutline fontSize={32} />
-	</Button >
-)
+import { DeleteExerciseButton } from './delete-exercise-button';
 
 export const Exercises = () => {
 	return (

@@ -1,5 +1,4 @@
 import { List, SwipeAction, Dialog } from "antd-mobile";
-import { useRef } from "react";
 
 export const Programs = ({ programs, onOpen, onDelete }) => {
 
@@ -11,7 +10,7 @@ export const Programs = ({ programs, onOpen, onDelete }) => {
 		<List header="Programs">
 			{programs.map((program, index) => (
 				<SwipeAction
-					key={index} // todo: index should be unique for each program.
+					key={index}
 					closeOnAction={true}
 					closeOnTouchOutside={true}
 					rightActions={[
