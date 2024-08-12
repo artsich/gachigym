@@ -1,10 +1,10 @@
 # About
 The goal of this application is to track the progress of your training.
 
-## Available Scripts
+## How to run
 
-In the project directory, you can run:
-
+### `npm install`
 ### `npm start`
+
 ### `npm test`
 ### `npm run build`
