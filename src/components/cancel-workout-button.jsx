@@ -3,11 +3,11 @@ import { Button, Dialog } from "antd-mobile";
 export const CancelWorkoutButton = ({ onClick }) => {
 	const confirm = async () => {
 		await Dialog.confirm({
-			content: `Cancel workout?`,
-			confirmText: 'Yes',
-			cancelText: 'No',
+			content: "Cancel workout?",
+			confirmText: "Yes",
+			cancelText: "No",
 			onConfirm: () => onClick()
-		})
+		});
 	};
 
 	return (
@@ -19,5 +19,5 @@ export const CancelWorkoutButton = ({ onClick }) => {
 			onClick={confirm}>
 			Cancel
 		</Button>
-	)
-}
+	);
+};

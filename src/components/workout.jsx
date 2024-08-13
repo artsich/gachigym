@@ -1,9 +1,9 @@
-import React from 'react';
-import { Form, Input, Button, Skeleton, Grid } from 'antd-mobile';
-import { Exercises } from './exercises';
-import { FinishTrainingButton } from './finish-training-button';
-import { CancelWorkoutButton } from './cancel-workout-button';
-import { Timer } from './timer';
+import React from "react";
+import { Form, Input, Button, Skeleton, Grid } from "antd-mobile";
+import { Exercises } from "./exercises";
+import { FinishTrainingButton } from "./finish-training-button";
+import { CancelWorkoutButton } from "./cancel-workout-button";
+import { Timer } from "./timer";
 
 export const Workout = ({
 	workout,
@@ -13,8 +13,8 @@ export const Workout = ({
 	onSaveAsProgram,
 	onCancel
 }) => {
-	const [formRef] = Form.useForm()
-	const started = workout?.startTime !== undefined
+	const [formRef] = Form.useForm();
+	const started = workout?.startTime !== undefined;
 
 	const saveAsProgram = async () => {
 		try {
@@ -35,16 +35,16 @@ export const Workout = ({
 						}
 					)
 				)
-			})
+			});
 		} catch (__1) {
 		}
-	}
+	};
 
 	if (workout === null) {
 		return <>
 			<Skeleton.Title animated />
 			<Skeleton.Paragraph lineCount={5} animated />
-		</>
+		</>;
 	}
 
 	return (
@@ -54,14 +54,14 @@ export const Workout = ({
 			onFinish={onFinish}
 			name="workout_form"
 			onValuesChange={(_, v) => onUpdate(v)}
-			style={{ padding: '16px' }}
+			style={{ padding: "16px" }}
 		>
 			<Grid columns={4}>
 				<Grid.Item span={3}>
 					<Form.Item
-						name={'name'}
+						name={"name"}
 						label='Workout name'
-						rules={[{ required: true, message: 'Name is required!' }]}
+						rules={[{ required: true, message: "Name is required!" }]}
 					>
 						<Input placeholder='name' />
 					</Form.Item>
@@ -73,7 +73,7 @@ export const Workout = ({
 								<FinishTrainingButton
 									onBeforeFinish={async () => {
 										try {
-											await formRef.validateFields()
+											await formRef.validateFields();
 											return true;
 										} catch (__1) {
 											return false;
@@ -98,9 +98,9 @@ export const Workout = ({
 					workout.startTime &&
 					(
 						<div style={{
-							marginTop: '8px',
-							display: 'flex',
-							justifyContent: 'center',
+							marginTop: "8px",
+							display: "flex",
+							justifyContent: "center",
 						}}>
 							<Timer startTime={workout.startTime} />
 						</div>
@@ -112,7 +112,7 @@ export const Workout = ({
 				size="middle"
 				block
 				fill='outline'
-				style={{ display: 'block', margin: '16px auto' }}
+				style={{ display: "block", margin: "16px auto" }}
 				onClick={saveAsProgram}
 			>
 				Save as Program

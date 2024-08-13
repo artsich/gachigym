@@ -1,6 +1,6 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { MainPage } from './pages/main-page';
-import { WorkoutPage } from './pages/workout-page';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { MainPage } from "./pages/main-page";
+import { WorkoutPage } from "./pages/workout-page";
 
 const WorkoutRouter = () => {
 	return (
@@ -15,9 +15,9 @@ export const App = () => {
 	return (
 		<Router>
 			<Routes>
-				<Route exact path="/" element={<MainPage />} />
+				<Route path="/" element={<MainPage />} />
 				<Route path="/workout/*" element={<WorkoutRouter />} />
 			</Routes>
 		</Router>
 	);
-}
+};

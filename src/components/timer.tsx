@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from "react";
 
-function calculateTimePassed(startTime) {
+function calculateTimePassed(startTime: Date) {
 	const start = new Date(startTime).getTime();
 	const now = new Date().getTime();
 	return now - start;
-};
+}
 
-export const Timer = ({ startTime }) => {
+export function Timer({startTime}: { startTime: Date }) {
 	const [timePassed, setTimePassed] = useState(calculateTimePassed(startTime));
 
 	useEffect(() => {
@@ -17,16 +17,16 @@ export const Timer = ({ startTime }) => {
 		return () => clearInterval(intervalId);
 	}, [startTime]);
 
-	const formatTime = (milliseconds) => {
+	const formatTime = (milliseconds: number) => {
 		const totalSeconds = Math.floor(milliseconds / 1000);
 		const hours = Math.floor(totalSeconds / 3600);
 		const minutes = Math.floor((totalSeconds % 3600) / 60);
 		const seconds = totalSeconds % 60;
 
-		return `${hours.toString().padStart(2, '0')}:${minutes
+		return `${hours.toString().padStart(2, "0")}:${minutes
 			.toString()
-			.padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+			.padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 	};
 
-	return <p style={{ fontSize: '32px' }}>{formatTime(timePassed)}</p>;
-};
+	return <p style={{fontSize: "32px"}}>{formatTime(timePassed)}</p>;
+}
