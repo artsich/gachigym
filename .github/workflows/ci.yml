@@ -1,17 +1,11 @@
-name: Build and Deploy
+name: ContinuousIntegration
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
       - name: Checkout repository
@@ -33,14 +27,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set homepage environment variable
-        run: echo "HOMEPAGE=https://artsich.github.io/gachigym" >> $GITHUB_ENV
+      - name: Run Lint
+        run: npm run lint
 
       - name: Build project
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+      - name: Run Tests
+        run: npm run test
