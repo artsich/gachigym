@@ -2,9 +2,6 @@ import { Button, Space } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
-	getPrograms,
-	getProgramByName,
-	deleteProgram,
 	saveCurrentWorkout
 } from "../services/workout-service";
 import {
@@ -14,6 +11,7 @@ import {
 } from "antd-mobile-icons";
 import { useState } from "react";
 import { Programs } from "../components/programs";
+import { Program, deleteProgram, getProgramByName, getPrograms } from "../services/program-service";
 
 const styles = {
 	templateCard: {
@@ -36,14 +34,16 @@ export const MainPage = () => {
 	const navigate = useNavigate();
 	const [programs, setPrograms] = useState(getPrograms());
 
-	const openProgram = (name) => {
+	const openProgram = (name: string) => {
 		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
 		const program = getProgramByName(name);
-		saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] });
-		navigate("/workout/current");
+		if (program) {
+			saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] });
+			navigate("/workout/current");
+		}
 	};
 
-	const handleDeleteProgram = (program) => {
+	const handleDeleteProgram = (program: Program) => {
 		deleteProgram(program.name);
 		setPrograms(getPrograms());
 	};
@@ -52,14 +52,13 @@ export const MainPage = () => {
 		<Space direction="vertical" block style={{ padding: "16px" }}>
 			{isTrainingInProgress() ? (
 				<Button
-					icon={<InformationCircleOutline />}
 					size="large"
 					className="mainButton"
 					style={styles.currentWorkoutButton}
 					onClick={() => navigate("/workout/current")}
 					block
 				>
-					Текущая тренировка
+					<InformationCircleOutline /> Текущая тренировка
 				</Button>
 			) : (
 				<Button
@@ -73,7 +72,7 @@ export const MainPage = () => {
 				</Button>
 			)}
 			<Button
-				type="primary"
+				color="primary"
 				size="large"
 				className="mainButton"
 				style={styles.historyButton}
@@ -84,8 +83,8 @@ export const MainPage = () => {
 			</Button>
 			<Programs
 				programs={programs}
-				onOpen={(program) => openProgram(program.name)}
-				onDelete={(program) => handleDeleteProgram(program)} />
+				onOpen={(program: any) => openProgram(program.name)}
+				onDelete={(program: any) => handleDeleteProgram(program)} />
 		</Space >
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Workout } from "../components/workout";
 import {
@@ -7,15 +7,14 @@ import {
 	saveCurrentWorkout,
 	saveWorkout,
 	getById,
-	saveProgram,
-	getProgramByName
 } from "../services/workout-service";
 import { Toast } from "antd-mobile";
+import { getProgramByName, saveProgram } from "../services/program-service";
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const [workout, setWorkout] = useState(null);
+	const [workout, setWorkout] = useState<any>(null);
 
 	useEffect(() => {
 		if (id === "current") {
@@ -36,7 +35,7 @@ export const WorkoutPage = () => {
 	return (
 		<Workout
 			workout={workout}
-			onUpdate={(workoutUpdated) => {
+			onUpdate={(workoutUpdated: any) => {
 				const newWorkout = { ...workoutUpdated, startTime: workout.startTime };
 				saveCurrentWorkout(newWorkout);
 				setWorkout(newWorkout);
@@ -51,7 +50,7 @@ export const WorkoutPage = () => {
 				saveWorkout({ ...workout, finishTime: Date.now() });
 				navigateToMain();
 			}}
-			onSaveAsProgram={(program) => {
+			onSaveAsProgram={(program: any) => {
 				if (!getProgramByName(program.name)) {
 					saveProgram(program);
 					Toast.show({

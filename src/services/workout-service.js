@@ -1,7 +1,6 @@
 import { generateId } from "./id-generator";
 
 const WORKOUTS_STORAGE_KEY = "trainings";
-const PROGRAMS_STORAGE_KEY = "programs";
 const CURRENT_WORKOUT_STORAGE_KEY = "current_workout";
 
 export function isTrainingInProgress() {
@@ -45,23 +44,4 @@ export function getById(id) {
 export function removeWorkout(id) {
 	const workouts = getWorkouts().filter(workout => workout.id !== id);
 	localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts));
-}
-
-export function saveProgram(program) {
-	let programs = getPrograms();
-	programs.push(program);
-	localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs));
-}
-
-export function getProgramByName(name) {
-	return getPrograms().find((p) => p.name === name);
-}
-
-export function getPrograms() {
-	return JSON.parse(localStorage.getItem(PROGRAMS_STORAGE_KEY)) ?? [];
-}
-
-export function deleteProgram(name) {
-	const programs = getPrograms().filter(program => program.name !== name);
-	localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs));
 }
