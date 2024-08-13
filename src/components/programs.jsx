@@ -3,7 +3,7 @@ import { List, SwipeAction, Dialog } from "antd-mobile";
 export const Programs = ({ programs, onOpen, onDelete }) => {
 
 	if (programs.length === 0) {
-		return <></>
+		return <></>;
 	}
 
 	return (
@@ -15,27 +15,27 @@ export const Programs = ({ programs, onOpen, onDelete }) => {
 					closeOnTouchOutside={true}
 					rightActions={[
 						{
-							key: 'delete',
-							text: 'Delete',
-							color: 'danger',
+							key: "delete",
+							text: "Delete",
+							color: "danger",
 							onClick: async () => {
 								await Dialog.confirm({
 									content: `Delete program '${program.name}'?`,
-									confirmText: 'Yes',
-									cancelText: 'No',
+									confirmText: "Yes",
+									cancelText: "No",
 									onConfirm: () => onDelete(program)
-								})
+								});
 							},
 						},
 					]}
 				>
 					<List.Item onClick={() => onOpen(program)}>
-						<div style={{ fontSize: '24px', }}>
+						<div style={{ fontSize: "24px", }}>
 							{program.name}
 						</div>
 					</List.Item>
 				</SwipeAction>
 			))}
 		</List >
-	)
+	);
 };

@@ -1,4 +1,4 @@
-import { Input, Switch, Form, SwipeAction, Grid } from 'antd-mobile';
+import { Input, Switch, Form, SwipeAction, Grid } from "antd-mobile";
 
 export const ExerciseSet = ({ field, onRemoveSet }) => {
 	return (
@@ -7,30 +7,30 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 			closeOnAction={true}
 			closeOnTouchOutside={true}
 			rightActions={[{
-				key: 'delete',
-				text: 'Delete',
-				color: 'danger',
+				key: "delete",
+				text: "Delete",
+				color: "danger",
 				onClick: () => {
-					onRemoveSet()
+					onRemoveSet();
 				}
 			}]}
 		>
 			<Grid columns={5} gap={8}>
 				<Grid.Item span={1}>
 					<Form.Item
-						name={[field.index, 'isDone']}
+						name={[field.index, "isDone"]}
 						valuePropName='checked'>
 						<Switch
 							style={{
-								'--checked-color': '#00b578',
-								marginTop: '8px'
+								"--checked-color": "#00b578",
+								marginTop: "8px"
 							}}
 						/>
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item span={2}>
 					<Form.Item
-						name={[field.index, 'weight']}
+						name={[field.index, "weight"]}
 						label="Weight"
 					>
 						<Input
@@ -43,9 +43,9 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 				</Grid.Item>
 				<Grid.Item span={2}>
 					<Form.Item
-						name={[field.index, 'reps']}
+						name={[field.index, "reps"]}
 						label="Reps"
-						rules={[{ required: true, message: 'Missing field' }]}
+						rules={[{ required: true, message: "Missing field" }]}
 					>
 						<Input
 							type='number'

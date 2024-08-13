@@ -1,8 +1,8 @@
-import React from 'react';
-import { Form, Input, Grid } from 'antd-mobile';
-import { AddCircleOutline } from 'antd-mobile-icons';
-import { ExerciseSet } from './exercise-set';
-import { DeleteExerciseButton } from './delete-exercise-button';
+import React from "react";
+import { Form, Input, Grid } from "antd-mobile";
+import { AddCircleOutline } from "antd-mobile-icons";
+import { ExerciseSet } from "./exercise-set";
+import { DeleteExerciseButton } from "./delete-exercise-button";
 
 export const Exercises = () => {
 	return (
@@ -10,7 +10,7 @@ export const Exercises = () => {
 			name="exercises"
 			renderAdd={() => (
 				<span>
-					<AddCircleOutline /> Add excersise
+					<AddCircleOutline /> Add exercise
 				</span>
 			)}
 		>
@@ -20,8 +20,8 @@ export const Exercises = () => {
 						<Grid columns={4}>
 							<Grid.Item span={3} >
 								<Form.Item
-									name={[index, 'name']}
-									rules={[{ required: true, message: 'Name is required' }]}
+									name={[index, "name"]}
+									rules={[{ required: true, message: "Name is required" }]}
 								>
 									<Input placeholder='Exercise name' />
 								</Form.Item>
@@ -31,7 +31,7 @@ export const Exercises = () => {
 							</Grid.Item>
 						</Grid>
 						<Form.Array
-							name={[index, 'sets']}
+							name={[index, "sets"]}
 							renderAdd={() => (
 								<span>
 									<AddCircleOutline /> Add set

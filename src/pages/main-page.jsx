@@ -38,15 +38,15 @@ export const MainPage = () => {
 
 	const openProgram = (name) => {
 		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
-		const program = getProgramByName(name)
-		saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] })
-		navigate("/workout/current")
-	}
+		const program = getProgramByName(name);
+		saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] });
+		navigate("/workout/current");
+	};
 
 	const handleDeleteProgram = (program) => {
-		deleteProgram(program.name)
-		setPrograms(getPrograms())
-	}
+		deleteProgram(program.name);
+		setPrograms(getPrograms());
+	};
 
 	return (
 		<Space direction="vertical" block style={{ padding: "16px" }}>
