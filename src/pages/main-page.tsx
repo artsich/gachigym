@@ -2,16 +2,22 @@ import { Button, Space } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import {
 	isTrainingInProgress,
-	saveCurrentWorkout
+	saveCurrentWorkout,
 } from "../services/workout-service";
 import {
 	EyeOutline,
 	AddCircleOutline,
 	InformationCircleOutline,
+	SetOutline,
 } from "antd-mobile-icons";
 import { useState } from "react";
 import { Programs } from "../components/programs";
-import { Program, deleteProgram, getProgramByName, getPrograms } from "../services/program-service";
+import {
+	Program,
+	deleteProgram,
+	getProgramByName,
+	getPrograms,
+} from "../services/program-service";
 
 const styles = {
 	templateCard: {
@@ -38,7 +44,10 @@ export const MainPage = () => {
 		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
 		const program = getProgramByName(name);
 		if (program) {
-			saveCurrentWorkout({ name: program.name, exercises: [...program.exercises] });
+			saveCurrentWorkout({
+				name: program.name,
+				exercises: [...program.exercises],
+			});
 			navigate("/workout/current");
 		}
 	};
@@ -58,7 +67,8 @@ export const MainPage = () => {
 					onClick={() => navigate("/workout/current")}
 					block
 				>
-					<InformationCircleOutline /> Текущая тренировка
+					<InformationCircleOutline />
+					<span> Current workout</span>
 				</Button>
 			) : (
 				<Button
@@ -68,7 +78,8 @@ export const MainPage = () => {
 					onClick={() => navigate("/workout")}
 					block
 				>
-					<AddCircleOutline /> Новая тренировка
+					<AddCircleOutline />
+					<span> New workout</span>
 				</Button>
 			)}
 			<Button
@@ -79,12 +90,25 @@ export const MainPage = () => {
 				onClick={() => navigate("/workouts")}
 				block
 			>
-				<EyeOutline /> История
+				<EyeOutline />
+				<span> История</span>
+			</Button>
+			<Button
+				block
+				color="primary"
+				size="large"
+				className="mainButton"
+				onClick={() => navigate("/settings")}
+				style={{ marginTop: "32px" }}
+			>
+				<SetOutline />
+				<span> Settings</span>
 			</Button>
 			<Programs
 				programs={programs}
 				onOpen={(program: any) => openProgram(program.name)}
-				onDelete={(program: any) => handleDeleteProgram(program)} />
-		</Space >
+				onDelete={(program: any) => handleDeleteProgram(program)}
+			/>
+		</Space>
 	);
 };
