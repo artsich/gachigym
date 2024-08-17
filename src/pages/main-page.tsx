@@ -25,9 +25,11 @@ const styles = {
 		cursor: "pointer",
 	},
 	newWorkoutButton: {
+		// todo: Fix for dark theme...
 		background: "#BDECB6",
 	},
 	historyButton: {
+		// todo: Fix for dark theme...
 		background: "#4285b4",
 	},
 	currentWorkoutButton: {

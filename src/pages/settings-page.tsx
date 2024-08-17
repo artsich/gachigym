@@ -34,7 +34,7 @@ export const SettingsPage = () => {
 
 	return (
 		<div style={{ padding: "32px" }}>
-			<Block title="Language">
+			<Block title="Language (does not work)">
 				<Radio.Group
 					defaultValue={settings.lang}
 					onChange={changeLanguage}

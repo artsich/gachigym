@@ -3,6 +3,7 @@ import { MainPage } from "./pages/main-page";
 import { WorkoutPage } from "./pages/workout-page";
 import { SettingsPage } from "./pages/settings-page";
 import { Footer } from "antd-mobile";
+import { applyTheme } from "./services/settings";
 
 const WorkoutRouter = () => {
 	return (
@@ -18,7 +19,13 @@ function footherContent() {
 	return `@ ${year} gachy.tracker All rights reserved`;
 }
 
+function init() {
+	applyTheme();
+}
+
 export const App = () => {
+	init();
+
 	return (
 		<>
 			<Router>
