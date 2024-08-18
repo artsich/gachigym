@@ -4,6 +4,7 @@ import { WorkoutPage } from "./pages/workout-page";
 import { SettingsPage } from "./pages/settings-page";
 import { Footer } from "antd-mobile";
 import { applyTheme } from "./services/settings";
+import { HistoryPage } from "./pages/history-page";
 
 const WorkoutRouter = () => {
 	return (
@@ -33,6 +34,7 @@ export const App = () => {
 					<Route path="/" element={<MainPage />} />
 					<Route path="/workout/*" element={<WorkoutRouter />} />
 					<Route path="/settings" element={<SettingsPage />} />
+					<Route path="/history" element={<HistoryPage />} />
 				</Routes>
 			</Router>
 			<Footer content={footherContent()} />
