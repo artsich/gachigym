@@ -89,7 +89,7 @@ export const MainPage = () => {
 				size="large"
 				className="mainButton"
 				style={styles.historyButton}
-				onClick={() => navigate("/workouts")}
+				onClick={() => navigate("/history")}
 				block
 			>
 				<EyeOutline />
