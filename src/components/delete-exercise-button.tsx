@@ -1,9 +1,13 @@
 import React from "react";
-import {Button, Dialog} from "antd-mobile";
-import {DeleteOutline} from "antd-mobile-icons";
-import {DialogConfirmProps} from "antd-mobile/es/components/dialog/confirm";
+import { Button, Dialog } from "antd-mobile";
+import { DeleteOutline } from "antd-mobile-icons";
+import { DialogConfirmProps } from "antd-mobile/es/components/dialog/confirm";
 
-export const DeleteExerciseButton = ({onClick}: { onClick: DialogConfirmProps["onConfirm"] }) => {
+export const DeleteExerciseButton = ({
+	onClick,
+}: {
+	onClick: DialogConfirmProps["onConfirm"];
+}) => {
 	return (
 		<Button
 			size="large"
@@ -12,13 +16,11 @@ export const DeleteExerciseButton = ({onClick}: { onClick: DialogConfirmProps["o
 			onClick={async () => {
 				await Dialog.confirm({
 					title: "Remove exercise",
-					confirmText: "Remove",
-					cancelText: "No",
-					onConfirm: onClick
+					onConfirm: onClick,
 				});
 			}}
 		>
-			<DeleteOutline fontSize={32}/>
+			<DeleteOutline fontSize={32} />
 		</Button>
 	);
 };
