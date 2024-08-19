@@ -10,10 +10,10 @@ export const OldWorkout = ({ workout }) => {
 					<div>{workout.name}</div>
 				</Grid.Item>
 				<Grid.Item span={1}>
-					<div >
+					<div>
 						<span
 							style={{
-								fontSize: "bold 16px"
+								fontSize: "bold 16px",
 							}}
 						>
 							{new Date(workout.startTime).toLocaleDateString()}

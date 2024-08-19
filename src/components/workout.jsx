@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Input, Button, Skeleton, Grid } from "antd-mobile";
 import { Exercises } from "./exercises";
 import { FinishTrainingButton } from "./finish-training-button";
@@ -11,7 +10,7 @@ export const Workout = ({
 	onStart,
 	onFinish,
 	onSaveAsProgram,
-	onCancel
+	onCancel,
 }) => {
 	const [formRef] = Form.useForm();
 	const started = workout?.startTime !== undefined;
@@ -19,39 +18,46 @@ export const Workout = ({
 	const saveAsProgram = async () => {
 		try {
 			await formRef.validateFields();
-			// TODO: maybe better this logic to service. (Logic to copy only name and exercises)
 			onSaveAsProgram({
-				name: workout.name,
-				exercises: workout.exercises.map(
-					e => (
-						{
-							name: e.name,
-							sets: e.sets.map(
-								s => ({
-									weight: s.weight,
-									reps: s.reps,
-								})
-							)
-						}
-					)
-				)
+				name: workout.name.trim(),
+				exercises: workout.exercises?.map((e) => ({
+					name: e.name.trim(),
+					sets: e.sets?.map((s) => ({
+						weight: s.weight,
+						reps: s.reps,
+					})),
+				})),
 			});
-		} catch (__1) {
+		} catch (e) {
+			console.error("catch", e);
 		}
 	};
 
+	const handleOnFinish = (workout) => {
+		onFinish({
+			name: workout.name.trim(),
+			exercises:
+				workout.exercises?.map((e) => ({
+					name: e.name.trim(),
+					sets: e.sets ? [...e.sets] : [],
+				})) || [],
+		});
+	};
+
 	if (workout === null) {
-		return <>
-			<Skeleton.Title animated />
-			<Skeleton.Paragraph lineCount={5} animated />
-		</>;
+		return (
+			<>
+				<Skeleton.Title animated />
+				<Skeleton.Paragraph lineCount={5} animated />
+			</>
+		);
 	}
 
 	return (
 		<Form
 			form={formRef}
 			initialValues={workout}
-			onFinish={onFinish}
+			onFinish={handleOnFinish}
 			name="workout_form"
 			onValuesChange={(_, v) => onUpdate(v)}
 			style={{ padding: "16px" }}
@@ -60,64 +66,78 @@ export const Workout = ({
 				<Grid.Item span={3}>
 					<Form.Item
 						name={"name"}
-						label='Workout name'
-						rules={[{ required: true, message: "Name is required!" }]}
+						label="Workout name"
+						rules={[
+							{
+								required: true,
+								message: "Name is required!",
+							},
+							{
+								type: "string",
+								min: 2,
+								message: "Too short",
+							},
+							{
+								type: "string",
+								max: 100,
+								message: "Too long",
+							},
+						]}
 					>
-						<Input placeholder='name' />
+						<Input placeholder="name" />
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item>
 					<Form.Item>
-						{
-							started ?
-								<FinishTrainingButton
-									onBeforeFinish={async () => {
-										try {
-											await formRef.validateFields();
-											return true;
-										} catch (__1) {
-											return false;
-										}
-									}}
-									onFinish={() => formRef.submit()} />
-								:
-								<Button
-									block
-									color='primary'
-									size="middle"
-									onClick={onStart}
-								>
-									Start
-								</Button>
-						}
+						{started ? (
+							<FinishTrainingButton
+								onBeforeFinish={async () => {
+									try {
+										await formRef.validateFields();
+										return true;
+									} catch (__1) {
+										return false;
+									}
+								}}
+								onFinish={() => formRef.submit()}
+							/>
+						) : (
+							<Button
+								block
+								color="primary"
+								size="middle"
+								onClick={onStart}
+							>
+								Start
+							</Button>
+						)}
 					</Form.Item>
 				</Grid.Item>
 			</Grid>
 			<Form.Item>
-				{
-					workout.startTime &&
-					(
-						<div style={{
+				{workout.startTime && (
+					<div
+						style={{
 							marginTop: "8px",
 							display: "flex",
 							justifyContent: "center",
-						}}>
-							<Timer startTime={workout.startTime} />
-						</div>
-					)
-				}
+						}}
+					>
+						<Timer startTime={workout.startTime} />
+					</div>
+				)}
 			</Form.Item>
 			<Exercises />
 			<Button
 				size="middle"
 				block
-				fill='outline'
+				fill="outline"
 				style={{ display: "block", margin: "16px auto" }}
 				onClick={saveAsProgram}
 			>
 				Save as Program
 			</Button>
 			<CancelWorkoutButton onClick={onCancel} />
-		</Form >
+		</Form>
 	);
 };

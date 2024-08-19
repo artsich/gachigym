@@ -18,16 +18,33 @@ export const Exercises = () => {
 				fields.map(({ index }) => (
 					<>
 						<Grid columns={4}>
-							<Grid.Item span={3} >
+							<Grid.Item span={3}>
 								<Form.Item
 									name={[index, "name"]}
-									rules={[{ required: true, message: "Name is required" }]}
+									rules={[
+										{
+											required: true,
+											message: "Name is required",
+										},
+										{
+											type: "string",
+											min: 2,
+											message: "Too short",
+										},
+										{
+											type: "string",
+											max: 100,
+											message: "Too long",
+										},
+									]}
 								>
-									<Input placeholder='Exercise name' />
+									<Input placeholder="Exercise name" />
 								</Form.Item>
 							</Grid.Item>
 							<Grid.Item>
-								<DeleteExerciseButton onClick={() => remove(index)} />
+								<DeleteExerciseButton
+									onClick={() => remove(index)}
+								/>
 							</Grid.Item>
 						</Grid>
 						<Form.Array
@@ -38,15 +55,18 @@ export const Exercises = () => {
 								</span>
 							)}
 						>
-							{(fields, { remove }) => fields.map((field) => (
-								<ExerciseSet
-									field={field}
-									onRemoveSet={() => remove(field.index)} />
-							))}
-						</Form.Array >
+							{(fields, { remove }) =>
+								fields.map((field) => (
+									<ExerciseSet
+										field={field}
+										onRemoveSet={() => remove(field.index)}
+									/>
+								))
+							}
+						</Form.Array>
 					</>
 				))
 			}
-		</Form.Array >
+		</Form.Array>
 	);
 };

@@ -6,53 +6,55 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 			key={field.index}
 			closeOnAction={true}
 			closeOnTouchOutside={true}
-			rightActions={[{
-				key: "delete",
-				text: "Delete",
-				color: "danger",
-				onClick: () => {
-					onRemoveSet();
-				}
-			}]}
+			rightActions={[
+				{
+					key: "delete",
+					text: "Delete",
+					color: "danger",
+					onClick: () => {
+						onRemoveSet();
+					},
+				},
+			]}
 		>
 			<Grid columns={5} gap={8}>
 				<Grid.Item span={1}>
 					<Form.Item
 						name={[field.index, "isDone"]}
-						valuePropName='checked'>
+						valuePropName="checked"
+					>
 						<Switch
 							style={{
 								"--checked-color": "#00b578",
-								marginTop: "8px"
+								marginTop: "8px",
 							}}
 						/>
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item span={2}>
-					<Form.Item
-						name={[field.index, "weight"]}
-						label="Weight"
-					>
+					<Form.Item name={[field.index, "weight"]} label="Weight">
 						<Input
-							type='number'
-							placeholder='...'
+							type="number"
+							placeholder="..."
 							clearable
 							min={0}
-							max={1000} />
+							max={1000}
+						/>
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item span={2}>
 					<Form.Item
 						name={[field.index, "reps"]}
 						label="Reps"
-						rules={[{ required: true, message: "Missing field" }]}
+						rules={[{ required: true, message: "Missing value" }]}
 					>
 						<Input
-							type='number'
+							type="number"
 							placeholder="..."
 							clearable
 							min={0}
-							max={1000} />
+							max={1000}
+						/>
 					</Form.Item>
 				</Grid.Item>
 			</Grid>
