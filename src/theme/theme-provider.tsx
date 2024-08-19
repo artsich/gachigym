@@ -1,0 +1,43 @@
+import {
+	ReactNode,
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
+import { Theme, getSettings } from "../services/settings";
+
+interface ThemeContextType {
+	theme: Theme;
+	setTheme: (theme: Theme) => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = (): ThemeContextType => {
+	const context = useContext(ThemeContext);
+	if (!context) {
+		throw new Error("useTheme must be used within a ThemeProvider");
+	}
+	return context;
+};
+
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
+	children,
+}) => {
+	const [theme, setTheme] = useState<Theme>(getSettings().theme);
+
+	useEffect(() => {
+		// TODO: find how to handle `system` theme.
+		document.documentElement.setAttribute(
+			"data-prefers-color-scheme",
+			theme
+		);
+	}, [theme]);
+
+	return (
+		<ThemeContext.Provider value={{ theme, setTheme }}>
+			{children}
+		</ThemeContext.Provider>
+	);
+};
