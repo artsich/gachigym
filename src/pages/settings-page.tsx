@@ -3,14 +3,18 @@ import { Block } from "../components/block";
 import { useState } from "react";
 import { RadioValue } from "antd-mobile/es/components/radio";
 import {
+	Language,
+	LanguageKeys,
 	Settings,
 	Theme,
 	getSettings,
+	setLanguage,
 	themes,
 	updateSettings,
 } from "../services/settings";
 import { useTheme } from "../theme/theme-provider";
 
+// TODO: shitty code, please refactor it!!!
 export const SettingsPage = () => {
 	const { setTheme } = useTheme();
 
@@ -23,7 +27,10 @@ export const SettingsPage = () => {
 	};
 
 	const changeLanguage = (val: RadioValue) => {
-		updateAndSaveSettings({ lang: val as string });
+		updateAndSaveSettings({ lang: val as Language });
+		if (val as Language) {
+			setLanguage(val as Language);
+		}
 	};
 
 	const changeTheme = (val: RadioValue) => {
@@ -38,14 +45,14 @@ export const SettingsPage = () => {
 
 	return (
 		<div style={{ padding: "32px" }}>
-			<Block title="Language (does not work)">
+			<Block title="Language (works only with built-in antd strings)">
 				<Radio.Group
 					defaultValue={settings.lang}
 					onChange={changeLanguage}
 				>
 					<Space direction="vertical">
-						<Radio value="eng">English</Radio>
-						<Radio value="rus">Russian</Radio>
+						<Radio value={LanguageKeys.English}>English</Radio>
+						<Radio value={LanguageKeys.Russian}>Russian</Radio>
 					</Space>
 				</Radio.Group>
 			</Block>

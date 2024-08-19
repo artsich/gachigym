@@ -4,15 +4,15 @@ export const FinishTrainingButton = ({ onBeforeFinish, onFinish }) => {
 	const confirm = async () => {
 		if (await onBeforeFinish()) {
 			await Dialog.confirm({
-				content: "Finish workout?",
-				confirmText: "Yes",
-				cancelText: "No",
-				onConfirm: () => onFinish()
+				title: "Finish workout?",
+				onConfirm: () => onFinish(),
 			});
 		}
 	};
 
 	return (
-		<Button block size='middle' color="primary" onClick={confirm}>Finish</Button>
+		<Button block size="middle" color="primary" onClick={confirm}>
+			Finish
+		</Button>
 	);
 };
