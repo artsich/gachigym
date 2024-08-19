@@ -9,7 +9,11 @@ import {
 	getById,
 } from "../services/workout-service";
 import { Toast } from "antd-mobile";
-import { getProgramByName, saveProgram } from "../services/program-service";
+import {
+	Program,
+	getProgramByName,
+	saveProgram,
+} from "../services/program-service";
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();
@@ -19,11 +23,9 @@ export const WorkoutPage = () => {
 	useEffect(() => {
 		if (id === "current") {
 			setWorkout(getCurrentWorkout());
-		}
-		else if (id) {
+		} else if (id) {
 			setWorkout(getById(id));
-		}
-		else {
+		} else {
 			setWorkout({ name: "", exercises: [] });
 		}
 	}, [id]);
@@ -36,7 +38,10 @@ export const WorkoutPage = () => {
 		<Workout
 			workout={workout}
 			onUpdate={(workoutUpdated: any) => {
-				const newWorkout = { ...workoutUpdated, startTime: workout.startTime };
+				const newWorkout = {
+					...workoutUpdated,
+					startTime: workout.startTime,
+				};
 				saveCurrentWorkout(newWorkout);
 				setWorkout(newWorkout);
 			}}
@@ -50,18 +55,17 @@ export const WorkoutPage = () => {
 				saveWorkout({ ...workout, finishTime: Date.now() });
 				navigateToMain();
 			}}
-			onSaveAsProgram={(program: any) => {
+			onSaveAsProgram={(program: Program) => {
 				if (!getProgramByName(program.name)) {
 					saveProgram(program);
 					Toast.show({
 						icon: "success",
 						content: `${program.name} is saved`,
 					});
-				}
-				else {
+				} else {
 					Toast.show({
 						icon: "fail",
-						content: `Program '${program.name}' already exists`,
+						content: `Program ${program.name} already exists`,
 					});
 				}
 			}}
