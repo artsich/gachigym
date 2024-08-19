@@ -9,8 +9,11 @@ import {
 	themes,
 	updateSettings,
 } from "../services/settings";
+import { useTheme } from "../theme/theme-provider";
 
 export const SettingsPage = () => {
+	const { setTheme } = useTheme();
+
 	const [settings, setSettings] = useState(getSettings());
 
 	const updateAndSaveSettings = (newSettings: Partial<Settings>) => {
@@ -27,6 +30,7 @@ export const SettingsPage = () => {
 		if (themes.includes(val as Theme)) {
 			const theme = val as Theme;
 			updateAndSaveSettings({ theme });
+			setTheme(theme);
 		} else {
 			console.error("Invalid theme value:", val);
 		}
