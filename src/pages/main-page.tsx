@@ -26,14 +26,14 @@ const styles = {
 	},
 	newWorkoutButton: {
 		// todo: Fix for dark theme...
-		background: "#BDECB6",
+		background: "#4285b4",
 	},
 	historyButton: {
 		// todo: Fix for dark theme...
 		background: "#4285b4",
 	},
 	currentWorkoutButton: {
-		background: "#FFFDD0",
+		background: "#4285b4",
 	},
 };
 
@@ -64,7 +64,7 @@ export const MainPage = () => {
 			{isTrainingInProgress() ? (
 				<Button
 					size="large"
-					className="mainButton"
+					color="primary"
 					style={styles.currentWorkoutButton}
 					onClick={() => navigate("/workout/current")}
 					block
@@ -75,8 +75,7 @@ export const MainPage = () => {
 			) : (
 				<Button
 					size="large"
-					className="mainButton"
-					style={styles.newWorkoutButton}
+					color="primary"
 					onClick={() => navigate("/workout")}
 					block
 				>
@@ -87,8 +86,6 @@ export const MainPage = () => {
 			<Button
 				color="primary"
 				size="large"
-				className="mainButton"
-				style={styles.historyButton}
 				onClick={() => navigate("/history")}
 				block
 			>
