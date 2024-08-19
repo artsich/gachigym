@@ -1,16 +1,21 @@
-import { Grid } from "antd-mobile";
+import { Grid, Space } from "antd-mobile";
 import { ExercisesView } from "./exercises-view";
 import "./style.css";
 
-export const OldWorkout = ({ workout }) => {
+export const Workout = ({ workout }) => {
 	return (
-		<Grid columns={1}>
-			<Grid columns={4} gap={18}>
+		<>
+			<Grid columns={4}>
 				<Grid.Item span={3}>
 					<div>{workout.name}</div>
 				</Grid.Item>
-				<Grid.Item span={1}>
-					<div>
+				<Grid.Item>
+					<Space
+						direction="vertical"
+						style={{
+							"--gap-vertical": "0px",
+						}}
+					>
 						<span
 							style={{
 								fontSize: "bold 16px",
@@ -25,10 +30,10 @@ export const OldWorkout = ({ workout }) => {
 						>
 							2 H 11 m
 						</span>
-					</div>
+					</Space>
 				</Grid.Item>
 			</Grid>
 			<ExercisesView exercises={workout.exercises} />
-		</Grid>
+		</>
 	);
 };

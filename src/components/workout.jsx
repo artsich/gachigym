@@ -60,7 +60,11 @@ export const Workout = ({
 			onFinish={handleOnFinish}
 			name="workout_form"
 			onValuesChange={(_, v) => onUpdate(v)}
-			style={{ padding: "16px" }}
+			style={{
+				paddingTop: "16px",
+				paddingLeft: "8px",
+				paddingRight: "8px",
+			}}
 		>
 			<Grid columns={4}>
 				<Grid.Item span={3}>
