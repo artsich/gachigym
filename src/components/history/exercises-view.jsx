@@ -1,12 +1,34 @@
-import { CapsuleTabs, Grid } from "antd-mobile";
+import { Grid, Space, Tag } from "antd-mobile";
+import { useState } from "react";
 
 export const ExercisesView = ({ exercises }) => {
+	const [activeExercise, setActiveExercise] = useState(0);
+
 	return (
-		<CapsuleTabs defaultActiveKey="0">
-			{exercises?.map((exercise, index) => (
-				<CapsuleTabs.Tab title={exercise.name} key={index}>
-					<Grid columns={5} gap={35}>
-						{exercise.sets?.map((set, ind2) => (
+		<Grid columns={1} gap={20}>
+			<Grid.Item>
+				<Space>
+					{exercises?.map((exercise, index) => (
+						<Tag
+							key={index}
+							fill={
+								activeExercise === index ? "solid" : "outline"
+							}
+							color={
+								activeExercise === index ? "warning" : "default"
+							}
+							onClick={() => setActiveExercise(index)}
+							style={{fontSize: "14px"}}
+						>
+							{exercise.name}
+						</Tag>
+					))}
+				</Space>
+			</Grid.Item>
+			<Grid.Item>
+				<Grid columns={6} gap={16}>
+					{exercises.length ? (
+						exercises[activeExercise].sets?.map((set, ind2) => (
 							<Grid.Item key={ind2}>
 								<div className="badge">
 									<div className="badge-weight">
@@ -16,10 +38,12 @@ export const ExercisesView = ({ exercises }) => {
 									<div className="badge-label-KG">KG</div>
 								</div>
 							</Grid.Item>
-						))}
-					</Grid>
-				</CapsuleTabs.Tab>
-			))}
-		</CapsuleTabs>
+						))
+					) : (
+						<div></div>
+					)}
+				</Grid>
+			</Grid.Item>
+		</Grid>
 	);
 };
