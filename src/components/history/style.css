@@ -1,10 +1,10 @@
 .badge {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 20%;
     background-color: rgb(21, 96, 189);
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -18,13 +18,13 @@
 
 .badge-reps {
     position: absolute;
-    top: -20%;
-    right: -20%;
-    font-size: .4em;
+    top: -30%;
+    right: -30%;
+    font-size: .5em;
     color: rgb(245, 245, 245);
-    width: 2em;
-    height: 2em;
-    line-height: 2em;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
     text-align: center;
     border: 1px solid white;
     border-radius: 50%;
