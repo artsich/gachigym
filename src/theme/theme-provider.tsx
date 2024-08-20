@@ -22,18 +22,45 @@ export const useTheme = (): ThemeContextType => {
 	return context;
 };
 
+const useSystemThemeDetector = () => {
+	const getCurrentTheme = () =>
+		window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+	const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme());
+
+	const mqListener = (e: MediaQueryListEvent) => {
+		setIsDarkTheme(e.matches);
+	};
+
+	useEffect(() => {
+		const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+		darkThemeMq.addEventListener("change", mqListener);
+
+		return () => {
+			darkThemeMq.removeEventListener("change", mqListener);
+		};
+	}, []);
+
+	return isDarkTheme;
+};
+
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
 	const [theme, setTheme] = useState<Theme>(getSettings().theme);
+	const isSystemDark = useSystemThemeDetector();
 
 	useEffect(() => {
-		// TODO: find how to handle `system` theme.
+		let desiredTheme = theme;
+		if (desiredTheme === "system") {
+			desiredTheme = isSystemDark ? "dark" : "light";
+		}
+
 		document.documentElement.setAttribute(
 			"data-prefers-color-scheme",
-			theme
+			desiredTheme
 		);
-	}, [theme]);
+	}, [theme, isSystemDark]);
 
 	return (
 		<ThemeContext.Provider value={{ theme, setTheme }}>
