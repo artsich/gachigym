@@ -17,8 +17,8 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 				},
 			]}
 		>
-			<Grid columns={5} gap={8}>
-				<Grid.Item span={1}>
+			<Grid columns={6}>
+				<Grid.Item span={2}>
 					<Form.Item
 						name={[field.index, "isDone"]}
 						valuePropName="checked"
@@ -46,7 +46,12 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 					<Form.Item
 						name={[field.index, "reps"]}
 						label="Reps"
-						rules={[{ required: true, message: "Missing value" }]}
+						rules={[
+							{
+								required: true,
+								message: "Missed",
+							},
+						]}
 					>
 						<Input
 							type="number"

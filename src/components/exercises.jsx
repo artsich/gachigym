@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Grid } from "antd-mobile";
+import { Form, Input, Grid, Divider } from "antd-mobile";
 import { AddCircleOutline } from "antd-mobile-icons";
 import { ExerciseSet } from "./exercise-set";
 import { DeleteExerciseButton } from "./delete-exercise-button";
@@ -47,6 +47,7 @@ export const Exercises = () => {
 								/>
 							</Grid.Item>
 						</Grid>
+						<Divider />
 						<Form.Array
 							name={[index, "sets"]}
 							renderAdd={() => (
