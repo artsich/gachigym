@@ -1,12 +1,14 @@
-import { List } from "antd-mobile";
+import { Divider, Grid } from "antd-mobile";
+import "./style.css";
 import { Workout } from "./workout";
 
 export const Workouts = ({ workouts }: { workouts: [any] }) => (
-	<List>
+	<Grid columns={1} className="history-vertical-gap">
 		{workouts.map((workout: any, index: number) => (
-			<List.Item key={index}>
-				<Workout workout={workout} />
-			</List.Item>
+			<><Grid.Item key={index}>
+			<Workout workout={workout} />
+		</Grid.Item>
+		<Divider /></>
 		))}
-	</List>
+	</Grid>
 );
