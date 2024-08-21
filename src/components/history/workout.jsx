@@ -4,7 +4,7 @@ import "./style.css";
 
 export const Workout = ({ workout }) => {
 	return (
-		<>
+		<Grid columns={1}>
 			<Grid columns={4}>
 				<Grid.Item span={3}>
 					<div>{workout.name}</div>
@@ -34,6 +34,6 @@ export const Workout = ({ workout }) => {
 				</Grid.Item>
 			</Grid>
 			<ExercisesView exercises={workout.exercises} />
-		</>
+		</Grid>
 	);
 };
