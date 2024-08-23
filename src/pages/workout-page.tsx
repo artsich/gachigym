@@ -8,9 +8,10 @@ import {
 	saveWorkout,
 	getById,
 } from "../services/workout-service";
-import { Toast } from "antd-mobile";
+import { Dialog, Toast } from "antd-mobile";
 import {
 	Program,
+	deleteProgram,
 	getProgramByName,
 	saveProgram,
 } from "../services/program-service";
@@ -63,9 +64,16 @@ export const WorkoutPage = () => {
 						content: `${program.name} is saved`,
 					});
 				} else {
-					Toast.show({
-						icon: "fail",
-						content: `Program ${program.name} already exists`,
+					Dialog.confirm({
+						title: `${program.name} already exists, replace?`,
+						onConfirm: () => {
+							deleteProgram(program.name);
+							saveProgram(program);
+							Toast.show({
+								icon: "success",
+								content: `${program.name} is updated`,
+							});
+						},
 					});
 				}
 			}}
