@@ -48,7 +48,7 @@ export const MainPage = () => {
 		if (program) {
 			if (isCurrentWorkoutExist()) {
 				Dialog.confirm({
-					title: "Wan't to replace current workout?",
+					title: "Want to replace current workout?",
 					onConfirm: () => {
 						navigateToProgram(program);
 					},
