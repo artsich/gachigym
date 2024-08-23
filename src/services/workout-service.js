@@ -20,6 +20,11 @@ export function getCurrentWorkout() {
 	return { name: "", exercises: [] };
 }
 
+export function isCurrentWorkoutExist() {
+	const currentWorkout = localStorage.getItem(CURRENT_WORKOUT_STORAGE_KEY);
+	return currentWorkout ? true : false;
+}
+
 export function saveCurrentWorkout(workout) {
 	localStorage.setItem(CURRENT_WORKOUT_STORAGE_KEY, JSON.stringify(workout));
 }

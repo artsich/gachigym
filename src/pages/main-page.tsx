@@ -1,6 +1,7 @@
-import { Button, Space } from "antd-mobile";
+import { Button, Dialog, Space } from "antd-mobile";
 import { useNavigate } from "react-router-dom";
 import {
+	isCurrentWorkoutExist,
 	isTrainingInProgress,
 	saveCurrentWorkout,
 } from "../services/workout-service";
@@ -43,15 +44,27 @@ export const MainPage = () => {
 	const [programs, setPrograms] = useState(getPrograms());
 
 	const openProgram = (name: string) => {
-		// TODO: Check that current not exists. if do, open modal and ask to rewrite current workout
 		const program = getProgramByName(name);
 		if (program) {
-			saveCurrentWorkout({
-				name: program.name,
-				exercises: [...program.exercises],
-			});
-			navigate("/workout/current");
+			if (isCurrentWorkoutExist()) {
+				Dialog.confirm({
+					title: "Wan't to replace current workout?",
+					onConfirm: () => {
+						navigateToProgram(program);
+					},
+				});
+			} else {
+				navigateToProgram(program);
+			}
 		}
+	};
+
+	const navigateToProgram = (program: Program) => {
+		saveCurrentWorkout({
+			name: program.name,
+			exercises: [...program.exercises],
+		});
+		navigate("/workout/current");
 	};
 
 	const handleDeleteProgram = (program: Program) => {
