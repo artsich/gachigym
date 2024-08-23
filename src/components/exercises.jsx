@@ -1,8 +1,6 @@
-import React from "react";
-import { Form, Input, Grid, Divider } from "antd-mobile";
+import { Form, Input, Divider, SwipeAction, Dialog } from "antd-mobile";
 import { AddCircleOutline } from "antd-mobile-icons";
 import { ExerciseSet } from "./exercise-set";
-import { DeleteExerciseButton } from "./delete-exercise-button";
 
 export const Exercises = () => {
 	return (
@@ -17,36 +15,49 @@ export const Exercises = () => {
 			{(fields, { remove }) =>
 				fields.map(({ index }) => (
 					<>
-						<Grid columns={4}>
-							<Grid.Item span={3}>
-								<Form.Item
-									name={[index, "name"]}
-									rules={[
-										{
-											required: true,
-											message: "Name is required",
-										},
-										{
-											type: "string",
-											min: 2,
-											message: "Too short",
-										},
-										{
-											type: "string",
-											max: 100,
-											message: "Too long",
-										},
-									]}
-								>
-									<Input placeholder="Exercise name" />
-								</Form.Item>
-							</Grid.Item>
-							<Grid.Item>
-								<DeleteExerciseButton
-									onClick={() => remove(index)}
+						<SwipeAction
+							key={index}
+							closeOnAction={true}
+							closeOnTouchOutside={true}
+							rightActions={[
+								{
+									key: "delete",
+									text: "Delete",
+									color: "danger",
+									onClick: () => {
+										Dialog.confirm({
+											title: "Remove excercise?",
+											onConfirm: () => remove(index),
+										});
+									},
+								},
+							]}
+						>
+							<Form.Item
+								name={[index, "name"]}
+								rules={[
+									{
+										required: true,
+										message: "Name is required",
+									},
+									{
+										type: "string",
+										min: 2,
+										message: "Too short",
+									},
+									{
+										type: "string",
+										max: 100,
+										message: "Too long",
+									},
+								]}
+							>
+								<Input
+									style={{ "--font-size": "24px" }}
+									placeholder="Exercise name"
 								/>
-							</Grid.Item>
-						</Grid>
+							</Form.Item>
+						</SwipeAction>
 						<Divider />
 						<Form.Array
 							name={[index, "sets"]}
