@@ -6,8 +6,35 @@
     --gap-vertical: 18px;
 }
 
-.datetime {
-    font-size: 12px;
+.workout-header {
+    font-size: 14px;
+    .adm-tag-round {
+        border-radius: 6px;
+    }
+}
+
+.date-time {
+    border-color: rgb(214, 227, 241);
+    background-color: rgb(214, 227, 241);
+    color: black;
+    font-weight: 600;
+}
+
+.workout-duration {
+    border-color: rgb(214, 226, 190);
+    background-color: rgb(214, 226, 190);
+    color: black;
+}
+
+.workout-name {
+    border-color: rgb(237, 233, 238);
+    background-color: rgb(237, 233, 238);
+    color: black;
+    font-size: 1.1em;
+}
+
+.workout-options {
+    font-size: 20px;
 }
 
 .badge {
@@ -32,7 +59,7 @@
     position: absolute;
     top: -30%;
     right: -30%;
-    font-size: .5em;
+    font-size: 0.5em;
     color: rgb(245, 245, 245);
     width: 1.8em;
     height: 1.8em;
@@ -50,5 +77,5 @@
     right: -40%;
     writing-mode: vertical-rl;
     transform: scale(-1);
-    font-size: .5em;
-} 
+    font-size: 0.5em;
+}
