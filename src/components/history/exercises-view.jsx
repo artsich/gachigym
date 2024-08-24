@@ -7,7 +7,7 @@ export const ExercisesView = ({ exercises }) => {
 	return (
 		<Grid columns={1} gap={20}>
 			<Grid.Item>
-				<Space>
+				<Space wrap>
 					{exercises?.map((exercise, index) => (
 						<Tag
 							key={index}
@@ -15,10 +15,10 @@ export const ExercisesView = ({ exercises }) => {
 								activeExercise === index ? "solid" : "outline"
 							}
 							color={
-								activeExercise === index ? "warning" : "default"
+								activeExercise === index ? "success" : "default"
 							}
 							onClick={() => setActiveExercise(index)}
-							style={{fontSize: "14px"}}
+							style={{ fontSize: "14px" }}
 						>
 							{exercise.name}
 						</Tag>
