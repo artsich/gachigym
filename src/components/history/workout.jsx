@@ -1,27 +1,29 @@
 import { AutoCenter, Grid, Space, Tag } from "antd-mobile";
 import { ExercisesView } from "./exercises-view";
-import "./style.css";
 import { ClockCircleOutline } from "antd-mobile-icons";
+import "./style.css";
 
-export const Workout = ({ workout }) => {
-	const durationOfWorkout = () => {
-		let timeDifference = new Date(workout.finishTime - workout.startTime);
-		let hours = Math.floor(timeDifference / 3600000);
-		let minutes = Math.round((timeDifference % 3600000) / 60000);
+const WorkoutDuration = ({ startTime, finishTime }) => {
+	const calculateDuration = () => {
+		const timeDifference = new Date(finishTime - startTime);
+		const hours = Math.floor(timeDifference / 3600000);
+		const minutes = Math.round((timeDifference % 3600000) / 60000);
 
-		return (
-			<AutoCenter>
-				<Tag round="true" className="workout-duration">
-					<ClockCircleOutline />
-					<span>
-						{hours < 1 ? <></> : hours + "h"} {minutes}m
-					</span>
-				</Tag>
-			</AutoCenter>
-		);
+		return `${hours < 1 ? "" : hours + "h"} ${minutes}m`;
 	};
 
-	var dateOptions = {
+	return (
+		<AutoCenter>
+			<Tag round="true" className="workout-duration">
+				<ClockCircleOutline />
+				<span>{calculateDuration()}</span>
+			</Tag>
+		</AutoCenter>
+	);
+};
+
+export const Workout = ({ workout }) => {
+	const dateOptions = {
 		weekday: "short",
 		day: "numeric",
 		month: "short",
@@ -38,7 +40,12 @@ export const Workout = ({ workout }) => {
 						)}
 					</Tag>
 				</Grid.Item>
-				<Grid.Item span={2}>{durationOfWorkout()}</Grid.Item>
+				<Grid.Item span={2}>
+					<WorkoutDuration
+						startTime={workout.startTime}
+						finishTime={workout.finishTime}
+					/>
+				</Grid.Item>
 				<Grid.Item span={4}>
 					<Space justify="center" block="true">
 						<Tag round="true" className="workout-name">
