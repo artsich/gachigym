@@ -1,11 +1,20 @@
-import { Form, Input, Button, Skeleton, Grid } from "antd-mobile";
+import { Form, Input, Button, Skeleton, Grid, Toast } from "antd-mobile";
 import { Exercises } from "./exercises";
 import { FinishTrainingButton } from "./finish-training-button";
 import { CancelWorkoutButton } from "./cancel-workout-button";
 import { Timer } from "./timer";
 
+function showValidationFailedMsg() {
+	Toast.show({
+		icon: "fail",
+		position: "top",
+		content: "Fill required fields",
+		maskClickable: true,
+	});
+}
+
 export const Workout = ({
-	workout,
+	initialWorkout,
 	onUpdate,
 	onStart,
 	onFinish,
@@ -13,24 +22,25 @@ export const Workout = ({
 	onCancel,
 }) => {
 	const [formRef] = Form.useForm();
-	const started = workout?.startTime !== undefined;
+	const started = initialWorkout?.startTime !== undefined;
 
 	const saveAsProgram = async () => {
-		try {
-			await formRef.validateFields();
-			onSaveAsProgram({
-				name: workout.name.trim(),
-				exercises: workout.exercises?.map((e) => ({
-					name: e.name.trim(),
-					sets: e.sets?.map((s) => ({
-						weight: s.weight,
-						reps: s.reps,
+		formRef
+			.validateFields()
+			.then(() => {
+				const workout = formRef.getFieldsValue();
+				onSaveAsProgram({
+					name: workout.name.trim(),
+					exercises: workout.exercises?.map((e) => ({
+						name: e.name.trim(),
+						sets: e.sets?.map((s) => ({
+							weight: s.weight,
+							reps: s.reps,
+						})),
 					})),
-				})),
-			});
-		} catch (e) {
-			console.error("catch", e);
-		}
+				});
+			})
+			.catch(() => showValidationFailedMsg());
 	};
 
 	const handleOnFinish = (workout) => {
@@ -44,7 +54,7 @@ export const Workout = ({
 		});
 	};
 
-	if (workout === null) {
+	if (initialWorkout === null) {
 		return (
 			<>
 				<Skeleton.Title animated />
@@ -56,7 +66,7 @@ export const Workout = ({
 	return (
 		<Form
 			form={formRef}
-			initialValues={workout}
+			initialValues={initialWorkout}
 			onFinish={handleOnFinish}
 			name="workout_form"
 			onValuesChange={(_, v) => onUpdate(v)}
@@ -96,6 +106,7 @@ export const Workout = ({
 										await formRef.validateFields();
 										return true;
 									} catch (__1) {
+										showValidationFailedMsg();
 										return false;
 									}
 								}}
@@ -115,7 +126,7 @@ export const Workout = ({
 				</Grid.Item>
 			</Grid>
 			<Form.Item>
-				{workout.startTime && (
+				{initialWorkout.startTime && (
 					<div
 						style={{
 							marginTop: "8px",
@@ -123,7 +134,7 @@ export const Workout = ({
 							justifyContent: "center",
 						}}
 					>
-						<Timer startTime={workout.startTime} />
+						<Timer startTime={initialWorkout.startTime} />
 					</div>
 				)}
 			</Form.Item>

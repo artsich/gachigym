@@ -37,7 +37,7 @@ export const WorkoutPage = () => {
 
 	return (
 		<Workout
-			workout={workout}
+			initialWorkout={workout}
 			onUpdate={(workoutUpdated: any) => {
 				const newWorkout = {
 					...workoutUpdated,
@@ -78,6 +78,7 @@ export const WorkoutPage = () => {
 				}
 			}}
 			onCancel={() => {
+				//TODO: if workout name is empty and there are not exsercises, just remove it without ask.
 				removeCurrentWorkout();
 				navigateToMain();
 			}}
