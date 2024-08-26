@@ -37,16 +37,21 @@ export function saveWorkout(workout) {
 }
 
 export function getWorkouts() {
-	const trainings = JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
+	const trainings =
+		JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
 	const sorted = trainings.sort((a, b) => b.startTime - a.startTime);
 	return sorted;
 }
 
+export function removeAllWorkouts() {
+	localStorage.removeItem(WORKOUTS_STORAGE_KEY);
+}
+
 export function getById(id) {
-	return getWorkouts().find(w => w.id === id);
+	return getWorkouts().find((w) => w.id === id);
 }
 
 export function removeWorkout(id) {
-	const workouts = getWorkouts().filter(workout => workout.id !== id);
+	const workouts = getWorkouts().filter((workout) => workout.id !== id);
 	localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts));
 }
