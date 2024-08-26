@@ -8,7 +8,7 @@ import {
 import { Theme, getSettings } from "../services/settings";
 
 interface ThemeContextType {
-	theme: Theme;
+	theme: "dark" | "light";
 	setTheme: (theme: Theme) => void;
 }
 
@@ -47,23 +47,25 @@ const useSystemThemeDetector = () => {
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
-	const [theme, setTheme] = useState<Theme>(getSettings().theme);
+	const [themeFromSettings, setTheme] = useState(getSettings().theme);
+	const [currentTheme, setCurrentTheme] = useState<"dark" | "light">("light");
 	const isSystemDark = useSystemThemeDetector();
 
 	useEffect(() => {
-		let desiredTheme = theme;
+		let desiredTheme = themeFromSettings;
 		if (desiredTheme === "system") {
 			desiredTheme = isSystemDark ? "dark" : "light";
 		}
 
+		setCurrentTheme(desiredTheme);
 		document.documentElement.setAttribute(
 			"data-prefers-color-scheme",
 			desiredTheme
 		);
-	}, [theme, isSystemDark]);
+	}, [themeFromSettings, isSystemDark]);
 
 	return (
-		<ThemeContext.Provider value={{ theme, setTheme }}>
+		<ThemeContext.Provider value={{ theme: currentTheme, setTheme }}>
 			{children}
 		</ThemeContext.Provider>
 	);
