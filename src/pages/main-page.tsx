@@ -41,7 +41,7 @@ const styles = {
 // TODO: Icons looks bad!
 export const MainPage = () => {
 	const navigate = useNavigate();
-	const [programs, setPrograms] = useState(getPrograms());
+	const [programs, setPrograms] = useState(() => getPrograms());
 
 	const openProgram = (name: string) => {
 		const program = getProgramByName(name);

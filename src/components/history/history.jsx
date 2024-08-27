@@ -1,11 +1,9 @@
-import { Button, Dialog, ErrorBlock, NavBar, Popover } from "antd-mobile";
+import { Button, Dialog, ErrorBlock, NavBar } from "antd-mobile";
 import { Workouts } from "./workouts";
 import { DeleteOutline, MoreOutline } from "antd-mobile-icons";
-import { useTheme } from "../../theme/theme-provider";
+import { ThemedPopoverMenu } from "../shared/themed-popover-menu";
 
 export const History = ({ workouts, onRemoveAll, onCreateNew }) => {
-	const { theme } = useTheme();
-
 	const actions = [
 		{
 			key: "clean",
@@ -32,14 +30,13 @@ export const History = ({ workouts, onRemoveAll, onCreateNew }) => {
 				backIcon={<></>}
 				right={
 					<div style={{ fontSize: 32 }}>
-						<Popover.Menu
-							mode={theme}
+						<ThemedPopoverMenu
 							actions={actions}
 							placement="bottom-start"
 							trigger="click"
 						>
 							<MoreOutline />
-						</Popover.Menu>
+						</ThemedPopoverMenu>
 					</div>
 				}
 			>

@@ -15,14 +15,19 @@ export const languageMap = {
 };
 
 export type Language = keyof typeof languageMap
-export type Theme = (typeof themes)[number];
+export type Theme = typeof themes[number];
 
 export type Settings = {
 	lang: Language;
 	theme: Theme;
 };
 
-export function setLanguage(lang: Language) {
+export const defaultSettings: Settings = {
+	lang: LanguageKeys.English,
+	theme: "system",
+};
+
+export function setLanguage(lang: Language): void {
 	setDefaultConfig({
 		locale: languageMap[lang],
 	});
@@ -32,7 +37,7 @@ export function getCurrentLanguageLocale(): typeof enUS | typeof ruRU {
 	return languageMap[getSettings().lang];
 }
 
-export function updateSettings(settings: Settings) {
+export function updateSettings(settings: Settings): void {
 	localStorage.setItem("SETTINGS", JSON.stringify(settings));
 }
 
@@ -41,9 +46,6 @@ export function getSettings(): Settings {
 	if (settingsJson) {
 		return JSON.parse(settingsJson) as Settings;
 	} else {
-		return {
-			lang: LanguageKeys.English,
-			theme: "system",
-		};
+		return defaultSettings;
 	}
 }
