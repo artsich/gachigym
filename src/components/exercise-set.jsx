@@ -34,6 +34,7 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 				<Grid.Item span={2}>
 					<Form.Item name={[field.index, "weight"]} label="Weight">
 						<Input
+							inputMode="numeric"
 							type="number"
 							placeholder="..."
 							clearable
@@ -54,6 +55,7 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 						]}
 					>
 						<Input
+							inputMode="numeric"
 							type="number"
 							placeholder="..."
 							clearable
