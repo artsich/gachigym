@@ -1,3 +1,5 @@
+import { Dialog, Toast } from "antd-mobile";
+
 type Set = {
 	weight: number,
 	reps: number
@@ -37,4 +39,26 @@ export function getPrograms(): Program[] {
 export function deleteProgram(name: string) {
 	const programs = getPrograms().filter(program => program.name !== name);
 	localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs));
+}
+
+export function saveAsProgram(program: Program) {
+	if (!getProgramByName(program.name)) {
+		saveProgram(program);
+		Toast.show({
+			icon: "success",
+			content: `${program.name} is saved`
+		});
+	} else {
+		Dialog.confirm({
+			title: `${program.name} already exists, replace?`,
+			onConfirm: () => {
+				deleteProgram(program.name);
+				saveProgram(program);
+				Toast.show({
+					icon: "success",
+					content: `${program.name} is updated`,
+				});
+			}
+		});
+	}
 }

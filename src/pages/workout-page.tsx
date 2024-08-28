@@ -8,12 +8,8 @@ import {
 	saveWorkout,
 	getById,
 } from "../services/workout-service";
-import { Dialog, Toast } from "antd-mobile";
 import {
-	Program,
-	deleteProgram,
-	getProgramByName,
-	saveProgram,
+	saveAsProgram
 } from "../services/program-service";
 
 export const WorkoutPage = () => {
@@ -56,27 +52,7 @@ export const WorkoutPage = () => {
 				saveWorkout({ ...workout, finishTime: Date.now() });
 				navigateToMain();
 			}}
-			onSaveAsProgram={(program: Program) => {
-				if (!getProgramByName(program.name)) {
-					saveProgram(program);
-					Toast.show({
-						icon: "success",
-						content: `${program.name} is saved`,
-					});
-				} else {
-					Dialog.confirm({
-						title: `${program.name} already exists, replace?`,
-						onConfirm: () => {
-							deleteProgram(program.name);
-							saveProgram(program);
-							Toast.show({
-								icon: "success",
-								content: `${program.name} is updated`,
-							});
-						},
-					});
-				}
-			}}
+			onSaveAsProgram={() => saveAsProgram(workout)}
 			onCancel={() => {
 				//TODO: if workout name is empty and there are not exsercises, just remove it without ask.
 				removeCurrentWorkout();
