@@ -29,6 +29,11 @@ export function saveCurrentWorkout(workout) {
 	localStorage.setItem(CURRENT_WORKOUT_STORAGE_KEY, JSON.stringify(workout));
 }
 
+export function isWorkoutsExist() {
+	const trainings = JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
+	return trainings.length !== 0;
+}
+
 export function saveWorkout(workout) {
 	const newWorkout = { ...workout, id: generateId() };
 	let workouts = getWorkouts();

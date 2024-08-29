@@ -1,28 +1,14 @@
-import { AutoCenter, Grid, Space, Tag } from "antd-mobile";
+import { Grid, Popover, Space, Tag } from "antd-mobile";
+import { WorkoutDuration } from "./workout-duration";
 import { ExercisesView } from "./exercises-view";
-import { ClockCircleOutline } from "antd-mobile-icons";
+import { WorkoutActions } from "./workout-actions";
+import { deleteProgram, saveAsProgram } from "../../services/program-service";
 import "./style.css";
 
-function calculateDuration(startTime, finishTime) {
-	const timeDifference = new Date(finishTime - startTime);
-	const hours = Math.floor(timeDifference / 3600000);
-	const minutes = Math.round((timeDifference % 3600000) / 60000);
+const truncateName = (name, maxLen) =>
+	name.length > maxLen ? name.substring(0, maxLen) + "..." : name;
 
-	return `${hours <= 1 ? "" : hours + "h"} ${minutes}m`;
-}
-
-const WorkoutDuration = ({ startTime, finishTime }) => {
-	return (
-		<AutoCenter>
-			<Tag round="true" className="workout-duration">
-				<ClockCircleOutline />
-				<span>{calculateDuration(startTime, finishTime)}</span>
-			</Tag>
-		</AutoCenter>
-	);
-};
-
-export const Workout = ({ workout }) => {
+export const Workout = ({ workout, onRemoveOne }) => {
 	const dateOptions = {
 		weekday: "short",
 		day: "numeric",
@@ -31,7 +17,7 @@ export const Workout = ({ workout }) => {
 
 	return (
 		<Grid columns={1} className="workout-vertical-gap">
-			<Grid columns={8} className="workout-header">
+			<Grid columns={10} className="workout-header">
 				<Grid.Item span={2}>
 					<Tag round="true" className="date-time">
 						{new Date(workout.startTime).toLocaleString(
@@ -41,17 +27,46 @@ export const Workout = ({ workout }) => {
 					</Tag>
 				</Grid.Item>
 				<Grid.Item span={2}>
-					<WorkoutDuration
-						startTime={workout.startTime}
-						finishTime={workout.finishTime}
-					/>
-				</Grid.Item>
-				<Grid.Item span={4}>
-					<Space justify="center" block="true">
-						<Tag round="true" className="workout-name">
-							{workout.name}
-						</Tag>
+					<Space justify="start">
+						<WorkoutDuration
+							startTime={workout.startTime}
+							finishTime={workout.finishTime}
+						/>
 					</Space>
+				</Grid.Item>
+				<Grid.Item span={5}>
+					<Space justify="start" block="true">
+						{
+							//todo: popover should be themed!
+						}
+						<Popover
+							content={workout.name}
+							trigger="click"
+							placement="bottom"
+						>
+							{
+								//todo: doesn't fit on the screen is width more then screen.width
+							}
+							<Tag round="true" className="workout-name">
+								{truncateName(workout.name, 15)}
+							</Tag>
+						</Popover>
+					</Space>
+				</Grid.Item>
+				<Grid.Item>
+					<WorkoutActions
+						span={1}
+						workout={workout}
+						onRemove={() => {
+							onRemoveOne(workout.id);
+						}}
+						onSaveProgram={() => {
+							saveAsProgram(workout);
+						}}
+						onDeleteProgram={() => {
+							deleteProgram(workout.name);
+						}}
+					/>
 				</Grid.Item>
 			</Grid>
 			<ExercisesView exercises={workout.exercises} />

@@ -28,17 +28,7 @@ export const Workout = ({
 		formRef
 			.validateFields()
 			.then(() => {
-				const workout = formRef.getFieldsValue();
-				onSaveAsProgram({
-					name: workout.name.trim(),
-					exercises: workout.exercises?.map((e) => ({
-						name: e.name.trim(),
-						sets: e.sets?.map((s) => ({
-							weight: s.weight,
-							reps: s.reps,
-						})),
-					})),
-				});
+				onSaveAsProgram();
 			})
 			.catch(() => showValidationFailedMsg());
 	};
