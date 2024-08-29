@@ -41,7 +41,19 @@ export function deleteProgram(name: string) {
 	localStorage.setItem(PROGRAMS_STORAGE_KEY, JSON.stringify(programs));
 }
 
-export function saveAsProgram(program: Program) {
+// TODO: create workout type
+export function saveAsProgram(workout: any) {
+	const program: Program = {
+		name: workout.name.trim(),
+		exercises: workout.exercises?.map((e: any) => ({
+			name: e.name.trim(),
+			sets: e.sets?.map((s: any) => ({
+				weight: s.weight,
+				reps: s.reps,
+			})),
+		})),
+	};
+
 	if (!getProgramByName(program.name)) {
 		saveProgram(program);
 		Toast.show({

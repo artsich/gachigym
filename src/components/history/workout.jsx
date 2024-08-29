@@ -36,34 +36,38 @@ export const Workout = ({ workout, onRemoveOne }) => {
 				</Grid.Item>
 				<Grid.Item span={5}>
 					<Space justify="start" block="true">
+						{
+							//todo: popover should be themed!
+						}
 						<Popover
 							content={workout.name}
 							trigger="click"
 							placement="bottom"
 						>
-							<Tag
-								round="true"
-								className="workout-name"
-								onClick={() => console.log(1)}
-							>
-								{truncateName(workout.name, 26)}
+							{
+								//todo: doesn't fit on the screen is width more then screen.width
+							}
+							<Tag round="true" className="workout-name">
+								{truncateName(workout.name, 15)}
 							</Tag>
 						</Popover>
 					</Space>
 				</Grid.Item>
-				<WorkoutActions
-					span={1}
-					workout={workout}
-					onRemove={() => {
-						onRemoveOne(workout.id);
-					}}
-					onSaveProgram={() => {
-						saveAsProgram(workout);
-					}}
-					onDeleteProgram={() => {
-						deleteProgram(workout.name);
-					}}
-				/>
+				<Grid.Item>
+					<WorkoutActions
+						span={1}
+						workout={workout}
+						onRemove={() => {
+							onRemoveOne(workout.id);
+						}}
+						onSaveProgram={() => {
+							saveAsProgram(workout);
+						}}
+						onDeleteProgram={() => {
+							deleteProgram(workout.name);
+						}}
+					/>
+				</Grid.Item>
 			</Grid>
 			<ExercisesView exercises={workout.exercises} />
 		</Grid>

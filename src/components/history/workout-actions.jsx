@@ -18,6 +18,7 @@ export const WorkoutActions = ({
 	const [isProgram, setIsProgram] = useState(false);
 
 	const onClickPopover = () => {
+		// TODO: temp solution, fix when db will be added.
 		setIsProgram(getProgramByName(workout.name) !== undefined);
 	};
 

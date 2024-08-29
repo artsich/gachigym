@@ -1,17 +1,17 @@
 import { Divider, Grid } from "antd-mobile";
 import "./style.css";
 import { Workout } from "./workout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getWorkouts, removeWorkout } from "../../services/workout-service";
 
 export const Workouts = () => {
-	const [workouts, setWorkouts] = useState([]);
+	const [workouts, setWorkouts] = useState<[]>([]);
 
 	const reload = () => {
 		setWorkouts(getWorkouts());
 	};
 
-	useState(() => {
+	useEffect(() => {
 		reload();
 	}, []);
 
@@ -22,7 +22,7 @@ export const Workouts = () => {
 					<Grid.Item>
 						<Workout
 							workout={workout}
-							onRemoveOne={(id) => {
+							onRemoveOne={(id: string) => {
 								removeWorkout(id);
 								reload();
 							}}
