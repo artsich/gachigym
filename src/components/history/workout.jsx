@@ -1,8 +1,9 @@
-import { Grid, Popover, Space, Tag } from "antd-mobile";
+import { Grid, Space, Tag } from "antd-mobile";
 import { WorkoutDuration } from "./workout-duration";
 import { ExercisesView } from "./exercises-view";
 import { WorkoutActions } from "./workout-actions";
 import { deleteProgram, saveAsProgram } from "../../services/program-service";
+import { ThemedPopover } from "../shared/themed-popover";
 import "./style.css";
 
 const truncateName = (name, maxLen) =>
@@ -17,7 +18,7 @@ export const Workout = ({ workout, onRemoveOne }) => {
 
 	return (
 		<Grid columns={1} className="workout-vertical-gap">
-			<Grid columns={10} className="workout-header">
+			<Grid columns={8} className="workout-header">
 				<Grid.Item span={2}>
 					<Tag round="true" className="date-time">
 						{new Date(workout.startTime).toLocaleString(
@@ -26,47 +27,47 @@ export const Workout = ({ workout, onRemoveOne }) => {
 						)}
 					</Tag>
 				</Grid.Item>
-				<Grid.Item span={2}>
-					<Space justify="start">
+				<Grid.Item>
+					<Space align="center" block>
 						<WorkoutDuration
 							startTime={workout.startTime}
 							finishTime={workout.finishTime}
 						/>
 					</Space>
 				</Grid.Item>
-				<Grid.Item span={5}>
-					<Space justify="start" block="true">
-						{
-							//todo: popover should be themed!
-						}
-						<Popover
+				<Grid.Item span={4}>
+					<Space justify="center" block="true">
+						<ThemedPopover
 							content={workout.name}
 							trigger="click"
 							placement="bottom"
 						>
 							{
-								//todo: doesn't fit on the screen is width more then screen.width
+								//todo: when clicked, text doesn't fit on the screen if width more then screen.width
+								// wrap mode should be changed somehow.
 							}
 							<Tag round="true" className="workout-name">
 								{truncateName(workout.name, 15)}
 							</Tag>
-						</Popover>
+						</ThemedPopover>
 					</Space>
 				</Grid.Item>
 				<Grid.Item>
-					<WorkoutActions
-						span={1}
-						workout={workout}
-						onRemove={() => {
-							onRemoveOne(workout.id);
-						}}
-						onSaveProgram={() => {
-							saveAsProgram(workout);
-						}}
-						onDeleteProgram={() => {
-							deleteProgram(workout.name);
-						}}
-					/>
+					<Space justify="end" block>
+						<WorkoutActions
+							span={1}
+							workout={workout}
+							onRemove={() => {
+								onRemoveOne(workout.id);
+							}}
+							onSaveProgram={() => {
+								saveAsProgram(workout);
+							}}
+							onDeleteProgram={() => {
+								deleteProgram(workout.name);
+							}}
+						/>
+					</Space>
 				</Grid.Item>
 			</Grid>
 			<ExercisesView exercises={workout.exercises} />
