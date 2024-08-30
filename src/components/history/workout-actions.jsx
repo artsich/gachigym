@@ -26,7 +26,7 @@ export const WorkoutActions = ({
 		{
 			key: "remove",
 			icon: <DeleteOutline />,
-			text: "remove workout",
+			text: "Remove",
 			onClick: () => {
 				Dialog.confirm({
 					title: "Remove workout?",
@@ -37,7 +37,7 @@ export const WorkoutActions = ({
 		{
 			key: "program",
 			icon: isProgram ? <HeartFill /> : <HeartOutline />,
-			text: isProgram ? "remove from programs" : "save as program",
+			text: isProgram ? "Remove from programs" : "Save as program",
 			onClick: () => {
 				isProgram ? onDeleteProgram() : onSaveProgram();
 			},
