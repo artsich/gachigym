@@ -1,5 +1,6 @@
 import { Grid, Space, Tag } from "antd-mobile";
 import { useState } from "react";
+import { SetBadge } from "./set-badge";
 
 export const ExercisesView = ({ exercises }) => {
 	const [activeExercise, setActiveExercise] = useState(0);
@@ -30,13 +31,10 @@ export const ExercisesView = ({ exercises }) => {
 					{exercises.length ? (
 						exercises[activeExercise].sets?.map((set, ind2) => (
 							<Grid.Item key={ind2}>
-								<div className="badge">
-									<div className="badge-weight">
-										{set.weight}
-									</div>
-									<div className="badge-reps">{set.reps}</div>
-									<div className="badge-label-KG">KG</div>
-								</div>
+								<SetBadge
+									weight={set.weight ?? 0}
+									reps={set.reps ?? 0}
+								/>
 							</Grid.Item>
 						))
 					) : (
