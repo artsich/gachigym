@@ -15,6 +15,10 @@ export const ExercisePlayer = ({
 	exercise: ProgramExcercise;
 	onFinished: (completedExcercise: CompletedExcercise) => void;
 }) => {
+	const [currentExercise, setCurrentExercise] = useState<ProgramExcercise>({
+		name: "no name",
+		sets: [],
+	});
 	const [completedSets, setCompletedSets] = useState<ProgramSet[]>([]);
 	const [completedCount, setCompletedCount] = useState<number>(0);
 	const [currentSet, setCurrentSet] = useState<ProgramSet>({
@@ -26,10 +30,14 @@ export const ExercisePlayer = ({
 		setCompletedSets([]);
 		setCompletedCount(0);
 		setCurrentSet(() => {
-			if (exercise.sets.length > 0) {
+			if (exercise.sets && exercise.sets.length > 0) {
 				return exercise.sets[0];
 			}
 			return { reps: 0, weight: 0 };
+		});
+		setCurrentExercise({
+			...exercise,
+			sets: exercise.sets ? [...exercise.sets] : [],
 		});
 	}, [exercise]);
 
@@ -38,12 +46,12 @@ export const ExercisePlayer = ({
 		setCompletedSets(newCompletedSets);
 
 		const newSetNumber = newCompletedSets.length;
-		const isLastSet = newSetNumber >= exercise.sets.length;
+		const isLastSet = newSetNumber >= currentExercise.sets.length;
 
 		if (isLastSet) {
 			askToFinish(newCompletedSets);
 		} else {
-			setCurrentSet(exercise.sets[newSetNumber] ?? {});
+			setCurrentSet(currentExercise.sets[newSetNumber] ?? {});
 			setCompletedCount((prevCount) => prevCount + 1);
 		}
 	};
@@ -54,7 +62,7 @@ export const ExercisePlayer = ({
 			cancelText: "Continue",
 			onConfirm: () =>
 				onFinished({
-					name: exercise.name,
+					name: currentExercise.name,
 					sets,
 				}),
 			onCancel: () => {
@@ -71,8 +79,10 @@ export const ExercisePlayer = ({
 			<Grid.Item>
 				<Space justify="center" block>
 					<h2>
-						{exercise.name}: {completedCount + 1} /{" "}
-						{exercise.sets.length}
+						{currentExercise.name}: {completedCount + 1} /{" "}
+						{currentExercise.sets && currentExercise.sets.length > 0
+							? currentExercise.sets.length
+							: completedCount + 1}
 					</h2>
 				</Space>
 			</Grid.Item>
