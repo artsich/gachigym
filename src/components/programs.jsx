@@ -1,6 +1,6 @@
 import { List, SwipeAction, Dialog } from "antd-mobile";
 
-export const Programs = ({ programs, onOpen, onDelete }) => {
+export const Programs = ({ programs, onOpen, onDelete, openInPlayer }) => {
 	if (programs.length === 0) {
 		return <></>;
 	}
@@ -23,6 +23,14 @@ export const Programs = ({ programs, onOpen, onDelete }) => {
 									onConfirm: () => onDelete(program),
 								});
 							},
+						},
+					]}
+					leftActions={[
+						{
+							key: "openPlayer",
+							text: "Open player",
+							color: "success",
+							onClick: () => openInPlayer(program.name),
 						},
 					]}
 				>

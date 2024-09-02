@@ -8,7 +8,7 @@ import { getCurrentLanguageLocale } from "./services/settings";
 
 function footherContent() {
 	const year = new Date().getFullYear();
-	return `@ ${year} gachy.tracker All rights reserved`;
+	return `@ ${year} workout.tracker`;
 }
 
 export const App = () => {

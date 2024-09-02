@@ -120,6 +120,9 @@ export const MainPage = () => {
 				programs={programs}
 				onOpen={(program: any) => openProgram(program.name)}
 				onDelete={(program: any) => handleDeleteProgram(program)}
+				openInPlayer={(programName: string) =>
+					navigate(`/player/${programName}`)
+				}
 			/>
 		</Space>
 	);
