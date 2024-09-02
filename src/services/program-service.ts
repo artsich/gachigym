@@ -1,18 +1,18 @@
 import { Dialog, Toast } from "antd-mobile";
 
-type Set = {
+export type Set = {
 	weight: number,
 	reps: number
 }
 
-type ProgramExcercise = {
+export type ProgramExcercise = {
 	name: string,
-	sets: [Set]
+	sets: Set[]
 }
 
 export type Program = {
 	name: string,
-	exercises: [ProgramExcercise]
+	exercises: ProgramExcercise[]
 }
 
 const PROGRAMS_STORAGE_KEY = "programs";
