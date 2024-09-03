@@ -2,7 +2,7 @@ import { Form, Input, Divider, SwipeAction, Dialog } from "antd-mobile";
 import { AddCircleOutline } from "antd-mobile-icons";
 import { ExerciseSet } from "./exercise-set";
 
-export const Exercises = () => {
+export const Exercises = ({ formRef }) => {
 	return (
 		<Form.Array
 			name="exercises"
@@ -38,7 +38,7 @@ export const Exercises = () => {
 								rules={[
 									{
 										required: true,
-										message: "Name is required",
+										message: "Name is required!",
 									},
 									{
 										type: "string",
@@ -55,6 +55,14 @@ export const Exercises = () => {
 								<Input
 									style={{ "--font-size": "24px" }}
 									placeholder="Exercise name"
+									onChange={(value) => {
+										// todo: by some reason it does not work, but for workout name it is fine.
+										// WHY???
+										formRef.setFieldValue(
+											[index, "name"],
+											value.trim()
+										);
+									}}
 								/>
 							</Form.Item>
 						</SwipeAction>

@@ -84,7 +84,12 @@ export const Workout = ({
 							},
 						]}
 					>
-						<Input placeholder="name" />
+						<Input
+							placeholder="name"
+							onChange={(value) =>
+								formRef.setFieldValue("name", value.trim())
+							}
+						/>
 					</Form.Item>
 				</Grid.Item>
 				<Grid.Item>
@@ -128,7 +133,7 @@ export const Workout = ({
 					</div>
 				)}
 			</Form.Item>
-			<Exercises />
+			<Exercises formRef={formRef} />
 			<Button
 				size="middle"
 				block
