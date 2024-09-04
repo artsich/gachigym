@@ -30,7 +30,8 @@ export function saveCurrentWorkout(workout) {
 }
 
 export function isWorkoutsExist() {
-	const trainings = JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
+	const trainings =
+		JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
 	return trainings.length !== 0;
 }
 
@@ -46,6 +47,13 @@ export function getWorkouts() {
 		JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
 	const sorted = trainings.sort((a, b) => b.startTime - a.startTime);
 	return sorted;
+}
+
+export function getWorkoutsInRange(startDate, finishDate) {
+	return getWorkouts().filter((workout) => {
+		const workoutDate = new Date(workout.finishTime);
+		return workoutDate >= startDate && workoutDate <= finishDate;
+	});
 }
 
 export function removeAllWorkouts() {

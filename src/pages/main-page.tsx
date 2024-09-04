@@ -19,6 +19,7 @@ import {
 	getProgramByName,
 	getPrograms,
 } from "../services/program-service";
+import { WorkoutActivityPanel } from "../components/workout-activity-panel";
 
 const styles = {
 	templateCard: {
@@ -74,6 +75,9 @@ export const MainPage = () => {
 
 	return (
 		<Space direction="vertical" block style={{ padding: "16px" }}>
+			<div style={{ marginBottom: "32px" }}>
+				<WorkoutActivityPanel />
+			</div>
 			{isTrainingInProgress() ? (
 				<Button
 					size="large"
