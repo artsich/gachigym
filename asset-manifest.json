@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/gachigym/static/css/main.e0618fa4.css",
-    "main.js": "/gachigym/static/js/main.cf8ca49a.js",
+    "main.css": "/gachigym/static/css/main.1e5c03aa.css",
+    "main.js": "/gachigym/static/js/main.00cfb558.js",
     "index.html": "/gachigym/index.html",
-    "main.e0618fa4.css.map": "/gachigym/static/css/main.e0618fa4.css.map",
-    "main.cf8ca49a.js.map": "/gachigym/static/js/main.cf8ca49a.js.map"
+    "static/media/javascript,__webpack_public_path__ = __webpack_base_uri__ = htmlWebpackPluginPublicPath;": "/gachigym/static/media/.1feff74faaf0efc6a044",
+    "main.1e5c03aa.css.map": "/gachigym/static/css/main.1e5c03aa.css.map",
+    "main.00cfb558.js.map": "/gachigym/static/js/main.00cfb558.js.map"
   },
   "entrypoints": [
-    "static/css/main.e0618fa4.css",
-    "static/js/main.cf8ca49a.js"
+    "static/css/main.1e5c03aa.css",
+    "static/js/main.00cfb558.js"
   ]
 }
