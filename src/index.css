@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+html[data-prefers-color-scheme='dark'] {
+  --adm-color-background:  #0d1117;
+}

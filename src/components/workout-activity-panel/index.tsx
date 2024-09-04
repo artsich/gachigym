@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import ActivityCalendar, {Activity, ThemeInput} from "react-activity-calendar";
+import ActivityCalendar, {
+	Activity,
+	ThemeInput,
+} from "react-activity-calendar";
 import { getWorkoutsInRange } from "../../services/workout-service";
 import { useTheme } from "../../theme/theme-provider";
 
@@ -22,6 +25,11 @@ function groupByDateCount(workouts: any) {
 	}, {});
 }
 
+const githubThemeColors: ThemeInput = {
+	dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+	light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+};
+
 export const WorkoutActivityPanel = () => {
 	const today = new Date();
 	const fourMonthsAgo = new Date(
@@ -30,8 +38,8 @@ export const WorkoutActivityPanel = () => {
 		today.getDate()
 	);
 
-	const [workouts] = useState(() => getWorkoutsInRange(fourMonthsAgo, today));
 	const { theme } = useTheme();
+	const [workouts] = useState(() => getWorkoutsInRange(fourMonthsAgo, today));
 
 	const workoutMap = groupByDateCount(workouts);
 
@@ -54,12 +62,6 @@ export const WorkoutActivityPanel = () => {
 			level: 0,
 		},
 	];
-
-	const githubThemeColors: ThemeInput = {
-		// GitHub's starting color is #161b22, but now the app background one is used because it looks better
-		dark: ["#1a1a1a", "#0e4429", "#006d32", "#26a641", "#39d353"],
-		light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-	};
 
 	return (
 		<>
