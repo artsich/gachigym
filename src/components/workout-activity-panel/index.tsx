@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import ActivityCalendar, { Activity } from "react-activity-calendar";
+import ActivityCalendar, {Activity, ThemeInput} from "react-activity-calendar";
 import { getWorkoutsInRange } from "../../services/workout-service";
 import { useTheme } from "../../theme/theme-provider";
 
@@ -55,10 +55,17 @@ export const WorkoutActivityPanel = () => {
 		},
 	];
 
+	const githubThemeColors: ThemeInput = {
+		// GitHub's starting color is #161b22, but now the app background one is used because it looks better
+		dark: ["#1a1a1a", "#0e4429", "#006d32", "#26a641", "#39d353"],
+		light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+	};
+
 	return (
 		<>
 			<ActivityCalendar
 				colorScheme={theme}
+				theme={githubThemeColors}
 				data={values}
 				loading={values.length === 0}
 				renderBlock={(block, activity) =>
