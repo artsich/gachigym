@@ -57,7 +57,7 @@ function workoutToActivity(workouts: any): Activity[] {
 }
 
 function compareDates(date1: string, date2: string): number {
-	return new Date(date1).getTime() - new Date(date2).getTime();
+	return new Date(date2).getTime() - new Date(date1).getTime();
 }
 
 const githubThemeColors: ThemeInput = {
