@@ -43,8 +43,8 @@ export function saveWorkout(workout) {
 }
 
 export function getWorkouts() {
-	const trainings =
-		JSON.parse(localStorage.getItem(WORKOUTS_STORAGE_KEY)) ?? [];
+	const json = localStorage.getItem(WORKOUTS_STORAGE_KEY).replace("NaN", 0);
+	const trainings = JSON.parse(json) ?? [];
 	const sorted = trainings.sort((a, b) => b.startTime - a.startTime);
 	return sorted;
 }

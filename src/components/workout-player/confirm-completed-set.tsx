@@ -17,6 +17,10 @@ export const ConfirmCompletedSet = ({
 	}, [set]);
 
 	const handleChange = (name: string, value: any) => {
+		if (isNaN(value)) {
+			value = 0;
+		}
+
 		setFormData({
 			...formData,
 			[name]: value,
@@ -54,7 +58,9 @@ export const ConfirmCompletedSet = ({
 							inputMode="numeric"
 							placeholder="..."
 							clearable
-							onChange={(value) => handleChange("weight", value)}
+							onChange={(value) =>
+								handleChange("weight", value ?? 0)
+							}
 							min={0}
 							max={1000}
 						/>
@@ -66,7 +72,9 @@ export const ConfirmCompletedSet = ({
 							inputMode="numeric"
 							placeholder="..."
 							clearable
-							onChange={(value) => handleChange("reps", value)}
+							onChange={(value) =>
+								handleChange("reps", value ?? 0)
+							}
 							min={0}
 							max={1000}
 						/>

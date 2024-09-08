@@ -3,8 +3,8 @@ export const SetBadge = ({
 	weight,
 	reps,
 }: {
-	weight: number | string;
-	reps: number | string;
+	weight: number;
+	reps: number;
 }) => {
 	const repsWeight = () => (
 		<>
@@ -20,5 +20,7 @@ export const SetBadge = ({
 		</>
 	);
 
-	return <div className="badge">{weight ? repsWeight() : onlyReps()}</div>;
+	return (
+		<div className="badge">{weight > 0 ? repsWeight() : onlyReps()}</div>
+	);
 };
