@@ -3,6 +3,7 @@ import { WorkoutPlayer } from "../components/workout-player/workout-player";
 import { getProgramByName } from "../services/program-service";
 import { saveWorkout } from "../services/workout-service";
 import { ErrorBlock } from "antd-mobile";
+import { RouterBlocker } from "../components/shared/router-blocker";
 
 export const WorkoutPlayerPage = () => {
 	const { name } = useParams();
@@ -22,12 +23,15 @@ export const WorkoutPlayerPage = () => {
 	}
 
 	return (
-		<WorkoutPlayer
-			program={program}
-			onFinish={(workout) => {
-				saveWorkout(workout);
-				navigate("/");
-			}}
-		/>
+		<>
+			<WorkoutPlayer
+				program={program}
+				onFinish={(workout) => {
+					saveWorkout(workout);
+					navigate("/");
+				}}
+			/>
+			<RouterBlocker title="Workout will not be saved." />
+		</>
 	);
 };
