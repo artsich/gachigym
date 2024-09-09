@@ -1,32 +1,20 @@
 import { Divider, Grid } from "antd-mobile";
-import "./style.css";
 import { Workout } from "./workout";
-import { useEffect, useState } from "react";
-import { getWorkouts, removeWorkout } from "../../services/workout-service";
+import "./style.css";
 
-export const Workouts = () => {
-	const [workouts, setWorkouts] = useState<[]>([]);
-
-	const reload = () => {
-		setWorkouts(getWorkouts());
-	};
-
-	useEffect(() => {
-		reload();
-	}, []);
-
+export const Workouts = ({
+	workouts,
+	onRemove,
+}: {
+	workouts: any[];
+	onRemove: (id: string) => void;
+}) => {
 	return (
 		<Grid columns={1} className="history-vertical-gap">
 			{workouts.map((workout, index) => (
 				<div key={index}>
 					<Grid.Item>
-						<Workout
-							workout={workout}
-							onRemoveOne={(id: string) => {
-								removeWorkout(id);
-								reload();
-							}}
-						/>
+						<Workout workout={workout} onRemoveOne={onRemove} />
 					</Grid.Item>
 					<Divider />
 				</div>

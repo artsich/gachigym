@@ -1,15 +1,28 @@
+import { useEffect, useState } from "react";
 import { Button, Dialog, ErrorBlock, NavBar } from "antd-mobile";
 import { Workouts } from "../components/history/workouts";
 import { DeleteOutline, SetOutline } from "antd-mobile-icons";
 import {
+	getWorkouts,
 	isWorkoutsExist,
 	removeAllWorkouts,
+	removeWorkout,
 } from "../services/workout-service";
 import { useNavigate } from "react-router-dom";
 import { ThemedPopoverMenu } from "../components/shared/themed-popover-menu";
 
 export const HistoryPage = () => {
 	const navigate = useNavigate();
+
+	const [workouts, setWorkouts] = useState<any[]>([]);
+
+	const reload = () => {
+		setWorkouts(getWorkouts());
+	};
+
+	useEffect(() => {
+		reload();
+	}, []);
 
 	const actions = [
 		{
@@ -21,7 +34,7 @@ export const HistoryPage = () => {
 					title: "Remove all?",
 					onConfirm: () => {
 						removeAllWorkouts();
-						navigate("/history");
+						reload();
 					},
 				});
 			},
@@ -52,7 +65,13 @@ export const HistoryPage = () => {
 			</NavBar>
 
 			{isWorkoutsExist() ? (
-				<Workouts />
+				<Workouts
+					workouts={workouts}
+					onRemove={(id) => {
+						removeWorkout(id);
+						reload();
+					}}
+				/>
 			) : (
 				<ErrorBlock title="No workouts" description="" status="empty">
 					<Button
