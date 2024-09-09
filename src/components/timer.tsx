@@ -17,7 +17,13 @@ function formatTime(milliseconds: number) {
 		.padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
-export function Timer({ startTime }: { startTime: Date }) {
+export function Timer({
+	startTime,
+	fontSize,
+}: {
+	startTime: Date;
+	fontSize?: string;
+}) {
 	const [timePassed, setTimePassed] = useState(
 		calculateTimePassed(startTime)
 	);
@@ -30,5 +36,9 @@ export function Timer({ startTime }: { startTime: Date }) {
 		return () => clearInterval(intervalId);
 	}, [startTime]);
 
-	return <p style={{ fontSize: "32px" }}>{formatTime(timePassed)}</p>;
+	return (
+		<span style={{ fontSize: fontSize ?? "32px" }}>
+			{formatTime(timePassed)}
+		</span>
+	);
 }

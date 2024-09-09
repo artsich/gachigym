@@ -1,104 +1,89 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Card, Dialog, Grid } from "antd-mobile";
+import { ConfirmCompletedSet } from "./confirm-completed-set";
 import {
 	ProgramExcercise,
 	Set as ProgramSet,
 } from "../../services/program-service";
-import { Button, Dialog, Grid, Space } from "antd-mobile";
-import { ConfirmCompletedSet } from "./confirm-completed-set";
 
 export type CompletedExcercise = ProgramExcercise;
 
 export const ExercisePlayer = ({
 	exercise,
-	onFinished,
+	onFinish,
 }: {
 	exercise: ProgramExcercise;
-	onFinished: (completedExcercise: CompletedExcercise) => void;
+	onFinish: (ex: CompletedExcercise) => void;
 }) => {
-	const [currentExercise, setCurrentExercise] = useState<ProgramExcercise>({
-		name: "no name",
-		sets: [],
-	});
 	const [completedSets, setCompletedSets] = useState<ProgramSet[]>([]);
-	const [completedCount, setCompletedCount] = useState<number>(0);
-	const [currentSet, setCurrentSet] = useState<ProgramSet>({
-		reps: 0,
-		weight: 0,
+	const [currentExercise] = useState<ProgramExcercise>(() => ({
+		...exercise,
+		sets: exercise.sets ? [...exercise.sets] : [],
+	}));
+	const [currentSet, setCurrentSet] = useState<ProgramSet>(() => {
+		if (exercise.sets && exercise.sets.length > 0) {
+			return exercise.sets[0];
+		}
+		return { reps: 0, weight: 0 };
 	});
 
-	useEffect(() => {
-		setCompletedSets([]);
-		setCompletedCount(0);
-		setCurrentSet(() => {
-			if (exercise.sets && exercise.sets.length > 0) {
-				return exercise.sets[0];
-			}
-			return { reps: 0, weight: 0 };
-		});
-		setCurrentExercise({
-			...exercise,
-			sets: exercise.sets ? [...exercise.sets] : [],
-		});
-	}, [exercise]);
-
-	const addCompletedSet = (set: ProgramSet) => {
-		const newCompletedSets = [...completedSets, set];
-		setCompletedSets(newCompletedSets);
-
-		const newSetNumber = newCompletedSets.length;
-		const isLastSet = newSetNumber >= currentExercise.sets.length;
-
-		if (isLastSet) {
-			askToFinish(newCompletedSets);
-		} else {
-			setCurrentSet(currentExercise.sets[newSetNumber] ?? {});
-			setCompletedCount((prevCount) => prevCount + 1);
-		}
-	};
-
-	const askToFinish = (sets: ProgramSet[], addNew = true) => {
+	const askToFinish = (sets: ProgramSet[]) => {
 		Dialog.confirm({
 			title: "Finish exercise?",
 			cancelText: "Continue",
-			onConfirm: () =>
-				onFinished({
-					name: currentExercise.name,
-					sets,
-				}),
-			onCancel: () => {
-				if (addNew) {
-					setCurrentSet({ reps: 0, weight: 0 });
-					setCompletedCount((prevCount) => prevCount + 1);
-				}
-			},
+			onConfirm: () => onFinish({ name: currentExercise.name, sets }),
+			onCancel: () => setCurrentSet({ reps: 0, weight: 0 }),
 		});
 	};
 
+	const handleOnCompleteSet = (set: ProgramSet) => {
+		const newCompletedSets = [...completedSets, set];
+		setCompletedSets(newCompletedSets);
+
+		const isLastSet =
+			newCompletedSets.length >= currentExercise.sets.length;
+
+		if (!isLastSet) {
+			setCurrentSet(currentExercise.sets[newCompletedSets.length] ?? {});
+		} else {
+			askToFinish(newCompletedSets);
+		}
+	};
+
 	return (
-		<Grid columns={1} gap={20}>
-			<Grid.Item>
-				<Space justify="center" block>
-					<h2>
-						{currentExercise.name}: {completedCount + 1} /{" "}
-						{currentExercise.sets && currentExercise.sets.length > 0
-							? currentExercise.sets.length
-							: completedCount + 1}
-					</h2>
-				</Space>
-			</Grid.Item>
-			<Grid.Item>
-				<Space justify="center" align="center" block>
-					<span
+		<Grid columns={1}>
+			<Grid.Item span={1}>
+				<div style={{ padding: "20px" }}>
+					<Card
+						onClick={() => {}}
 						style={{
-							height: 130,
-							width: 130,
-							backgroundColor: "red",
-							borderRadius: "50%",
-							display: "inline-flex",
-							alignItems: "center",
+							borderRadius: "16px",
+							background: "#3f4955",
+						}}
+						title={
+							<span
+								style={{
+									fontSize: "32px",
+								}}
+							>
+								{`${currentExercise.name}: ${
+									completedSets.length
+								} / ${
+									currentExercise.sets &&
+									currentExercise.sets.length > 0
+										? currentExercise.sets.length
+										: completedSets.length + 1
+								}`}
+							</span>
+						}
+						headerStyle={{
+							display: "flex",
 							justifyContent: "center",
-							fontSize: "24px",
-							color: "#fff",
+						}}
+						bodyStyle={{
+							fontSize: "32px",
+							display: "flex",
+							justifyContent: "center",
 						}}
 					>
 						{!currentSet.reps && !currentSet.weight
@@ -107,28 +92,25 @@ export const ExercisePlayer = ({
 							  (currentSet.weight > 0
 									? ` x ${currentSet.weight} kg`
 									: "")}
-					</span>
-				</Space>
+					</Card>
+				</div>
 			</Grid.Item>
-			<Grid.Item>
-				<Grid columns={2} gap={20}>
-					<Grid.Item>
-						<Button
-							block
-							color="success"
-							fill="outline"
-							onClick={() => askToFinish(completedSets, false)}
-						>
-							Finish exercise
-						</Button>
-					</Grid.Item>
-					<Grid.Item>
-						<ConfirmCompletedSet
-							set={currentSet}
-							onDone={(set) => addCompletedSet(set)}
-						/>
-					</Grid.Item>
-				</Grid>
+			<Grid.Item span={1}>
+				<div style={{ height: "100px" }}></div>
+			</Grid.Item>
+			<Grid.Item span={1}>
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}
+				>
+					<ConfirmCompletedSet
+						set={currentSet}
+						onDone={handleOnCompleteSet}
+					/>
+				</div>
 			</Grid.Item>
 		</Grid>
 	);

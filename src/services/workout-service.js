@@ -43,10 +43,13 @@ export function saveWorkout(workout) {
 }
 
 export function getWorkouts() {
-	const json = localStorage.getItem(WORKOUTS_STORAGE_KEY).replace("NaN", 0);
-	const trainings = JSON.parse(json) ?? [];
-	const sorted = trainings.sort((a, b) => b.startTime - a.startTime);
-	return sorted;
+	let json = localStorage.getItem(WORKOUTS_STORAGE_KEY) ?? "";
+	json = json.replace("NaN", 0);
+	if (json) {
+		const trainings = JSON.parse(json);
+		return trainings.sort((a, b) => b.startTime - a.startTime);
+	}
+	return [];
 }
 
 export function getWorkoutsInRange(startDate, finishDate) {
