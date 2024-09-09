@@ -21,10 +21,16 @@ const useNavigationBlocker = (when: boolean) => {
 	}, [when]);
 };
 
-export const RouterBlocker = ({ title }: { title: string }) => {
+export const RouterBlocker = ({
+	when,
+	title,
+}: {
+	when: boolean;
+	title: string;
+}) => {
 	let blocker = useBlocker(
 		({ currentLocation, nextLocation }) =>
-			currentLocation.pathname !== nextLocation.pathname
+			when && currentLocation.pathname !== nextLocation.pathname
 	);
 
 	useNavigationBlocker(true);

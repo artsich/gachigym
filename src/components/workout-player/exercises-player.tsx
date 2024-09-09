@@ -52,8 +52,6 @@ export const ExercisesPlayer = ({
 		<Swiper
 			slidesPerView={1}
 			spaceBetween={50}
-			onSlideChange={() => console.log("slide change")}
-			onSwiper={(swiper: any) => console.log(swiper)}
 			pagination={{
 				clickable: true,
 			}}
