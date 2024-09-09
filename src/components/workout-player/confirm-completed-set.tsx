@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Input, Popup } from "antd-mobile";
 import { Set } from "../../services/program-service";
+import { RightOutline } from "antd-mobile-icons";
+import "./style.css";
 
 export const ConfirmCompletedSet = ({
 	set,
@@ -29,9 +31,9 @@ export const ConfirmCompletedSet = ({
 
 	return (
 		<>
-			<Button block color="success" onClick={() => setVisible(true)}>
-				Done
-			</Button>
+			<button className="set-done-btn" onClick={() => setVisible(true)}>
+				<RightOutline />
+			</button>
 			<Popup
 				visible={visible}
 				bodyStyle={{ height: "40vh" }}
@@ -53,13 +55,13 @@ export const ConfirmCompletedSet = ({
 					<Form.Header>Confirm results</Form.Header>
 					<Form.Item label="Weight">
 						<Input
-							value={`${formData.weight}`}
+							value={formData.weight ? `${formData.weight}` : ""}
 							type="number"
 							inputMode="numeric"
 							placeholder="..."
 							clearable
 							onChange={(value) =>
-								handleChange("weight", value ?? 0)
+								handleChange("weight", value ?? "")
 							}
 							min={0}
 							max={1000}
@@ -67,13 +69,13 @@ export const ConfirmCompletedSet = ({
 					</Form.Item>
 					<Form.Item label="Reps">
 						<Input
-							value={`${formData.reps}`}
+							value={formData.reps ? `${formData.reps}` : ""}
 							type="number"
 							inputMode="numeric"
 							placeholder="..."
 							clearable
 							onChange={(value) =>
-								handleChange("reps", value ?? 0)
+								handleChange("reps", value ?? "")
 							}
 							min={0}
 							max={1000}

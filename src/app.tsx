@@ -5,6 +5,7 @@ import { ConfigProvider } from "antd-mobile";
 import { setDefaultConfig } from "antd-mobile";
 import { useEffect } from "react";
 import { getCurrentLanguageLocale } from "./services/settings";
+import { VBoxContainer } from "./components/shared/vbox-container";
 
 function footherContent() {
 	const year = new Date().getFullYear();
@@ -25,8 +26,10 @@ export const App = () => {
 	return (
 		<ConfigProvider locale={locale}>
 			<ThemeProvider>
-				<AppRoutes />
-				<Footer content={footherContent()} />
+				<VBoxContainer gap={100}>
+					<AppRoutes />
+					<Footer content={footherContent()} />
+				</VBoxContainer>
 			</ThemeProvider>
 		</ConfigProvider>
 	);
