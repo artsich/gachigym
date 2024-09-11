@@ -1,24 +1,47 @@
-import { Grid, Space, Tag } from "antd-mobile";
+import { AutoCenter, Grid, Space, Tag } from "antd-mobile";
 import { useState } from "react";
 import { SetBadge } from "./set-badge";
 import { InformationCircleFill } from "antd-mobile-icons";
 import { ThemedPopover } from "../shared/themed-popover";
 
-const getExerciseInformation = (sets) => {
-	const tonnage = sets.length
-		? sets?.reduce(
-				(tonnage, set) => tonnage + (set.weight || 0) * (set.reps || 0),
-				0
-		  )
-		: 0;
+function getSetsInformation(sets) {
+	const tonnage =
+		sets?.reduce(
+			(tonnage, set) =>
+				tonnage + Number(set.weight || 0) * Number(set.reps || 0),
+			0
+		) ?? 0;
 
-	const reps = sets.length
-		? sets?.reduce((summaryReps, set) => {
-				return summaryReps + set.reps;
-		  }, 0)
-		: 0;
+	const reps =
+		sets?.reduce(
+			(summaryReps, set) => summaryReps + Number(set.reps || 0),
+			0
+		) ?? 0;
 
-	return `Tonnage: ${tonnage} kg for ${reps} reps`;
+	if (tonnage === 0) {
+		return `${reps} reps`;
+	} else {
+		return `Tonnage: ${tonnage} kg for ${reps} reps`;
+	}
+}
+
+const ExerciseSummary = ({ exercise }) => {
+	const sets = exercise?.sets;
+	if (!sets) {
+		return <></>;
+	}
+
+	return (
+		<AutoCenter>
+			<ThemedPopover
+				content={getSetsInformation(sets)}
+				trigger="click"
+				placement="bottom"
+			>
+				<InformationCircleFill fontSize={20} />
+			</ThemedPopover>
+		</AutoCenter>
+	);
 };
 
 export const ExercisesView = ({ exercises }) => {
@@ -66,17 +89,7 @@ export const ExercisesView = ({ exercises }) => {
 						</Grid>
 					</Grid.Item>
 					<Grid.Item span={1}>
-						<AutoCenter>
-							<ThemedPopover
-								content={getExerciseInformation(
-									exercises[activeExercise].sets
-								)}
-								trigger="click"
-								placement="bottom"
-							>
-								<InformationCircleFill fontSize={20} />
-							</ThemedPopover>
-						</AutoCenter>
+						<ExerciseSummary exercise={exercises[activeExercise]} />
 					</Grid.Item>
 				</Grid>
 			</Grid.Item>
