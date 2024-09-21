@@ -17,20 +17,7 @@ export const ExerciseSet = ({ field, onRemoveSet }) => {
 				},
 			]}
 		>
-			<Grid columns={6}>
-				<Grid.Item span={2}>
-					<Form.Item
-						name={[field.index, "isDone"]}
-						valuePropName="checked"
-					>
-						<Switch
-							style={{
-								"--checked-color": "#00b578",
-								marginTop: "8px",
-							}}
-						/>
-					</Form.Item>
-				</Grid.Item>
+			<Grid columns={4}>
 				<Grid.Item span={2}>
 					<Form.Item name={[field.index, "weight"]} label="Weight">
 						<Input
