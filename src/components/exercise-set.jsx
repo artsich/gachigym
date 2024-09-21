@@ -1,4 +1,4 @@
-import { Input, Switch, Form, SwipeAction, Grid } from "antd-mobile";
+import { Input, Form, SwipeAction, Grid } from "antd-mobile";
 
 export const ExerciseSet = ({ field, onRemoveSet }) => {
 	return (

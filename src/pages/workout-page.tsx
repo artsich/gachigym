@@ -8,9 +8,7 @@ import {
 	saveWorkout,
 	getById,
 } from "../services/workout-service";
-import {
-	saveAsProgram
-} from "../services/program-service";
+import { saveAsProgram } from "../services/program-service";
 
 export const WorkoutPage = () => {
 	const navigate = useNavigate();
@@ -42,14 +40,13 @@ export const WorkoutPage = () => {
 				saveCurrentWorkout(newWorkout);
 				setWorkout(newWorkout);
 			}}
-			onStart={() => {
-				const newWorkout = { ...workout, startTime: Date.now() };
-				saveCurrentWorkout(newWorkout);
-				setWorkout(newWorkout);
-			}}
 			onFinish={() => {
 				removeCurrentWorkout();
-				saveWorkout({ ...workout, finishTime: Date.now() });
+				saveWorkout({
+					...workout,
+					startTime: Date.now(),
+					finishTime: Date.now(),
+				});
 				navigateToMain();
 			}}
 			onSaveAsProgram={() => saveAsProgram(workout)}

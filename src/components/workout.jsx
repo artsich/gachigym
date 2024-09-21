@@ -1,8 +1,14 @@
-import { Form, Input, Button, Skeleton, Grid, Toast } from "antd-mobile";
+import {
+	Form,
+	Input,
+	Button,
+	Skeleton,
+	Grid,
+	Toast,
+	Dialog,
+} from "antd-mobile";
 import { Exercises } from "./exercises";
-import { FinishTrainingButton } from "./finish-training-button";
 import { CancelWorkoutButton } from "./cancel-workout-button";
-import { Timer } from "./timer";
 
 function showValidationFailedMsg() {
 	Toast.show({
@@ -16,13 +22,11 @@ function showValidationFailedMsg() {
 export const Workout = ({
 	initialWorkout,
 	onUpdate,
-	onStart,
 	onFinish,
 	onSaveAsProgram,
 	onCancel,
 }) => {
 	const [formRef] = Form.useForm();
-	const started = initialWorkout?.startTime !== undefined;
 
 	const saveAsProgram = async () => {
 		formRef
@@ -94,45 +98,29 @@ export const Workout = ({
 				</Grid.Item>
 				<Grid.Item>
 					<Form.Item>
-						{started ? (
-							<FinishTrainingButton
-								onBeforeFinish={async () => {
-									try {
-										await formRef.validateFields();
-										return true;
-									} catch (__1) {
-										showValidationFailedMsg();
-										return false;
-									}
-								}}
-								onFinish={() => formRef.submit()}
-							/>
-						) : (
-							<Button
-								block
-								color="primary"
-								size="middle"
-								onClick={onStart}
-							>
-								Start
-							</Button>
-						)}
+						<Button
+							block
+							color="primary"
+							size="middle"
+							onClick={async () => {
+								try {
+									await formRef.validateFields();
+								} catch (__1) {
+									showValidationFailedMsg();
+									return;
+								}
+
+								await Dialog.confirm({
+									title: "Save workout?",
+									onConfirm: () => formRef.submit(),
+								});
+							}}
+						>
+							Save
+						</Button>
 					</Form.Item>
 				</Grid.Item>
 			</Grid>
-			<Form.Item>
-				{initialWorkout.startTime && (
-					<div
-						style={{
-							marginTop: "8px",
-							display: "flex",
-							justifyContent: "center",
-						}}
-					>
-						<Timer startTime={initialWorkout.startTime} />
-					</div>
-				)}
-			</Form.Item>
 			<Exercises formRef={formRef} />
 			<Button
 				size="middle"
