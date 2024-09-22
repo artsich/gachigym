@@ -36,7 +36,7 @@ export const HistoryPage = () => {
 
 	useEffect(() => {
 		reload();
-	}, []);
+	});
 
 	const actions = [
 		{
