@@ -54,6 +54,7 @@ export const ExercisesView = ({ exercises }) => {
 					{exercises?.map((exercise, index) => (
 						<Tag
 							key={index}
+							round={true}
 							fill={
 								activeExercise === index ? "solid" : "outline"
 							}
@@ -61,7 +62,7 @@ export const ExercisesView = ({ exercises }) => {
 								activeExercise === index ? "success" : "default"
 							}
 							onClick={() => setActiveExercise(index)}
-							style={{ fontSize: "14px" }}
+							style={{ fontSize: "14px", padding: "6px 14px" }}
 						>
 							{exercise.name}
 						</Tag>
