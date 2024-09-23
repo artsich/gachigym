@@ -7,31 +7,35 @@ export const FilterByDate = ({ range, onChangeDateRange }) => {
 	const [currentButton, setCurrentButton] = useState();
 
 	return (
-		<div style={{ margin: "14px" }}>
+		<div style={{ margin: "14px 4px" }}>
 			<h4 style={{ margin: "5px" }}>Period</h4>
 			<AutoCenter>
-				<Grid columns={9} gap={20}>
+				<Grid columns={9} gap={5}>
 					<GridItem span={4}>
 						<Button
 							size="small"
+							style={{ fontSize: "14px", width: "100%" }}
 							onClick={() => {
 								setVisible(true);
-								setCurrentButton("start");
+								setCurrentButton("Start");
 							}}
 						>
-							{range?.start?.toLocaleDateString("en-GB")}
+							{range?.start?.toDateString("en-US")}
 						</Button>
 					</GridItem>
-					<div style={{paddingTop: "5px"}}>-</div>
+					<AutoCenter>
+						<div style={{ padding: "4px" }}>-</div>
+					</AutoCenter>
 					<GridItem span={4}>
 						<Button
 							size="small"
+							style={{ fontSize: "14px", width: "100%" }}
 							onClick={() => {
 								setVisible(true);
-								setCurrentButton("end");
+								setCurrentButton("End");
 							}}
 						>
-							{range?.end?.toLocaleDateString("en-GB")}
+							{range?.end?.toDateString("en-US")}
 						</Button>
 					</GridItem>
 				</Grid>
@@ -39,12 +43,14 @@ export const FilterByDate = ({ range, onChangeDateRange }) => {
 			<DatePicker
 				title={currentButton}
 				visible={visible}
-				value={currentButton === "start"? range.start : range.end}
+				max={new Date()}
+				value={currentButton === "Start" ? range.start : range.end}
 				onClose={() => {
 					setVisible(false);
 				}}
 				onConfirm={(val) => {
-					currentButton === "start"? range.start = val : range.end = val;
+					if (currentButton === "Start") range.start = val;
+					else range.end = val;
 					onChangeDateRange(range);
 					Toast.show(val?.toLocaleDateString("en-GB"));
 				}}

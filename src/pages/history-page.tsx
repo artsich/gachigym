@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Dialog, ErrorBlock, NavBar } from "antd-mobile";
 import { Workouts } from "../components/history/workouts";
 import { DeleteOutline, SetOutline } from "antd-mobile-icons";
@@ -25,18 +25,18 @@ export const HistoryPage = () => {
 
 	const [workouts, setWorkouts] = useState<any[]>([]);
 
-	const reload = () => {
+	const reload = useCallback(() => {
 		setWorkouts(
 			getWorkoutsInRange(
 				dateRangeOfWorkouts.start,
 				dateRangeOfWorkouts.end
 			)
 		);
-	};
+	}, [dateRangeOfWorkouts]);
 
 	useEffect(() => {
 		reload();
-	});
+	}, [reload]);
 
 	const actions = [
 		{
