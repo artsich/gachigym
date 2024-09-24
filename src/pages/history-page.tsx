@@ -1,28 +1,42 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Dialog, ErrorBlock, NavBar } from "antd-mobile";
 import { Workouts } from "../components/history/workouts";
 import { DeleteOutline, SetOutline } from "antd-mobile-icons";
 import {
-	getWorkouts,
+	getWorkoutsInRange,
 	isWorkoutsExist,
 	removeAllWorkouts,
 	removeWorkout,
 } from "../services/workout-service";
 import { useNavigate } from "react-router-dom";
 import { ThemedPopoverMenu } from "../components/shared/themed-popover-menu";
+import { FilterByDate } from "../components/filter-by-date";
+
+const startDateFromDateRange = new Date();
+startDateFromDateRange.setMonth(startDateFromDateRange.getMonth() - 1);
 
 export const HistoryPage = () => {
 	const navigate = useNavigate();
 
+	const [dateRangeOfWorkouts, setDateRangeOfWorkouts] = useState<{
+		start: Date;
+		end: Date;
+	}>({ start: startDateFromDateRange, end: new Date() });
+
 	const [workouts, setWorkouts] = useState<any[]>([]);
 
-	const reload = () => {
-		setWorkouts(getWorkouts());
-	};
+	const reload = useCallback(() => {
+		setWorkouts(
+			getWorkoutsInRange(
+				dateRangeOfWorkouts.start,
+				dateRangeOfWorkouts.end
+			)
+		);
+	}, [dateRangeOfWorkouts]);
 
 	useEffect(() => {
 		reload();
-	}, []);
+	}, [reload]);
 
 	const actions = [
 		{
@@ -44,10 +58,6 @@ export const HistoryPage = () => {
 	return (
 		<div style={{ padding: "6px" }}>
 			<NavBar
-				style={{
-					"--border-bottom": "1px #eee solid",
-					marginBottom: "32px",
-				}}
 				backIcon={<></>}
 				right={
 					<div style={{ fontSize: 24 }}>
@@ -63,7 +73,19 @@ export const HistoryPage = () => {
 			>
 				Past Workouts
 			</NavBar>
-
+			<FilterByDate
+				range={dateRangeOfWorkouts}
+				onChangeDateRange={(range: any) => {
+					setDateRangeOfWorkouts(range);
+					reload();
+				}}
+			/>
+			<div
+				style={{
+					borderBottom: "1px #eee solid",
+					marginBottom: "32px",
+				}}
+			></div>
 			{isWorkoutsExist() ? (
 				<Workouts
 					workouts={workouts}
