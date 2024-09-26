@@ -7,19 +7,17 @@ import ActivityCalendar, {
 import { getWorkoutsInRange } from "../../services/workout-service";
 import { useTheme } from "../../theme/theme-provider";
 
+const today = new Date();
+today.setHours(23, 59, 59, 999);
+const fourMonthsAgo = new Date(today);
+fourMonthsAgo.setMonth(fourMonthsAgo.getMonth() - 4);
+
 function formatDate(date: Date) {
 	const year = date.getFullYear();
 	const month = String(date.getMonth() + 1).padStart(2, "0");
 	const day = String(date.getDate()).padStart(2, "0");
 	return `${year}-${month}-${day}`;
 }
-
-const today = new Date();
-const fourMonthsAgo = new Date(
-	today.getFullYear(),
-	today.getMonth() - 4,
-	today.getDate()
-);
 
 interface DateCountMap {
 	[date: string]: number;
@@ -67,8 +65,7 @@ const githubThemeColors: ThemeInput = {
 
 export const WorkoutActivityPanel = () => {
 	const { theme } = useTheme();
-	// TODO: when workout create, this component does not update state :(
-	const [workouts] = useState(() => getWorkoutsInRange(fourMonthsAgo, today));
+	const [workouts] = useState(getWorkoutsInRange(fourMonthsAgo, today));
 
 	return (
 		<>
