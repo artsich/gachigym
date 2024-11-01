@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, Popup } from "antd-mobile";
+import { Picker } from "antd-mobile";
 import { Set } from "../../services/program-service";
 import { RightOutline } from "antd-mobile-icons";
+import { PickerValue } from "antd-mobile/es/components/picker-view";
 import "./style.css";
+
+const weightOptions = Array.from({ length: 1001 }, (_, i) => ({
+	label: `${i} kg`,
+	value: i.toString(),
+}));
+
+const repsOptions = Array.from({ length: 1001 }, (_, i) => ({
+	label: `${i} reps`,
+	value: i.toString(),
+}));
+
+const columns = [weightOptions, repsOptions];
 
 export const ConfirmCompletedSet = ({
 	set,
@@ -12,20 +25,22 @@ export const ConfirmCompletedSet = ({
 	onDone: (set: Set) => void;
 }) => {
 	const [visible, setVisible] = useState(false);
-	const [formData, setFormData] = useState(set);
+	const [selectedValues, setSelectedValues] = useState([
+		set.weight?.toString() || "0",
+		set.reps?.toString() || "0",
+	]);
 
 	useEffect(() => {
-		setFormData(set);
+		setSelectedValues([
+			set.weight?.toString() || "0",
+			set.reps?.toString() || "0",
+		]);
 	}, [set]);
 
-	const handleChange = (name: string, value: any) => {
-		if (isNaN(value)) {
-			value = 0;
-		}
-
-		setFormData({
-			...formData,
-			[name]: value,
+	const handleConfirm = (values: PickerValue[]) => {
+		onDone({
+			weight: parseInt(values[0]!.toString()),
+			reps: parseInt(values[1]!.toString()),
 		});
 	};
 
@@ -34,58 +49,14 @@ export const ConfirmCompletedSet = ({
 			<button className="set-done-btn" onClick={() => setVisible(true)}>
 				<RightOutline />
 			</button>
-			<Popup
+
+			<Picker
+				columns={columns}
 				visible={visible}
-				bodyStyle={{ height: "40vh" }}
-				onMaskClick={() => {
-					setVisible(false);
-				}}
-				onClose={() => {
-					setVisible(false);
-				}}
-			>
-				<Form
-					layout="horizontal"
-					onFinish={() => {
-						setVisible(false);
-						onDone(formData);
-					}}
-					mode="card"
-				>
-					<Form.Header>Confirm results</Form.Header>
-					<Form.Item label="Weight">
-						<Input
-							value={formData.weight ? `${formData.weight}` : ""}
-							type="number"
-							inputMode="numeric"
-							placeholder="..."
-							clearable
-							onChange={(value) =>
-								handleChange("weight", value ?? "")
-							}
-							min={0}
-							max={1000}
-						/>
-					</Form.Item>
-					<Form.Item label="Reps">
-						<Input
-							value={formData.reps ? `${formData.reps}` : ""}
-							type="number"
-							inputMode="numeric"
-							placeholder="..."
-							clearable
-							onChange={(value) =>
-								handleChange("reps", value ?? "")
-							}
-							min={0}
-							max={1000}
-						/>
-					</Form.Item>
-					<Button block color="primary" type="submit">
-						Done
-					</Button>
-				</Form>
-			</Popup>
+				onClose={() => setVisible(false)}
+				value={selectedValues}
+				onConfirm={handleConfirm}
+			/>
 		</>
 	);
 };
